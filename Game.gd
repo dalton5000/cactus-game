@@ -26,7 +26,7 @@ onready var terrain_map : = $Level/Navigation/Terrain
 onready var marker_map : = $Level/Marker
 onready var cactus_map : = $Level/Cacti
 onready var spine_label : = $HUDLayer/BuildBar/HBoxContainer/SpinePanel/VBoxContainer/AmountLabel
-onready var master_cactus : = $Cacti/Master
+onready var master_cactus : = $Units/Cacti/Master
 
 func _ready():
 	print(Vector2(1,1).normalized())
@@ -123,7 +123,7 @@ func place_cactus(cell_pos : Vector2, cactus_id : int):
 			BUILD_MODES.SHOOTER: new_cactus=preload("res://Cacti/Shooter.tscn").instance()
 			BUILD_MODES.LURE: new_cactus=preload("res://Cacti/Lure.tscn").instance()
 		new_cactus.global_position = $Level/Cacti.map_to_world(target_cell) + Vector2(0,8)
-		$Cacti.add_child(new_cactus)
+		$Units/Cacti.add_child(new_cactus)
 	
 func _unhandled_input(event):
 	match cursor_mode:

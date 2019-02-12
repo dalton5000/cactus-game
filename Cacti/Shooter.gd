@@ -34,6 +34,8 @@ func _on_ShootingArea_area_entered(area):
 func enemy_died(enemy):
 	if enemy in enemies_in_range:
 		enemies_in_range.erase(enemy)
+		if enemy == target:
+			find_next_target()
 		
 func find_next_target():
 	if enemies_in_range.size() > 0:
@@ -55,9 +57,10 @@ func shoot():
 		is_shooting = false
 	
 func spawn_spine():
-	var spine = preload("res://Cacti/SpineProjectile.tscn").instance()
-	spine.direction = (target.global_position - global_position).normalized()
-	get_parent().add_child(spine)
-	spine.global_position = global_position
+	if target:
+		var spine = preload("res://Cacti/SpineProjectile.tscn").instance()
+		spine.direction = (target.global_position - global_position).normalized()
+		get_parent().add_child(spine)
+		spine.global_position = global_position
 	
 	
