@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://UI/HUDLayer.gd" type="Script" id=1]
 [ext_resource path="res://UI/icons/spines.png" type="Texture" id=2]
@@ -7,8 +7,13 @@
 [ext_resource path="res://UI/icons/cacti.png" type="Texture" id=5]
 [ext_resource path="res://UI/icons/poachers.png" type="Texture" id=6]
 [ext_resource path="res://UI/BuildBar/building_buttongroup.tres" type="ButtonGroup" id=7]
-[ext_resource path="res://UI/theme.tres" type="Theme" id=8]
-[ext_resource path="res://UI/PauseMenu.gd" type="Script" id=9]
+[ext_resource path="res://UI/icons/build_menu.png" type="Texture" id=8]
+[ext_resource path="res://UI/icons/build_seeder.png" type="Texture" id=9]
+[ext_resource path="res://UI/icons/build_grower.png" type="Texture" id=10]
+[ext_resource path="res://UI/icons/build_shooter.png" type="Texture" id=11]
+[ext_resource path="res://UI/icons/build_lure.png" type="Texture" id=12]
+[ext_resource path="res://UI/theme.tres" type="Theme" id=13]
+[ext_resource path="res://UI/PauseMenu.gd" type="Script" id=14]
 
 [node name="HUDLayer" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -93,43 +98,81 @@ text = "x0"
 valign = 1
 
 [node name="BuildBar" type="HBoxContainer" parent="."]
+anchor_left = 0.5
 anchor_top = 1.0
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
-margin_top = -20.0
-alignment = 2
+margin_left = -460.0
+margin_top = -60.0
+margin_right = 212.0
+margin_bottom = -28.0
+rect_min_size = Vector2( 0, 32 )
+custom_constants/separation = 8
+
+[node name="BuildButton" type="Button" parent="BuildBar"]
+margin_right = 128.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 128, 0 )
+custom_fonts/font = ExtResource( 3 )
+toggle_mode = true
+group = ExtResource( 7 )
+text = "Build"
+icon = ExtResource( 8 )
 
 [node name="SeederButton" type="Button" parent="BuildBar"]
-margin_left = 797.0
-margin_right = 853.0
-margin_bottom = 20.0
+visible = false
+margin_left = 136.0
+margin_right = 264.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 128, 0 )
+custom_fonts/font = ExtResource( 3 )
 toggle_mode = true
 group = ExtResource( 7 )
 text = "Seeder"
+icon = ExtResource( 9 )
 
 [node name="GrowerButton" type="Button" parent="BuildBar"]
-margin_left = 857.0
-margin_right = 915.0
-margin_bottom = 20.0
+visible = false
+margin_left = 136.0
+margin_right = 264.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 128, 0 )
+custom_fonts/font = ExtResource( 3 )
 toggle_mode = true
 group = ExtResource( 7 )
 text = "Grower"
+icon = ExtResource( 10 )
 
-[node name="ShooterButon" type="Button" parent="BuildBar"]
-margin_left = 919.0
-margin_right = 980.0
-margin_bottom = 20.0
+[node name="ShooterButton" type="Button" parent="BuildBar"]
+visible = false
+margin_left = 136.0
+margin_right = 264.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 128, 0 )
+custom_fonts/font = ExtResource( 3 )
 toggle_mode = true
 group = ExtResource( 7 )
 text = "Shooter"
+icon = ExtResource( 11 )
 
 [node name="LureButton" type="Button" parent="BuildBar"]
-margin_left = 984.0
-margin_right = 1024.0
-margin_bottom = 20.0
-toggle_mode = true
-group = ExtResource( 7 )
+visible = false
+margin_left = 136.0
+margin_right = 264.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 128, 0 )
+custom_fonts/font = ExtResource( 3 )
 text = "Lure"
+icon = ExtResource( 12 )
+
+[node name="CancelBuildButton" type="Button" parent="BuildBar"]
+visible = false
+margin_left = 136.0
+margin_right = 264.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 128, 0 )
+custom_fonts/font = ExtResource( 3 )
+text = "Cancel"
 
 [node name="PauseMenu" type="PopupPanel" parent="."]
 pause_mode = 2
@@ -142,9 +185,9 @@ margin_top = -388.0
 margin_right = -352.0
 margin_bottom = -228.0
 rect_min_size = Vector2( 320, 160 )
-theme = ExtResource( 8 )
+theme = ExtResource( 13 )
 popup_exclusive = true
-script = ExtResource( 9 )
+script = ExtResource( 14 )
 
 [node name="Label" type="Label" parent="PauseMenu"]
 anchor_right = 1.0
@@ -157,7 +200,9 @@ text = "Pause"
 align = 1
 valign = 1
 
+[connection signal="button_up" from="BuildBar/BuildButton" to="." method="_on_BuildButton_button_up"]
 [connection signal="button_up" from="BuildBar/SeederButton" to="." method="_on_SeederButton_button_up"]
 [connection signal="button_up" from="BuildBar/GrowerButton" to="." method="_on_GrowerButton_button_up"]
-[connection signal="button_up" from="BuildBar/ShooterButon" to="." method="_on_ShooterButon_button_up"]
+[connection signal="button_up" from="BuildBar/ShooterButton" to="." method="_on_ShooterButon_button_up"]
 [connection signal="button_up" from="BuildBar/LureButton" to="." method="_on_LureButton_button_up"]
+[connection signal="button_up" from="BuildBar/CancelBuildButton" to="." method="_on_CancelBuildButton_button_up"]
