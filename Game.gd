@@ -25,7 +25,7 @@ var build_mode : int = BUILD_MODES.NONE
 onready var terrain_map : = $Level/Navigation/Terrain
 onready var marker_map : = $Level/Marker
 onready var cactus_map : = $Level/Cacti
-onready var spine_label : = $HUDLayer/BuildBar/HBoxContainer/SpinePanel/VBoxContainer/AmountLabel
+onready var hud := $HUDLayer
 onready var master_cactus : = $Units/Cacti/Master
 
 func _ready():
@@ -67,9 +67,6 @@ func change_cursormode(new_mode):
 		match new_mode:
 			CURSOR_MODES.INSPECT:
 				Input.set_custom_mouse_cursor(inspect_cursor)
-				if $HUDLayer/BuildBar/HBoxContainer/SeederButton.group.get_pressed_button():
-					$HUDLayer/BuildBar/HBoxContainer/SeederButton.group.get_pressed_button().release_focus()
-					$HUDLayer/BuildBar/HBoxContainer/SeederButton.group.get_pressed_button().pressed = false
 				marker_map.clear()
 				cactus_map.hide()
 			CURSOR_MODES.BUILD:
@@ -104,10 +101,12 @@ func get_master_cactus() -> Node:
 
 func spines_produced(amount):
 	Gamestate.spines += amount
-	spine_label.text = str(Gamestate.spines)
+	hud.update_spine_count(Gamestate.spines)
+	#spine_label.text = str(Gamestate.spines)
+	
 func spines_consumed(amount):
 	Gamestate.spines -= amount
-	spine_label.text = str(Gamestate.spines)
+	hud.update_spine_count(Gamestate.spines)
 	
 func place_cactus(cell_pos : Vector2, cactus_id : int):
 	if cell_is_occupied(cell_pos):
@@ -134,20 +133,10 @@ func _unhandled_input(event):
 				elif event.button_index == BUTTON_LEFT and event.pressed:
 					place_cactus($Level.get_global_mouse_position(), build_mode)
 
-func _on_SeederButton_button_up():
+func _on_HUDLayer_build_item_selected(which_item):
+	match which_item:
+		"seeder": build_mode = BUILD_MODES.SEEDER
+		"grower": build_mode = BUILD_MODES.GROWER
+		"shooter": build_mode = BUILD_MODES.SHOOTER
+		"lure": build_mode = BUILD_MODES.LURE
 	change_cursormode(CURSOR_MODES.BUILD)
-	build_mode = BUILD_MODES.SEEDER
-	
-func _on_GrowerButton_button_up():
-	change_cursormode(CURSOR_MODES.BUILD)
-	build_mode = BUILD_MODES.GROWER
-
-
-func _on_ShooterButon_button_up():
-	change_cursormode(CURSOR_MODES.BUILD)
-	build_mode = BUILD_MODES.SHOOTER
-
-func _on_LureButton_button_up():
-	change_cursormode(CURSOR_MODES.BUILD)
-	build_mode = BUILD_MODES.LURE
-
