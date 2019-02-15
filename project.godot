@@ -26,8 +26,8 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Gamestate="*res://Singletons/Gamestate.gd"
 CactusData="*res://Singletons/CactusData.gd"
+Gamestate="*res://Singletons/Gamestate.gd"
 
 [debug]
 

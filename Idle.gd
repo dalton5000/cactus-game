@@ -12,4 +12,8 @@ func update(delta) -> String:
 	return("Move")
 
 func find_target() -> Node:
-	return(game.get_master_cactus())
+#	return(game.get_master_cactus())
+	if FSM.owner.has_loot:
+		return(FSM.owner.spawn_position)
+	else:
+		return(game.get_rocket())

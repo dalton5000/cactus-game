@@ -5,7 +5,7 @@ var path
 onready var speed : float = FSM.owner.speed
 
 func enter() -> void:
-	update_path(1.0/60.0)
+	update_path()
 
 func exit() -> void:
 	pass
@@ -35,12 +35,19 @@ func update(delta) -> String:
 	FSM.owner.get_node("WalkAnimation").play("walk_"+anim_direction)
 
 	var walk_distance = speed * delta
+	
+	#true if reached_target
 	if move_along_path(walk_distance):
-		return("Idle")
+		if FSM.owner.has_loot:
+			FSM.owner.queue_free()
+			return("Idle")
+		else:
+			return("Idle")
 	else:
 		return("")
 	
-func update_path(delta):
+func update_path():
+	var delta = 1.0/60.0
 	var n = Navigation2D.new()
 	
 	var own_pos = FSM.owner.global_position

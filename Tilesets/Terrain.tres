@@ -12,6 +12,26 @@ polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 vertices = PoolVector2Array( 16, 16, 32, 8, 16, 0, 0, 8 )
 polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 
+[sub_resource type="NavigationPolygon" id=3]
+
+vertices = PoolVector2Array( 16, 16, 32, 8, 16, 0, 0, 8 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
+
+[sub_resource type="NavigationPolygon" id=4]
+
+vertices = PoolVector2Array( 16, 16, 32, 8, 16, 0, 0, 8 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
+
+[sub_resource type="NavigationPolygon" id=5]
+
+vertices = PoolVector2Array( 0, 8, 16, 16, 32, 8, 16, 0 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
+
+[sub_resource type="NavigationPolygon" id=6]
+
+vertices = PoolVector2Array( 0, 8, 16, 16, 32, 8, 16, 0 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
+
 [sub_resource type="NavigationPolygon" id=7]
 
 vertices = PoolVector2Array( 16, 16, 32, 8, 16, 0, 0, 8 )
@@ -22,37 +42,17 @@ polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 vertices = PoolVector2Array( 16, 16, 32, 8, 16, 0, 0, 8 )
 polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 
-[sub_resource type="NavigationPolygon" id=3]
-
-vertices = PoolVector2Array( 0, 8, 16, 16, 32, 8, 16, 0 )
-polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
-
 [sub_resource type="NavigationPolygon" id=9]
-
-vertices = PoolVector2Array( 0, 8, 16, 16, 32, 8, 16, 0 )
-polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
-
-[sub_resource type="NavigationPolygon" id=10]
-
-vertices = PoolVector2Array( 16, 16, 32, 8, 16, 0, 0, 8 )
-polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
-
-[sub_resource type="NavigationPolygon" id=11]
-
-vertices = PoolVector2Array( 16, 16, 32, 8, 16, 0, 0, 8 )
-polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
-
-[sub_resource type="NavigationPolygon" id=4]
 
 vertices = PoolVector2Array( 16, 0, 32, 8, 16, 16, 0, 8 )
 polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 
-[sub_resource type="NavigationPolygon" id=5]
+[sub_resource type="NavigationPolygon" id=10]
 
 vertices = PoolVector2Array( 0, 8, 16, 16, 32, 8, 16, 0 )
 polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 
-[sub_resource type="NavigationPolygon" id=6]
+[sub_resource type="NavigationPolygon" id=11]
 
 vertices = PoolVector2Array( 0, 8, 16, 16, 32, 8, 16, 0 )
 polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
@@ -94,7 +94,7 @@ polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 2/tile_mode = 0
 2/occluder_offset = Vector2( 0, 0 )
 2/navigation_offset = Vector2( 0, 0 )
-2/navigation = SubResource( 3 )
+2/navigation = SubResource( 5 )
 2/shapes = [  ]
 2/z_index = 0
 3/name = "stone"
@@ -105,7 +105,7 @@ polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 3/tile_mode = 0
 3/occluder_offset = Vector2( 0, 0 )
 3/navigation_offset = Vector2( 0, 0 )
-3/navigation = SubResource( 9 )
+3/navigation = SubResource( 6 )
 3/shapes = [  ]
 3/z_index = 0
 4/name = "grass_fertile"
@@ -116,7 +116,7 @@ polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 4/tile_mode = 0
 4/occluder_offset = Vector2( 0, 0 )
 4/navigation_offset = Vector2( 0, 0 )
-4/navigation = SubResource( 10 )
+4/navigation = SubResource( 7 )
 4/shapes = [  ]
 4/z_index = 0
 5/name = "dirt_fertile"
@@ -127,7 +127,7 @@ polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 5/tile_mode = 0
 5/occluder_offset = Vector2( 0, 0 )
 5/navigation_offset = Vector2( 0, 0 )
-5/navigation = SubResource( 11 )
+5/navigation = SubResource( 8 )
 5/shapes = [  ]
 5/z_index = 0
 6/name = "sand_fertile"
@@ -138,7 +138,7 @@ polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 6/tile_mode = 0
 6/occluder_offset = Vector2( 0, 0 )
 6/navigation_offset = Vector2( 0, 0 )
-6/navigation = SubResource( 4 )
+6/navigation = SubResource( 9 )
 6/shapes = [  ]
 6/z_index = 0
 7/name = "stone_fertile"
@@ -149,7 +149,7 @@ polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 7/tile_mode = 0
 7/occluder_offset = Vector2( 0, 0 )
 7/navigation_offset = Vector2( 0, 0 )
-7/navigation = SubResource( 5 )
+7/navigation = SubResource( 10 )
 7/shapes = [  ]
 7/z_index = 0
 8/name = "grass_barren"
@@ -160,7 +160,7 @@ polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 8/tile_mode = 0
 8/occluder_offset = Vector2( 0, 0 )
 8/navigation_offset = Vector2( 0, 0 )
-8/navigation = SubResource( 6 )
+8/navigation = SubResource( 11 )
 8/shapes = [  ]
 8/z_index = 0
 9/name = "dirt_barren"
@@ -182,7 +182,7 @@ polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 10/tile_mode = 0
 10/occluder_offset = Vector2( 0, 0 )
 10/navigation_offset = Vector2( 0, 0 )
-10/navigation = SubResource( 7 )
+10/navigation = SubResource( 3 )
 10/shapes = [  ]
 10/z_index = 0
 11/name = "stone_barren"
@@ -193,7 +193,7 @@ polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 11/tile_mode = 0
 11/occluder_offset = Vector2( 0, 0 )
 11/navigation_offset = Vector2( 0, 0 )
-11/navigation = SubResource( 8 )
+11/navigation = SubResource( 4 )
 11/shapes = [  ]
 11/z_index = 0
 12/name = "water_dark"

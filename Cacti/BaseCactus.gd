@@ -13,7 +13,8 @@ func _ready():
 func initialize():
 	randomize()
 	grow_time = grow_time * (randf()*0.75+0.5)
-	pop_amount(-CactusData.cacti[cactus_type].cost)
+	var cost = CactusData.cacti[cactus_type].cost
+	pop_amount(-cost)
 
 func _physics_process(delta):
 	_growing_process(delta)

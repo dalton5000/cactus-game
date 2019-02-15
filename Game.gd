@@ -1,11 +1,13 @@
 extends Node
 
-const FERTILE_CELL_ID : = 8
+const FERTILE_CELL_ID : = 6
 
 const GRASS_CELL_ID : = 0
 const DIRT_CELL_ID : = 1
 const SAND_CELL_ID : = 2
 const STONE_CELL_ID : = 3
+
+var spines_stolen_per_enemy = 20
 
 #cursor
 var inspect_cursor = load("res://UI/cursors/default.png")
@@ -18,8 +20,8 @@ enum MARK_TYPES { VALID, INVALID}
 enum CURSOR_MODES { INSPECT, BUILD }
 var cursor_mode : int = -1
 
-enum BUILD_MODES { MASTER, SEEDER, GROWER, SHOOTER, LURE, DELETE, NONE }
-var build_mode : int = BUILD_MODES.NONE
+enum BUILD_MODES { MASTER, SEEDER, GROWER, SHOOTER, LURE, DELETE }
+var build_mode : int = -1
 
 #nodes
 onready var terrain_map : = $Level/Navigation/Terrain
@@ -27,12 +29,14 @@ onready var marker_map : = $Level/Marker
 onready var cactus_map : = $Level/Cacti
 onready var spine_label : = $HUDLayer/BuildBar/HBoxContainer/SpinePanel/VBoxContainer/AmountLabel
 onready var master_cactus : = $Units/Cacti/Master
+onready var rocket : = $Units/Cacti/Rocket
 
 func _ready():
 	print(Vector2(1,1).normalized())
 	yield(get_tree(), "idle_frame")
 	change_cursormode(CURSOR_MODES.INSPECT)
-
+	spine_label.text = str(Gamestate.spines)
+	
 func _physics_process(delta):
 	
 	var mouse_pos = $Level.get_global_mouse_position()
@@ -102,29 +106,61 @@ func cell_is_fertile(cell_pos : Vector2) -> bool:
 func get_master_cactus() -> Node:
 	return(master_cactus)
 
+func get_rocket() -> Node:
+	return(rocket)
+
 func spines_produced(amount):
 	Gamestate.spines += amount
 	spine_label.text = str(Gamestate.spines)
+	
 func spines_consumed(amount):
 	Gamestate.spines -= amount
 	spine_label.text = str(Gamestate.spines)
-	
+
+func can_afford(cactus_id : int) -> bool:
+	var cost
+	match cactus_id:
+		BUILD_MODES.SEEDER:
+			cost = CactusData.cacti["seeder"].cost
+		BUILD_MODES.GROWER:
+			cost = CactusData.cacti["grower"].cost
+		BUILD_MODES.SHOOTER:
+			cost = CactusData.cacti["shooter"].cost
+		BUILD_MODES.LURE:
+			cost = CactusData.cacti["lure"].cost
+	if Gamestate.spines >= cost:
+		return(true)
+	else:
+		return(false)
+			
 func place_cactus(cell_pos : Vector2, cactus_id : int):
 	if cell_is_occupied(cell_pos):
 		pass
 	else:
-		var target_cell = cactus_map.world_to_map(cell_pos)
-		cactus_map.set_cellv(target_cell,cactus_id)
+		if can_afford(build_mode):
+			var target_cell = cactus_map.world_to_map(cell_pos)
+			cactus_map.set_cellv(target_cell,cactus_id)
+			
+			var new_cactus
+			var cost
+			match cactus_id:			
+				BUILD_MODES.SEEDER:
+					new_cactus=preload("res://Cacti/Seeder.tscn").instance()
+					cost = CactusData.cacti["seeder"].cost
+				BUILD_MODES.GROWER:
+					new_cactus=preload("res://Cacti/Grower.tscn").instance()
+					cost = CactusData.cacti["grower"].cost
+				BUILD_MODES.SHOOTER:
+					new_cactus=preload("res://Cacti/Shooter.tscn").instance()
+					cost = CactusData.cacti["shooter"].cost
+				BUILD_MODES.LURE:
+					new_cactus=preload("res://Cacti/Lure.tscn").instance()
+					cost = CactusData.cacti["lure"].cost
+			spines_consumed(cost)
+			new_cactus.global_position = $Level/Cacti.map_to_world(target_cell) + Vector2(0,8)
+			$Units/Cacti.add_child(new_cactus)
 		
-		var new_cactus
-		match cactus_id:
-			BUILD_MODES.SEEDER: new_cactus=preload("res://Cacti/Seeder.tscn").instance()
-			BUILD_MODES.GROWER: new_cactus=preload("res://Cacti/Grower.tscn").instance()
-			BUILD_MODES.SHOOTER: new_cactus=preload("res://Cacti/Shooter.tscn").instance()
-			BUILD_MODES.LURE: new_cactus=preload("res://Cacti/Lure.tscn").instance()
-		new_cactus.global_position = $Level/Cacti.map_to_world(target_cell) + Vector2(0,8)
-		$Units/Cacti.add_child(new_cactus)
-	
+
 func _unhandled_input(event):
 	match cursor_mode:
 		CURSOR_MODES.BUILD:
@@ -133,7 +169,8 @@ func _unhandled_input(event):
 					change_cursormode(CURSOR_MODES.INSPECT)
 				elif event.button_index == BUTTON_LEFT and event.pressed:
 					place_cactus($Level.get_global_mouse_position(), build_mode)
-
+					
+				
 func _on_SeederButton_button_up():
 	change_cursormode(CURSOR_MODES.BUILD)
 	build_mode = BUILD_MODES.SEEDER
@@ -141,7 +178,6 @@ func _on_SeederButton_button_up():
 func _on_GrowerButton_button_up():
 	change_cursormode(CURSOR_MODES.BUILD)
 	build_mode = BUILD_MODES.GROWER
-
 
 func _on_ShooterButon_button_up():
 	change_cursormode(CURSOR_MODES.BUILD)
@@ -151,3 +187,7 @@ func _on_LureButton_button_up():
 	change_cursormode(CURSOR_MODES.BUILD)
 	build_mode = BUILD_MODES.LURE
 
+
+
+func _on_Rocket_enemy_reached_rocket():
+	Gamestate.spines_in_rocket -= spines_stolen_per_enemy
