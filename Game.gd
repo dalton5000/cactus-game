@@ -143,7 +143,8 @@ func spines_consumed(amount):
 	Gamestate.spines -= amount
 	hud.update_spine_count(Gamestate.spines)
 
-func can_afford(cactus_id : int) -> bool:
+func can_build(cactus_id : int, pos : Vector2) -> bool:
+	# First, make sure we can afford the unit
 	var cost
 	match cactus_id:
 		BUILD_MODES.SEEDER:
@@ -156,17 +157,20 @@ func can_afford(cactus_id : int) -> bool:
 			cost = CactusData.cacti["lure"].cost
 		BUILD_MODES.ROCKET:
 			cost = CactusData.cacti["rocket"].cost
-	if Gamestate.spines >= cost:
-		return(true)
-	else:
-		return(false)
+	if Gamestate.spines < cost:
+		return false
+	# Now, is it on an area we can see?
+	if fog_map.get_cell(pos[0], pos[1]) != 3:
+		return false
+	# Yay! We can build!
+	return true
 
 func place_cactus(cell_pos : Vector2, cactus_id : int):
 	if cell_is_occupied(cell_pos):
 		pass
 	else:
-		if can_afford(build_mode):
-			var target_cell = cactus_map.world_to_map(cell_pos)
+		var target_cell = cactus_map.world_to_map(cell_pos)
+		if can_build(build_mode, target_cell):
 			cactus_map.set_cellv(target_cell,cactus_id)
 			
 			var new_cactus
