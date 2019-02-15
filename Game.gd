@@ -45,7 +45,7 @@ func init_fog_map():
 		fog_map.set_cell(current_cell[0], current_cell[1], 2);
 		revealed_map.set_cell(current_cell[0], current_cell[1], 0);
 	for current_cactus in cactus_map.get_used_cells():
-		for pair in [[2, 6], [3, 5], [4, 4], [5, 3], [6, 2]]:
+		for pair in [[2, 8], [4, 7], [6, 6], [7, 4], [8, 2]]:
 			for x in range(-pair[0], pair[0]+1):
 				for y in range(-pair[1], pair[1]+1):
 					revealed_map.set_cell(current_cactus[0]+x, current_cactus[1]+y, 3)
@@ -68,27 +68,16 @@ func refresh_fog_map():
 				fog_map.set_cell(current_cell[0], current_cell[1], 1)
 	
 func _physics_process(delta):
-	
 	var mouse_pos = $Level.get_global_mouse_position()
-	
+	var cell_pos = marker_map.world_to_map(mouse_pos)
 	match cursor_mode:
 		CURSOR_MODES.INSPECT:
 			pass
 		CURSOR_MODES.BUILD:
-			if cell_is_occupied(mouse_pos):
-				mark_cell(mouse_pos, 1)
+			if can_build(build_mode, cell_pos):
+				mark_cell(mouse_pos, 0)
 			else:
-				match build_mode:
-					BUILD_MODES.SEEDER:
-						mark_cell(mouse_pos, cell_is_sand(mouse_pos))
-					BUILD_MODES.GROWER:
-						mark_cell(mouse_pos, cell_is_sand(mouse_pos))
-					BUILD_MODES.LURE:
-						mark_cell(mouse_pos, cell_is_sand(mouse_pos))
-					BUILD_MODES.SHOOTER:
-						mark_cell(mouse_pos, cell_is_sand(mouse_pos))
-					BUILD_MODES.ROCKET:
-						mark_cell(mouse_pos, cell_is_sand(mouse_pos))
+				mark_cell(mouse_pos, 1)
 
 func mark_cell(cell_pos : Vector2, type : int) ->  void:
 	marker_map.clear()	
@@ -161,6 +150,12 @@ func can_build(cactus_id : int, pos : Vector2) -> bool:
 		return false
 	# Now, is it on an area we can see?
 	if fog_map.get_cell(pos[0], pos[1]) != 3:
+		return false
+	# Is it on a cell that's already occupied?
+	if cactus_map.get_cell(pos[0], pos[1]) != -1:
+		return false
+	# Is it on the right sort of tile?
+	if not terrain_map.get_cell(pos[0], pos[1]) in [FERTILE_CELL_ID, SAND_CELL_ID]:
 		return false
 	# Yay! We can build!
 	return true
