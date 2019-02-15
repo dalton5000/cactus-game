@@ -10,7 +10,7 @@ var spawn_position : Node
 var direction : Vector2
 var anim_direction : String
 var has_loot : = false
-
+var is_alive := true
 
 var target : Node
 
@@ -25,6 +25,7 @@ func get_hit(damage : int) -> void:
 func die() -> void:
 	$FSM.switch_state("Die")
 	emit_signal("died", self)
+	is_alive = false
 
 func hit_rocket() -> void:
 	has_loot = true
@@ -33,3 +34,6 @@ func hit_rocket() -> void:
 func get_lured(lurer):
 	target = lurer
 	$FSM/States/Move.update_path()
+
+func is_alive() -> bool:
+	return is_alive
