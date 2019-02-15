@@ -27,6 +27,8 @@ var build_mode : int = -1
 onready var terrain_map : = $Level/Navigation/Terrain
 onready var marker_map : = $Level/Marker
 onready var cactus_map : = $Level/Cacti
+onready var fog_map : = $Level/Fog
+onready var revealed_map : = $Level/Revealed
 onready var hud := $HUDLayer
 onready var master_cactus : = $Units/Cacti/Master
 onready var rocket : = $Units/Cacti/Rocket
@@ -36,6 +38,34 @@ func _ready():
 	yield(get_tree(), "idle_frame")
 	change_cursormode(CURSOR_MODES.INSPECT)
 	hud.update_spine_count(Gamestate.spines)
+	init_fog_map()
+
+func init_fog_map():
+	for current_cell in terrain_map.get_used_cells():
+		fog_map.set_cell(current_cell[0], current_cell[1], 2);
+		revealed_map.set_cell(current_cell[0], current_cell[1], 0);
+	for current_cactus in cactus_map.get_used_cells():
+		for pair in [[2, 6], [3, 5], [4, 4], [5, 3], [6, 2]]:
+			for x in range(-pair[0], pair[0]+1):
+				for y in range(-pair[1], pair[1]+1):
+					revealed_map.set_cell(current_cactus[0]+x, current_cactus[1]+y, 3)
+	refresh_fog_map()
+
+func refresh_fog_map():
+	# Reset the fog map
+	for current_cell in terrain_map.get_used_cells_by_id(2):
+		fog_map.set_cell(current_cell[0], current_cell[1], 2);
+	# And un-hide stuff around each cactus
+	for current_cactus in cactus_map.get_used_cells():
+		for pair in [[2, 5], [4, 4], [5, 2]]:
+			for x in range(-pair[0], pair[0]+1):
+				for y in range(-pair[1], pair[1]+1):
+					fog_map.set_cell(current_cactus[0]+x, current_cactus[1]+y, 3)
+					revealed_map.set_cell(current_cactus[0]+x, current_cactus[1]+y, 3)
+	for current_cell in terrain_map.get_used_cells():
+		if fog_map.get_cell(current_cell[0], current_cell[1]) == 2:
+			if (int(current_cell[0]) % 2 + int(current_cell[1]) % 2) == 1:
+				fog_map.set_cell(current_cell[0], current_cell[1], 1)
 	
 func _physics_process(delta):
 	
@@ -59,9 +89,6 @@ func _physics_process(delta):
 						mark_cell(mouse_pos, cell_is_sand(mouse_pos))
 					BUILD_MODES.ROCKET:
 						mark_cell(mouse_pos, cell_is_sand(mouse_pos))
-						
-	
-	##	print(mouse_pos)
 
 func mark_cell(cell_pos : Vector2, type : int) ->  void:
 	marker_map.clear()	
@@ -163,7 +190,7 @@ func place_cactus(cell_pos : Vector2, cactus_id : int):
 			spines_consumed(cost)
 			new_cactus.global_position = $Level/Cacti.map_to_world(target_cell) + Vector2(0,8)
 			$Units/Cacti.add_child(new_cactus)
-		
+			refresh_fog_map()
 
 func _unhandled_input(event):
 	match cursor_mode:
@@ -171,6 +198,7 @@ func _unhandled_input(event):
 			if event is InputEventMouseButton:
 				if event.button_index == BUTTON_RIGHT and event.pressed:
 					change_cursormode(CURSOR_MODES.INSPECT)
+					#fog_map.hide()
 				elif event.button_index == BUTTON_LEFT and event.pressed:
 					place_cactus($Level.get_global_mouse_position(), build_mode)					
 				
@@ -182,6 +210,8 @@ func _on_HUDLayer_build_item_selected(which_item):
 		"lure": build_mode = BUILD_MODES.LURE
 		"rocket": build_mode = BUILD_MODES.ROCKET
 	change_cursormode(CURSOR_MODES.BUILD)
+	refresh_fog_map()
+	#fog_map.show()
 
 func _on_Rocket_enemy_reached_rocket():
 	Gamestate.spines_in_rocket -= spines_stolen_per_enemy
