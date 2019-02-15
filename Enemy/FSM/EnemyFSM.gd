@@ -11,7 +11,6 @@ onready var statemap = {
 	"Die": STATE_DIE
 	}
 
-
 onready var current_state : Node = STATE_IDLE
 
 func _ready():
@@ -19,11 +18,9 @@ func _ready():
 
 func switch_state(new_state) -> void:
 	if statemap[new_state] != current_state:
-		print("Enemy switching state to: %s" % new_state)
 		current_state.exit()
 		current_state = statemap[new_state]
 		current_state.enter()
-		
 
 func _physics_process(delta):
 	if current_state:

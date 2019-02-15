@@ -1,5 +1,7 @@
 extends EnemyState
 
+func _enter_tree():
+	label = "idle" # no other way to override variables :(
 
 func enter() -> void:
 	pass

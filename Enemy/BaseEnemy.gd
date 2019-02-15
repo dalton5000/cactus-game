@@ -1,5 +1,9 @@
 extends Area2D
 
+const font = preload("res://UI/fonts/connection_ii/ConnectionII.tres")
+
+onready var fsm = $FSM
+
 signal died
 
 export (int) var health = 100
@@ -37,3 +41,7 @@ func get_lured(lurer):
 
 func is_alive() -> bool:
 	return is_alive
+
+func _draw():
+	draw_set_transform(Vector2(0, 0), 0, Vector2(0.5, 0.5))
+	draw_string(font, Vector2(10, 0), fsm.current_state.label)

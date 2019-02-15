@@ -4,6 +4,10 @@ var path
 
 onready var speed : float = FSM.owner.speed
 
+
+func _enter_tree():
+	label = "move" # no other way to override variables :(
+
 func enter() -> void:
 	update_path()
 
