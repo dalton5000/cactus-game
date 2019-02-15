@@ -1,18 +1,16 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://Tilesets/Terrain.tres" type="TileSet" id=2]
 [ext_resource path="res://Tilesets/tileset_markers.png" type="Texture" id=3]
 [ext_resource path="res://Tilesets/tileset_cacti.png" type="Texture" id=4]
 [ext_resource path="res://Spawner.gd" type="Script" id=5]
-[ext_resource path="res://Cacti/Master.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Cacti/Rocket.tscn" type="PackedScene" id=7]
-[ext_resource path="res://UI/theme.tres" type="Theme" id=8]
-[ext_resource path="res://UI/BuildBar/building_buttongroup.tres" type="ButtonGroup" id=9]
-[ext_resource path="res://UI/PauseMenu.gd" type="Script" id=10]
-[ext_resource path="res://GameTime.gd" type="Script" id=11]
-[ext_resource path="res://addons/carmel4a97.RTS_Camera2D/RTS-Camera2D.gd" type="Script" id=12]
-[ext_resource path="res://addons/carmel4a97.RTS_Camera2D/node_icon.png" type="Texture" id=13]
+[ext_resource path="res://UI/HUDLayer.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Cacti/Master.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Cacti/Rocket.tscn" type="PackedScene" id=8]
+[ext_resource path="res://GameTime.gd" type="Script" id=9]
+[ext_resource path="res://addons/carmel4a97.RTS_Camera2D/RTS-Camera2D.gd" type="Script" id=10]
+[ext_resource path="res://addons/carmel4a97.RTS_Camera2D/node_icon.png" type="Texture" id=11]
 
 [sub_resource type="TileSet" id=1]
 
@@ -100,9 +98,6 @@
 4/shapes = [  ]
 4/z_index = 0
 
-[sub_resource type="StyleBoxEmpty" id=3]
-
-
 [node name="Game" type="Node" groups=[
 "game",
 ]]
@@ -144,6 +139,8 @@ position = Vector2( 46, -70 )
 [node name="Position2D3" type="Position2D" parent="Level/Spawner"]
 position = Vector2( -40, 20 )
 
+[node name="HUDLayer" parent="." instance=ExtResource( 6 )]
+
 [node name="Units" type="YSort" parent="."]
 z_index = 1
 
@@ -151,7 +148,7 @@ z_index = 1
 
 [node name="Cacti" type="YSort" parent="Units"]
 
-[node name="Master" parent="Units/Cacti" instance=ExtResource( 6 )]
+[node name="Master" parent="Units/Cacti" instance=ExtResource( 7 )]
 editor/display_folded = true
 position = Vector2( 32, 72 )
 
@@ -161,116 +158,12 @@ frame = 2
 [node name="Uniform" parent="Units/Cacti/Master" index="1"]
 frame = 2
 
-[node name="Rocket" parent="Units/Cacti" instance=ExtResource( 7 )]
+[node name="Rocket" parent="Units/Cacti" instance=ExtResource( 8 )]
 position = Vector2( 120, 0 )
-
-[node name="HUDLayer" type="CanvasLayer" parent="."]
-
-[node name="BuildBar" type="Control" parent="HUDLayer"]
-anchor_right = 1.0
-margin_bottom = 72.0
-theme = ExtResource( 8 )
-
-[node name="Label" type="Label" parent="HUDLayer/BuildBar"]
-margin_right = 40.0
-margin_bottom = 14.0
-text = "TEST
-"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="HUDLayer/BuildBar"]
-margin_right = 40.0
-margin_bottom = 40.0
-
-[node name="SpinePanel" type="PanelContainer" parent="HUDLayer/BuildBar/HBoxContainer"]
-margin_right = 82.0
-margin_bottom = 62.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="HUDLayer/BuildBar/HBoxContainer/SpinePanel"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 75.0
-margin_bottom = 55.0
-
-[node name="Label" type="Label" parent="HUDLayer/BuildBar/HBoxContainer/SpinePanel/VBoxContainer"]
-margin_right = 68.0
-margin_bottom = 22.0
-text = "Spines:"
-
-[node name="AmountLabel" type="Label" parent="HUDLayer/BuildBar/HBoxContainer/SpinePanel/VBoxContainer"]
-margin_top = 26.0
-margin_right = 68.0
-margin_bottom = 48.0
-text = "0"
-align = 1
-
-[node name="VSeparator" type="VSeparator" parent="HUDLayer/BuildBar/HBoxContainer"]
-margin_left = 86.0
-margin_right = 111.0
-margin_bottom = 62.0
-custom_styles/separator = SubResource( 3 )
-custom_constants/separation = 25
-
-[node name="SeederButton" type="Button" parent="HUDLayer/BuildBar/HBoxContainer"]
-margin_left = 115.0
-margin_right = 197.0
-margin_bottom = 62.0
-toggle_mode = true
-group = ExtResource( 9 )
-text = "Seeder"
-
-[node name="GrowerButton" type="Button" parent="HUDLayer/BuildBar/HBoxContainer"]
-margin_left = 201.0
-margin_right = 289.0
-margin_bottom = 62.0
-toggle_mode = true
-group = ExtResource( 9 )
-text = "Grower"
-
-[node name="ShooterButon" type="Button" parent="HUDLayer/BuildBar/HBoxContainer"]
-margin_left = 293.0
-margin_right = 383.0
-margin_bottom = 62.0
-toggle_mode = true
-group = ExtResource( 9 )
-text = "Shooter"
-
-[node name="LureButton" type="Button" parent="HUDLayer/BuildBar/HBoxContainer"]
-margin_left = 387.0
-margin_right = 443.0
-margin_bottom = 62.0
-toggle_mode = true
-group = ExtResource( 9 )
-text = "Lure"
-
-[node name="PauseMenu" type="PopupPanel" parent="HUDLayer"]
-pause_mode = 2
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -672.0
-margin_top = -388.0
-margin_right = -352.0
-margin_bottom = -228.0
-rect_min_size = Vector2( 320, 160 )
-theme = ExtResource( 8 )
-popup_exclusive = true
-script = ExtResource( 10 )
-
-[node name="Label" type="Label" parent="HUDLayer/PauseMenu"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 4.0
-margin_right = -4.0
-margin_bottom = -4.0
-text = "Pause"
-align = 1
-valign = 1
 
 [node name="GameTime" type="Node" parent="."]
 editor/display_folded = true
-script = ExtResource( 11 )
+script = ExtResource( 9 )
 
 [node name="NightModulate" type="CanvasModulate" parent="GameTime"]
 
@@ -279,17 +172,14 @@ script = ExtResource( 11 )
 [node name="RTS-Camera2D" type="Camera2D" parent="."]
 current = true
 zoom = Vector2( 0.5, 0.5 )
-script = ExtResource( 12 )
+script = ExtResource( 10 )
 __meta__ = {
-"_editor_icon": ExtResource( 13 )
+"_editor_icon": ExtResource( 11 )
 }
 edge = true
 wheel = false
 
+[connection signal="build_item_selected" from="HUDLayer" to="." method="_on_HUDLayer_build_item_selected"]
 [connection signal="enemy_reached_rocket" from="Units/Cacti/Rocket" to="." method="_on_Rocket_enemy_reached_rocket"]
-[connection signal="button_up" from="HUDLayer/BuildBar/HBoxContainer/SeederButton" to="." method="_on_SeederButton_button_up"]
-[connection signal="button_up" from="HUDLayer/BuildBar/HBoxContainer/GrowerButton" to="." method="_on_GrowerButton_button_up"]
-[connection signal="button_up" from="HUDLayer/BuildBar/HBoxContainer/ShooterButon" to="." method="_on_ShooterButon_button_up"]
-[connection signal="button_up" from="HUDLayer/BuildBar/HBoxContainer/LureButton" to="." method="_on_LureButton_button_up"]
 
 [editable path="Units/Cacti/Master"]
