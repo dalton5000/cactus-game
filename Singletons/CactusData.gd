@@ -9,24 +9,27 @@ var cacti : = {
 		"name" : "Seeder",
 		"cost" : 10,
 		"tile_id" : 1
-		},
-		
+	},
 	"grower" : {
 		"name" : "Grower",
 		"cost" : 10,
 		"tile_id" : 2
-		},
-	
+	},
 	"shooter" : {
 		"name" : "Shooter",
 		"cost" : 10,
 		"tile_id" : 2
-		},
-	
+	},
 	"lure" : {
 		"name" : "Lure",
 		"cost" : 10,
-		"tile_id" : 2 },
+		"tile_id" : 2
+	},
+	"rocket" : {
+		"name" : "Rocket",
+		"cost" : 10,
+		"tile_id" : 2
 	}
+}
 		
 	

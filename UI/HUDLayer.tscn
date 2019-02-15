@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://UI/HUDLayer.gd" type="Script" id=1]
 [ext_resource path="res://UI/icons/spines.png" type="Texture" id=2]
@@ -12,8 +12,9 @@
 [ext_resource path="res://UI/icons/build_grower.png" type="Texture" id=10]
 [ext_resource path="res://UI/icons/build_shooter.png" type="Texture" id=11]
 [ext_resource path="res://UI/icons/build_lure.png" type="Texture" id=12]
-[ext_resource path="res://UI/theme.tres" type="Theme" id=13]
-[ext_resource path="res://UI/PauseMenu.gd" type="Script" id=14]
+[ext_resource path="res://UI/icons/build_rocket.png" type="Texture" id=13]
+[ext_resource path="res://UI/theme.tres" type="Theme" id=14]
+[ext_resource path="res://UI/PauseMenu.gd" type="Script" id=15]
 
 [node name="HUDLayer" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -121,8 +122,7 @@ icon = ExtResource( 8 )
 
 [node name="SeederButton" type="Button" parent="BuildBar"]
 visible = false
-margin_left = 136.0
-margin_right = 264.0
+margin_right = 128.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 128, 0 )
 custom_fonts/font = ExtResource( 3 )
@@ -145,8 +145,8 @@ icon = ExtResource( 10 )
 
 [node name="ShooterButton" type="Button" parent="BuildBar"]
 visible = false
-margin_left = 136.0
-margin_right = 264.0
+margin_left = 272.0
+margin_right = 400.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 128, 0 )
 custom_fonts/font = ExtResource( 3 )
@@ -157,18 +157,28 @@ icon = ExtResource( 11 )
 
 [node name="LureButton" type="Button" parent="BuildBar"]
 visible = false
-margin_left = 136.0
-margin_right = 264.0
+margin_left = 408.0
+margin_right = 536.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 128, 0 )
 custom_fonts/font = ExtResource( 3 )
 text = "Lure"
 icon = ExtResource( 12 )
 
+[node name="RocketButton" type="Button" parent="BuildBar"]
+visible = false
+margin_left = 544.0
+margin_right = 672.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 128, 0 )
+custom_fonts/font = ExtResource( 3 )
+text = "Rocket"
+icon = ExtResource( 13 )
+
 [node name="CancelBuildButton" type="Button" parent="BuildBar"]
 visible = false
-margin_left = 136.0
-margin_right = 264.0
+margin_left = 680.0
+margin_right = 808.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 128, 0 )
 custom_fonts/font = ExtResource( 3 )
@@ -185,9 +195,9 @@ margin_top = -388.0
 margin_right = -352.0
 margin_bottom = -228.0
 rect_min_size = Vector2( 320, 160 )
-theme = ExtResource( 13 )
+theme = ExtResource( 14 )
 popup_exclusive = true
-script = ExtResource( 14 )
+script = ExtResource( 15 )
 
 [node name="Label" type="Label" parent="PauseMenu"]
 anchor_right = 1.0
@@ -205,4 +215,5 @@ valign = 1
 [connection signal="button_up" from="BuildBar/GrowerButton" to="." method="_on_GrowerButton_button_up"]
 [connection signal="button_up" from="BuildBar/ShooterButton" to="." method="_on_ShooterButon_button_up"]
 [connection signal="button_up" from="BuildBar/LureButton" to="." method="_on_LureButton_button_up"]
+[connection signal="button_up" from="BuildBar/RocketButton" to="." method="_on_RocketButton_button_up"]
 [connection signal="button_up" from="BuildBar/CancelBuildButton" to="." method="_on_CancelBuildButton_button_up"]

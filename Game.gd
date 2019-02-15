@@ -20,7 +20,7 @@ enum MARK_TYPES { VALID, INVALID}
 enum CURSOR_MODES { INSPECT, BUILD }
 var cursor_mode : int = -1
 
-enum BUILD_MODES { MASTER, SEEDER, GROWER, SHOOTER, LURE, DELETE }
+enum BUILD_MODES { MASTER, SEEDER, GROWER, SHOOTER, LURE, ROCKET, DELETE }
 var build_mode : int = -1
 
 #nodes
@@ -56,6 +56,8 @@ func _physics_process(delta):
 					BUILD_MODES.LURE:
 						mark_cell(mouse_pos, cell_is_sand(mouse_pos))
 					BUILD_MODES.SHOOTER:
+						mark_cell(mouse_pos, cell_is_sand(mouse_pos))
+					BUILD_MODES.ROCKET:
 						mark_cell(mouse_pos, cell_is_sand(mouse_pos))
 						
 	
@@ -125,6 +127,8 @@ func can_afford(cactus_id : int) -> bool:
 			cost = CactusData.cacti["shooter"].cost
 		BUILD_MODES.LURE:
 			cost = CactusData.cacti["lure"].cost
+		BUILD_MODES.ROCKET:
+			cost = CactusData.cacti["rocket"].cost
 	if Gamestate.spines >= cost:
 		return(true)
 	else:
@@ -153,6 +157,9 @@ func place_cactus(cell_pos : Vector2, cactus_id : int):
 				BUILD_MODES.LURE:
 					new_cactus=preload("res://Cacti/Lure.tscn").instance()
 					cost = CactusData.cacti["lure"].cost
+				BUILD_MODES.ROCKET:
+					new_cactus=preload("res://Cacti/Rocket.tscn").instance()
+					cost = CactusData.cacti["rocket"].cost
 			spines_consumed(cost)
 			new_cactus.global_position = $Level/Cacti.map_to_world(target_cell) + Vector2(0,8)
 			$Units/Cacti.add_child(new_cactus)
@@ -173,6 +180,7 @@ func _on_HUDLayer_build_item_selected(which_item):
 		"grower": build_mode = BUILD_MODES.GROWER
 		"shooter": build_mode = BUILD_MODES.SHOOTER
 		"lure": build_mode = BUILD_MODES.LURE
+		"rocket": build_mode = BUILD_MODES.ROCKET
 	change_cursormode(CURSOR_MODES.BUILD)
 
 func _on_Rocket_enemy_reached_rocket():

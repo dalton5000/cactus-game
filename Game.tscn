@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://Tilesets/Terrain.tres" type="TileSet" id=2]
@@ -7,10 +7,9 @@
 [ext_resource path="res://Spawner.gd" type="Script" id=5]
 [ext_resource path="res://UI/HUDLayer.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Cacti/Master.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Cacti/Rocket.tscn" type="PackedScene" id=8]
-[ext_resource path="res://GameTime.gd" type="Script" id=9]
-[ext_resource path="res://addons/carmel4a97.RTS_Camera2D/RTS-Camera2D.gd" type="Script" id=10]
-[ext_resource path="res://addons/carmel4a97.RTS_Camera2D/node_icon.png" type="Texture" id=11]
+[ext_resource path="res://GameTime.gd" type="Script" id=8]
+[ext_resource path="res://addons/carmel4a97.RTS_Camera2D/RTS-Camera2D.gd" type="Script" id=9]
+[ext_resource path="res://addons/carmel4a97.RTS_Camera2D/node_icon.png" type="Texture" id=10]
 
 [sub_resource type="TileSet" id=1]
 
@@ -158,12 +157,9 @@ frame = 2
 [node name="Uniform" parent="Units/Cacti/Master" index="1"]
 frame = 2
 
-[node name="Rocket" parent="Units/Cacti" instance=ExtResource( 8 )]
-position = Vector2( 120, 0 )
-
 [node name="GameTime" type="Node" parent="."]
 editor/display_folded = true
-script = ExtResource( 9 )
+script = ExtResource( 8 )
 
 [node name="NightModulate" type="CanvasModulate" parent="GameTime"]
 
@@ -172,14 +168,13 @@ script = ExtResource( 9 )
 [node name="RTS-Camera2D" type="Camera2D" parent="."]
 current = true
 zoom = Vector2( 0.5, 0.5 )
-script = ExtResource( 10 )
+script = ExtResource( 9 )
 __meta__ = {
-"_editor_icon": ExtResource( 11 )
+"_editor_icon": ExtResource( 10 )
 }
 edge = true
 wheel = false
 
 [connection signal="build_item_selected" from="HUDLayer" to="." method="_on_HUDLayer_build_item_selected"]
-[connection signal="enemy_reached_rocket" from="Units/Cacti/Rocket" to="." method="_on_Rocket_enemy_reached_rocket"]
 
 [editable path="Units/Cacti/Master"]

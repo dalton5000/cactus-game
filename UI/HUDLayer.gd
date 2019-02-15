@@ -10,6 +10,7 @@ onready var button_build_seeder = $BuildBar/SeederButton
 onready var button_build_grower = $BuildBar/GrowerButton
 onready var button_build_shooter = $BuildBar/ShooterButton
 onready var button_build_lure = $BuildBar/LureButton
+onready var button_build_rocket = $BuildBar/RocketButton
 onready var button_build_cancel = $BuildBar/CancelBuildButton
 
 signal build_item_selected
@@ -38,12 +39,15 @@ func _on_ShooterButon_button_up():
 func _on_LureButton_button_up():
 	emit_signal("build_item_selected", "lure")
 
+func _on_RocketButton_button_up():
+	emit_signal("build_item_selected", "rocket")
+
 func _on_CancelBuildButton_button_up():
 	button_build.show()
-	for current in [button_build_seeder, button_build_grower, button_build_shooter, button_build_lure, button_build_cancel]:
+	for current in [button_build_seeder, button_build_grower, button_build_shooter, button_build_lure, button_build_rocket, button_build_cancel]:
 		current.hide()
 
 func _on_BuildButton_button_up():
 	button_build.hide()
-	for current in [button_build_seeder, button_build_grower, button_build_shooter, button_build_lure, button_build_cancel]:
+	for current in [button_build_seeder, button_build_grower, button_build_shooter, button_build_lure, button_build_rocket, button_build_cancel]:
 		current.show()
