@@ -4,11 +4,13 @@ extends Node
 onready var STATE_IDLE = $States/Idle
 onready var STATE_MOVE = $States/Move
 onready var STATE_DIE = $States/Die
+onready var STATE_ATTACK = $States/Attack
 
 onready var statemap = {
 	"Idle" : STATE_IDLE,
 	"Move": STATE_MOVE,
-	"Die": STATE_DIE
+	"Die": STATE_DIE,
+	"Attack": STATE_ATTACK
 	}
 
 onready var current_state : Node = STATE_IDLE

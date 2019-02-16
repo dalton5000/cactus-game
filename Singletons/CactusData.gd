@@ -7,7 +7,9 @@ var coins_per_production := 20
 var cacti : = {
 	"miner" : {
 		"name" : "Miner",
+		"threat_level": 1,
 		"cost" : 10,
+		"health": 50,
 		"tile_id" : 1,
 		"unlocked_at_start": true,
 		"icon": preload("res://UI/icons/build_miner.png")
@@ -15,6 +17,8 @@ var cacti : = {
 	"farmer" : {
 		"name" : "Farmer",
 		"cost" : 10,
+		"threat_level": 1,
+		"health": 50,
 		"tile_id" : 2,
 		"unlocked_at_start": true,
 		"icon": preload("res://UI/icons/build_farmer.png")
@@ -22,6 +26,8 @@ var cacti : = {
 	"shooter" : {
 		"name" : "Shooter",
 		"cost" : 10,
+		"threat_level": 2,
+		"health": 50,
 		"tile_id" : 2,
 		"unlocked_at_start": false,
 		"icon": preload("res://UI/icons/build_shooter.png")
@@ -29,13 +35,17 @@ var cacti : = {
 	"lure" : {
 		"name" : "Lure",
 		"cost" : 10,
-		"tile_id" : 2,
+		"threat_level": 10,
+		"health": 50,
+		"tile_id" : 4,
 		"unlocked_at_start": false,
 		"icon": preload("res://UI/icons/build_lure.png")
 	},
 	"rocket" : {
 		"name" : "Rocket",
 		"cost" : 10,
+		"threat_level": 4,
+		"health": 100,
 		"tile_id" : 2,
 		"unlocked_at_start": false,
 		"icon": preload("res://UI/icons/build_rocket.png")

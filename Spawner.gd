@@ -10,7 +10,7 @@ onready var enemy_container = get_node("/root/Game/Units/Enemies")
 
 func _ready():
 	positions = get_children()
-	#spawn_wave()
+	spawn_wave()
 	
 func spawn_wave():
 	for i in waves[0]:

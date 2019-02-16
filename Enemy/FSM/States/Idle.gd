@@ -3,8 +3,9 @@ extends EnemyState
 func _enter_tree():
 	label = "idle" # no other way to override variables :(
 
-func enter() -> void:
-	pass
+func enter():
+	FSM.owner.target = find_target()
+	return("Move")
 
 func exit() -> void:
 	pass
@@ -14,8 +15,17 @@ func update(delta) -> String:
 	return("Move")
 
 func find_target() -> Node:
-#	return(game.get_master_cactus())
-	if FSM.owner.has_loot:
-		return(FSM.owner.spawn_position)
+	print(FSM.owner.cacti_in_range)
+	if FSM.owner.cacti_in_range.size() == 0:
+		return(game.get_master_cactus())
 	else:
-		return(game.get_rocket())
+		var highest_threat = 0
+		var new_target
+		for cactus in FSM.owner.cacti_in_range:
+			if cactus.threat_level > highest_threat:
+				print(cactus.threat_level)
+				print("^ threat level")
+				new_target = cactus
+				highest_threat = cactus.threat_level
+		print("new_target: %s" %new_target)
+		return(new_target)

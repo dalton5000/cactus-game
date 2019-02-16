@@ -16,6 +16,9 @@ var anim_direction : String
 var has_loot : = false
 var is_alive := true
 
+var master_cactus : Node
+var cacti_in_range : = []
+
 var target : Node
 
 func _ready():
@@ -45,3 +48,18 @@ func is_alive() -> bool:
 func _draw():
 	draw_set_transform(Vector2(0, 0), 0, Vector2(0.5, 0.5))
 	draw_string(font, Vector2(10, 0), fsm.current_state.label)
+
+
+func _on_DetectionArea_area_entered(area):
+	if area.is_in_group("cacti"):
+		if area in cacti_in_range:
+			pass
+		else:
+			cacti_in_range.append(area)
+			fsm.switch_state("Idle")
+
+
+func _on_DetectionArea_area_exited(area):
+	if area.is_in_group("cacti"):
+		if area in cacti_in_range:
+			cacti_in_range.erase(area)

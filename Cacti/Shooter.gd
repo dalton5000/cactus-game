@@ -49,11 +49,11 @@ func shoot():
 	if !is_shooting:
 		var target_pos = target.global_position
 		is_shooting = true
-		shooting_tween.interpolate_property($Sprite,"modulate",Color.white,Color.red,0.7,Tween.TRANS_BACK,Tween.EASE_IN)
+		shooting_tween.interpolate_property($Sprite,"modulate",Color.white,Color.yellowgreen,0.7,Tween.TRANS_BACK,Tween.EASE_IN)
 		shooting_tween.start()
 		yield(shooting_tween, "tween_completed")
 		spawn_spine(target_pos)
-		shooting_tween.interpolate_property($Sprite,"modulate",Color.red,Color.white,0.1,Tween.TRANS_LINEAR,Tween.EASE_OUT)
+		shooting_tween.interpolate_property($Sprite,"modulate",Color.yellowgreen,Color.white,0.1,Tween.TRANS_LINEAR,Tween.EASE_OUT)
 	#	$Sprite.modulate = Color.whit
 		yield(shooting_tween, "tween_completed")
 		shooting_tween.start()

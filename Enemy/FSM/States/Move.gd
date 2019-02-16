@@ -42,24 +42,21 @@ func update(delta) -> String:
 	
 	#true if reached_target
 	if move_along_path(walk_distance):
-		if FSM.owner.has_loot:
-			FSM.owner.queue_free()
-			return("Idle")
-		else:
-			return("Idle")
+		return("Attack")
 	else:
 		return("")
 	
 func update_path():
-	var delta = 1.0/60.0
-	var n = Navigation2D.new()
-	
-	var own_pos = FSM.owner.global_position
-	var target_pos = FSM.owner.target.global_position
-	
-	
-	path = navigation.get_simple_path(own_pos,target_pos,false)
-	path.remove(0)
+	if FSM.owner.target:
+		var delta = 1.0/60.0
+		var n = Navigation2D.new()
+		
+		var own_pos = FSM.owner.global_position
+		var target_pos = FSM.owner.target.global_position
+		
+		
+		path = navigation.get_simple_path(own_pos,target_pos,false)
+		path.remove(0)
 	
 
 func move_along_path(distance) -> bool:

@@ -313,3 +313,13 @@ func _ready():
 	init_fog_map()
 	resources_map.create_stuff(resources)
 	Gamestate.connect("research_complete", self, "_on_research_complete")
+
+
+func _on_Master_died():
+	$GameOverLayer/Control/GameOverAnim.play("gameover")
+	get_tree().paused = true
+
+
+func _on_RestartButton_pressed():
+	get_tree().paused=false
+	get_tree().change_scene_to(load("res://Game.tscn"))
