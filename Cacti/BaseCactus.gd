@@ -14,7 +14,7 @@ func initialize():
 	randomize()
 	grow_time = grow_time * (randf()*0.75+0.5)
 	var cost = CactusData.cacti[cactus_type].cost
-	pop_amount(-cost)
+	pop_amount(-cost, 1)
 
 func _physics_process(delta):
 	_growing_process(delta)
@@ -32,8 +32,8 @@ func _grow() -> void:
 	if grow_phase == max_grow_phase:
 		growing = false
 
-func pop_amount(amount : int) -> void:
+func pop_amount(amount : int, icon : int) -> void:
 	var poplabel = preload("res://UI/PopLabel.tscn").instance()
 	add_child(poplabel)
 	poplabel.position = $LabelStartPosition.position
-	poplabel.pop_amount(amount)
+	poplabel.pop_amount(amount, icon)

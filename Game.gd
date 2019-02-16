@@ -20,7 +20,7 @@ enum MARK_TYPES { VALID, INVALID}
 enum CURSOR_MODES { INSPECT, BUILD }
 var cursor_mode : int = -1
 
-enum BUILD_MODES { MASTER, SEEDER, GROWER, SHOOTER, LURE, ROCKET, DELETE }
+enum BUILD_MODES { MASTER, MINER, FARMER, SHOOTER, LURE, ROCKET, DELETE }
 var build_mode : int = -1
 
 #nodes
@@ -40,6 +40,7 @@ func _ready():
 	yield(get_tree(), "idle_frame")
 	change_cursormode(CURSOR_MODES.INSPECT)
 	hud.update_spine_count(Gamestate.spines)
+	hud.update_coin_count(Gamestate.coins)
 	init_fog_map()
 	resources_map.create_stuff(resources)
 
@@ -128,21 +129,29 @@ func get_rocket() -> Node:
 	return(rocket)
 
 func spines_produced(amount):
+	Gamestate.spines += amount
 	hud.update_spine_count(Gamestate.spines)
-	#spine_label.text = str(Gamestate.spines)
 	
 func spines_consumed(amount):
 	Gamestate.spines -= amount
 	hud.update_spine_count(Gamestate.spines)
 
+func coins_produced(amount):
+	Gamestate.coins += amount
+	hud.update_coin_count(Gamestate.coins)
+
+func coins_consumed(amount):
+	Gamestate.coins -= amount
+	hud.update_coin_count(Gamestate.coins)
+
 func can_build(cactus_id : int, pos : Vector2) -> bool:
 	# First, make sure we can afford the unit
 	var cost
 	match cactus_id:
-		BUILD_MODES.SEEDER:
-			cost = CactusData.cacti["seeder"].cost
-		BUILD_MODES.GROWER:
-			cost = CactusData.cacti["grower"].cost
+		BUILD_MODES.MINER:
+			cost = CactusData.cacti["miner"].cost
+		BUILD_MODES.FARMER:
+			cost = CactusData.cacti["farmer"].cost
 		BUILD_MODES.SHOOTER:
 			cost = CactusData.cacti["shooter"].cost
 		BUILD_MODES.LURE:
@@ -173,13 +182,13 @@ func place_cactus(cell_pos : Vector2, cactus_id : int):
 			
 			var new_cactus
 			var cost
-			match cactus_id:			
-				BUILD_MODES.SEEDER:
-					new_cactus=preload("res://Cacti/Seeder.tscn").instance()
-					cost = CactusData.cacti["seeder"].cost
-				BUILD_MODES.GROWER:
-					new_cactus=preload("res://Cacti/Grower.tscn").instance()
-					cost = CactusData.cacti["grower"].cost
+			match cactus_id:
+				BUILD_MODES.MINER:
+					new_cactus = preload("res://Cacti/Miner.tscn").instance()
+					cost = CactusData.cacti["miner"].cost
+				BUILD_MODES.FARMER:
+					new_cactus = preload("res://Cacti/Farmer.tscn").instance()
+					cost = CactusData.cacti["farmer"].cost
 				BUILD_MODES.SHOOTER:
 					new_cactus=preload("res://Cacti/Shooter.tscn").instance()
 					cost = CactusData.cacti["shooter"].cost
@@ -206,8 +215,8 @@ func _unhandled_input(event):
 				
 func _on_HUDLayer_build_item_selected(which_item):
 	match which_item:
-		"seeder": build_mode = BUILD_MODES.SEEDER
-		"grower": build_mode = BUILD_MODES.GROWER
+		"miner": build_mode = BUILD_MODES.MINER
+		"farmer": build_mode = BUILD_MODES.FARMER
 		"shooter": build_mode = BUILD_MODES.SHOOTER
 		"lure": build_mode = BUILD_MODES.LURE
 		"rocket": build_mode = BUILD_MODES.ROCKET

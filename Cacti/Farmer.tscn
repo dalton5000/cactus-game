@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Cacti/BaseCactus.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Cacti/Farmer.gd" type="Script" id=2]
+[ext_resource path="res://Cacti/cactus_farmer.png" type="Texture" id=3]
+
+[node name="Farmer" groups=[
+"grower",
+] instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="Uniform" parent="." index="1"]
+visible = true
+texture = ExtResource( 3 )
+
+[node name="Timer_Harvest" type="Timer" parent="." index="4"]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="Timer_Harvest" to="." method="_on_Timer_Harvest_timeout"]

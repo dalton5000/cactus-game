@@ -1,17 +1,17 @@
 extends Node
 
 var production_length : = 5.0
-var spines_per_production : = 10
-
+var spines_per_production : = 20
+var coins_per_production := 20
 
 var cacti : = {
-	"seeder" : {
-		"name" : "Seeder",
+	"miner" : {
+		"name" : "Miner",
 		"cost" : 10,
 		"tile_id" : 1
 	},
-	"grower" : {
-		"name" : "Grower",
+	"farmer" : {
+		"name" : "Farmer",
 		"cost" : 10,
 		"tile_id" : 2
 	},

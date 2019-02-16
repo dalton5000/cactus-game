@@ -6,8 +6,8 @@ onready var cactus_label = $ResourceBar/LabelCacti
 onready var poacher_label = $ResourceBar/LabelPoachers
 
 onready var button_build = $BuildBar/BuildButton
-onready var button_build_seeder = $BuildBar/SeederButton
-onready var button_build_grower = $BuildBar/GrowerButton
+onready var button_build_farmer = $BuildBar/FarmerButton
+onready var button_build_miner = $BuildBar/MinerButton
 onready var button_build_shooter = $BuildBar/ShooterButton
 onready var button_build_lure = $BuildBar/LureButton
 onready var button_build_rocket = $BuildBar/RocketButton
@@ -27,11 +27,11 @@ func update_cactus_count(amount : int):
 func update_poacher_count(amount : int):
 	poacher_label.text = "x" + str(amount)
 
-func _on_SeederButton_button_up():
-	emit_signal("build_item_selected", "seeder")
+func _on_FarmerButton_button_up():
+	emit_signal("build_item_selected", "farmer")
 
-func _on_GrowerButton_button_up():
-	emit_signal("build_item_selected", "grower")
+func _on_MinerButton_button_up():
+	emit_signal("build_item_selected", "miner")
 
 func _on_ShooterButon_button_up():
 	emit_signal("build_item_selected", "shooter")
@@ -44,10 +44,10 @@ func _on_RocketButton_button_up():
 
 func _on_CancelBuildButton_button_up():
 	button_build.show()
-	for current in [button_build_seeder, button_build_grower, button_build_shooter, button_build_lure, button_build_rocket, button_build_cancel]:
+	for current in [button_build_miner, button_build_farmer, button_build_shooter, button_build_lure, button_build_rocket, button_build_cancel]:
 		current.hide()
 
 func _on_BuildButton_button_up():
 	button_build.hide()
-	for current in [button_build_seeder, button_build_grower, button_build_shooter, button_build_lure, button_build_rocket, button_build_cancel]:
+	for current in [button_build_miner, button_build_farmer, button_build_shooter, button_build_lure, button_build_rocket, button_build_cancel]:
 		current.show()

@@ -1,19 +1,28 @@
 extends Node2D
 
+const spr_spine = preload("res://UI/icons/spine.png")
+const spr_coin = preload("res://UI/icons/coin_small.png")
+
+onready var label_amount = $Label_Amount
+onready var texture_icon = $Texture_Icon
+
+enum ICON {COIN=0, SPINE=1}
+
 export (Vector2) var final_scale = Vector2(1.0, 1.0)
 export (float) var float_distance = 30
 export (float) var duration = 1.0
 export (String) var text = "not set"
-
-var default_template : = "[center]%s[/center]"
-var spine_template_red : = "[center][color=red]%s[/color][img]res://UI/icons/spinex2.png[/img][/center]"
-var spine_template_green : = "[center][color=green]%s[/color][img]res://UI/icons/spinex2.png[/img][/center]"
 	
-func pop_amount(amount : int) -> void:
+func pop_amount(amount : int, icon : int) -> void:
+	match icon:
+		ICON.SPINE: texture_icon.texture = spr_spine
+		ICON.COIN: texture_icon.texture = spr_coin
 	if amount >= 0:
-		$Label.bbcode_text = spine_template_green % ("+" + str(amount))
+		label_amount.modulate = Color.green
+		label_amount.text = "+" + str(amount)
 	else:
-		$Label.bbcode_text = spine_template_red % amount
+		label_amount.modulate = Color.red
+		label_amount.text = str(amount)
 		
 	$Tween.interpolate_property(self, "position", position, 
 			position + Vector2(0, -float_distance), duration, Tween.TRANS_BACK,
@@ -27,9 +36,7 @@ func pop_amount(amount : int) -> void:
 	queue_free()
 	
 func pop_string(text : String) -> void:
-	
-	$Label.bbcode_text = default_template % text
-		
+	texture_icon.hide()
 	$Tween.interpolate_property(self, "position", position, 
 			position + Vector2(0, -float_distance), duration, Tween.TRANS_BACK,
 			Tween.EASE_IN)
