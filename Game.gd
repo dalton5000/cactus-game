@@ -27,11 +27,13 @@ var build_mode : int = -1
 onready var terrain_map : = $Level/Navigation/Terrain
 onready var marker_map : = $Level/Marker
 onready var cactus_map : = $Level/Cacti
+onready var resources_map : = $Level/Navigation/Resources
 onready var fog_map : = $Level/Fog
 onready var revealed_map : = $Level/Revealed
 onready var hud := $HUDLayer
 onready var master_cactus : = $Units/Cacti/Master
 onready var rocket : = $Units/Cacti/Rocket
+onready var resources : = $Units/Resources
 
 func _ready():
 	print(Vector2(1,1).normalized())
@@ -39,6 +41,7 @@ func _ready():
 	change_cursormode(CURSOR_MODES.INSPECT)
 	hud.update_spine_count(Gamestate.spines)
 	init_fog_map()
+	resources_map.create_stuff(resources)
 
 func init_fog_map():
 	for current_cell in terrain_map.get_used_cells():
