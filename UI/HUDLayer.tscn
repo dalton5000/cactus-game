@@ -6,14 +6,14 @@
 [ext_resource path="res://UI/icons/coins.png" type="Texture" id=4]
 [ext_resource path="res://UI/icons/cacti.png" type="Texture" id=5]
 [ext_resource path="res://UI/icons/poachers.png" type="Texture" id=6]
-[ext_resource path="res://UI/BuildBar/building_buttongroup.tres" type="ButtonGroup" id=7]
-[ext_resource path="res://UI/icons/build_menu.png" type="Texture" id=8]
-[ext_resource path="res://UI/icons/build_seeder.png" type="Texture" id=9]
-[ext_resource path="res://UI/icons/build_grower.png" type="Texture" id=10]
-[ext_resource path="res://UI/icons/build_shooter.png" type="Texture" id=11]
-[ext_resource path="res://UI/icons/build_lure.png" type="Texture" id=12]
-[ext_resource path="res://UI/icons/build_rocket.png" type="Texture" id=13]
-[ext_resource path="res://UI/theme.tres" type="Theme" id=14]
+[ext_resource path="res://UI/theme.tres" type="Theme" id=7]
+[ext_resource path="res://UI/BuildBar/building_buttongroup.tres" type="ButtonGroup" id=8]
+[ext_resource path="res://UI/icons/build_menu.png" type="Texture" id=9]
+[ext_resource path="res://UI/icons/build_seeder.png" type="Texture" id=10]
+[ext_resource path="res://UI/icons/build_grower.png" type="Texture" id=11]
+[ext_resource path="res://UI/icons/build_shooter.png" type="Texture" id=12]
+[ext_resource path="res://UI/icons/build_lure.png" type="Texture" id=13]
+[ext_resource path="res://UI/icons/build_rocket.png" type="Texture" id=14]
 [ext_resource path="res://UI/PauseMenu.gd" type="Script" id=15]
 
 [node name="HUDLayer" type="CanvasLayer"]
@@ -108,17 +108,18 @@ margin_top = -60.0
 margin_right = 212.0
 margin_bottom = -28.0
 rect_min_size = Vector2( 0, 32 )
+theme = ExtResource( 7 )
 custom_constants/separation = 8
 
 [node name="BuildButton" type="Button" parent="BuildBar"]
 margin_right = 128.0
-margin_bottom = 32.0
+margin_bottom = 33.0
 rect_min_size = Vector2( 128, 0 )
 custom_fonts/font = ExtResource( 3 )
 toggle_mode = true
-group = ExtResource( 7 )
+group = ExtResource( 8 )
 text = "Build"
-icon = ExtResource( 8 )
+icon = ExtResource( 9 )
 
 [node name="SeederButton" type="Button" parent="BuildBar"]
 visible = false
@@ -127,9 +128,9 @@ margin_bottom = 32.0
 rect_min_size = Vector2( 128, 0 )
 custom_fonts/font = ExtResource( 3 )
 toggle_mode = true
-group = ExtResource( 7 )
+group = ExtResource( 8 )
 text = "Seeder"
-icon = ExtResource( 9 )
+icon = ExtResource( 10 )
 
 [node name="GrowerButton" type="Button" parent="BuildBar"]
 visible = false
@@ -139,9 +140,9 @@ margin_bottom = 32.0
 rect_min_size = Vector2( 128, 0 )
 custom_fonts/font = ExtResource( 3 )
 toggle_mode = true
-group = ExtResource( 7 )
+group = ExtResource( 8 )
 text = "Grower"
-icon = ExtResource( 10 )
+icon = ExtResource( 11 )
 
 [node name="ShooterButton" type="Button" parent="BuildBar"]
 visible = false
@@ -151,9 +152,9 @@ margin_bottom = 32.0
 rect_min_size = Vector2( 128, 0 )
 custom_fonts/font = ExtResource( 3 )
 toggle_mode = true
-group = ExtResource( 7 )
+group = ExtResource( 8 )
 text = "Shooter"
-icon = ExtResource( 11 )
+icon = ExtResource( 12 )
 
 [node name="LureButton" type="Button" parent="BuildBar"]
 visible = false
@@ -163,7 +164,7 @@ margin_bottom = 32.0
 rect_min_size = Vector2( 128, 0 )
 custom_fonts/font = ExtResource( 3 )
 text = "Lure"
-icon = ExtResource( 12 )
+icon = ExtResource( 13 )
 
 [node name="RocketButton" type="Button" parent="BuildBar"]
 visible = false
@@ -173,7 +174,7 @@ margin_bottom = 32.0
 rect_min_size = Vector2( 128, 0 )
 custom_fonts/font = ExtResource( 3 )
 text = "Rocket"
-icon = ExtResource( 13 )
+icon = ExtResource( 14 )
 
 [node name="CancelBuildButton" type="Button" parent="BuildBar"]
 visible = false
@@ -195,7 +196,7 @@ margin_top = -388.0
 margin_right = -352.0
 margin_bottom = -228.0
 rect_min_size = Vector2( 320, 160 )
-theme = ExtResource( 14 )
+theme = ExtResource( 7 )
 popup_exclusive = true
 script = ExtResource( 15 )
 

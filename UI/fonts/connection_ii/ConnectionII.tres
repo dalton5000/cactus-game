@@ -1,6 +1,6 @@
 [gd_resource type="DynamicFont" load_steps=2 format=2]
 
-[sub_resource type="DynamicFontData" id=1]
+[sub_resource type="DynamicFontData" id=3]
 
 font_path = "res://UI/fonts/connection_ii/ConnectionII.otf"
 
@@ -9,5 +9,5 @@ font_path = "res://UI/fonts/connection_ii/ConnectionII.otf"
 size = 20
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
-font_data = SubResource( 1 )
+font_data = SubResource( 3 )
 
