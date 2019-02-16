@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://Tilesets/Terrain.tres" type="TileSet" id=2]
@@ -14,6 +14,8 @@
 [ext_resource path="res://addons/carmel4a97.RTS_Camera2D/RTS-Camera2D.gd" type="Script" id=12]
 [ext_resource path="res://addons/carmel4a97.RTS_Camera2D/node_icon.png" type="Texture" id=13]
 [ext_resource path="res://UI/theme.tres" type="Theme" id=14]
+[ext_resource path="res://Sound/beach.ogg" type="AudioStream" id=15]
+[ext_resource path="res://Sound/wind.ogg" type="AudioStream" id=16]
 
 [sub_resource type="TileSet" id=1]
 
@@ -159,6 +161,7 @@ pause_mode = 2
 script = ExtResource( 1 )
 
 [node name="Level" type="Node2D" parent="."]
+editor/display_folded = true
 
 [node name="Navigation" type="Navigation2D" parent="Level"]
 
@@ -214,6 +217,7 @@ format = 1
 
 [node name="Units" type="YSort" parent="."]
 pause_mode = 1
+editor/display_folded = true
 z_index = 1
 
 [node name="Enemies" type="YSort" parent="Units"]
@@ -271,6 +275,7 @@ edge = true
 wheel = false
 
 [node name="GameOverLayer" type="CanvasLayer" parent="."]
+editor/display_folded = true
 
 [node name="Control" type="Control" parent="GameOverLayer"]
 pause_mode = 2
@@ -316,6 +321,62 @@ margin_right = 221.0
 margin_bottom = 242.0
 size_flags_horizontal = 4
 text = "Try Again!"
+
+[node name="Sounds" type="Node2D" parent="."]
+
+[node name="Audio_Beach" type="AudioStreamPlayer2D" parent="Sounds"]
+position = Vector2( -923.892, -39.0278 )
+stream = ExtResource( 15 )
+volume_db = -10.0
+autoplay = true
+max_distance = 500.0
+attenuation = 2.0
+bus = "Ambience"
+
+[node name="Audio_Beach2" type="AudioStreamPlayer2D" parent="Sounds"]
+position = Vector2( -351.611, -345.871 )
+stream = ExtResource( 15 )
+volume_db = -10.0
+autoplay = true
+max_distance = 500.0
+attenuation = 2.0
+bus = "Ambience"
+
+[node name="Audio_Beach3" type="AudioStreamPlayer2D" parent="Sounds"]
+position = Vector2( -225.096, 352.001 )
+stream = ExtResource( 15 )
+volume_db = -10.0
+autoplay = true
+max_distance = 500.0
+attenuation = 2.0
+bus = "Ambience"
+
+[node name="Audio_Beach4" type="AudioStreamPlayer2D" parent="Sounds"]
+position = Vector2( 334.017, 349.28 )
+stream = ExtResource( 15 )
+volume_db = -10.0
+autoplay = true
+max_distance = 500.0
+attenuation = 2.0
+bus = "Ambience"
+
+[node name="Audio_Beach5" type="AudioStreamPlayer2D" parent="Sounds"]
+position = Vector2( 757.094, -26.1831 )
+stream = ExtResource( 15 )
+volume_db = -10.0
+autoplay = true
+max_distance = 500.0
+attenuation = 2.0
+bus = "Ambience"
+
+[node name="Audio_Wind" type="AudioStreamPlayer2D" parent="Sounds"]
+position = Vector2( -86.3382, -98.283 )
+stream = ExtResource( 16 )
+volume_db = -10.0
+autoplay = true
+max_distance = 500.0
+attenuation = 2.0
+bus = "Ambience"
 
 [connection signal="build_item_selected" from="HUDLayer" to="." method="_on_HUDLayer_build_item_selected"]
 [connection signal="destroy_selected" from="HUDLayer" to="." method="_on_HUDLayer_destroy_selected"]
