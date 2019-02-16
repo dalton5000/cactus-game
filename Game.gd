@@ -14,10 +14,9 @@ var inspect_cursor = load("res://UI/cursors/default.png")
 var build_cursor = load("res://UI/cursors/place.png")
 var attack_cursor = load("res://UI/cursors/attack.png")
 
-
 enum MARK_TYPES { VALID, INVALID}
 
-enum CURSOR_MODES { INSPECT, BUILD }
+enum CURSOR_MODES { INSPECT, BUILD, DESTROY }
 var cursor_mode : int = -1
 
 enum BUILD_MODES { MASTER, MINER, FARMER, SHOOTER, LURE, ROCKET, DELETE }
@@ -57,7 +56,7 @@ func init_fog_map():
 
 func refresh_fog_map():
 	# Reset the fog map
-	for current_cell in terrain_map.get_used_cells_by_id(2):
+	for current_cell in terrain_map.get_used_cells():
 		fog_map.set_cell(current_cell[0], current_cell[1], 2);
 	# And un-hide stuff around each cactus
 	for current_cactus in cactus_map.get_used_cells():
@@ -82,6 +81,11 @@ func _physics_process(delta):
 				mark_cell(mouse_pos, 0)
 			else:
 				mark_cell(mouse_pos, 1)
+		CURSOR_MODES.DESTROY:
+			if can_delete(cell_pos):
+				mark_cell(mouse_pos, 0)
+			else:
+				mark_cell(mouse_pos, 1)
 
 func mark_cell(cell_pos : Vector2, type : int) ->  void:
 	marker_map.clear()	
@@ -97,6 +101,10 @@ func change_cursormode(new_mode):
 				cactus_map.hide()
 			CURSOR_MODES.BUILD:
 				Input.set_custom_mouse_cursor(build_cursor,0,Vector2(10,25))
+				marker_map.clear()
+				cactus_map.show()
+			CURSOR_MODES.DESTROY:
+				Input.set_custom_mouse_cursor(attack_cursor, 0, Vector2(0, 0))
 				marker_map.clear()
 				cactus_map.show()
 		cursor_mode = new_mode
@@ -172,6 +180,18 @@ func can_build(cactus_id : int, pos : Vector2) -> bool:
 	# Yay! We can build!
 	return true
 
+func can_delete(pos : Vector2) -> bool:
+	# Is it on an area we can see?
+	if fog_map.get_cell(pos[0], pos[1]) != 3:
+		return false
+	# Is there actually something there?
+	if cactus_map.get_cell(pos[0], pos[1]) == -1:
+		return false
+	# Is it the king? (which can't be deleted)
+	if cactus_map.get_cell(pos[0], pos[1]) == 0:
+		return false
+	return true
+
 func place_cactus(cell_pos : Vector2, cactus_id : int):
 	if cell_is_occupied(cell_pos):
 		pass
@@ -203,16 +223,37 @@ func place_cactus(cell_pos : Vector2, cactus_id : int):
 			$Units/Cacti.add_child(new_cactus)
 			refresh_fog_map()
 
+func delete_cactus(cell_pos : Vector2):
+	var target_cell = cactus_map.world_to_map(cell_pos)
+	# Is there actually a cactus here?
+	var current_tile = cactus_map.get_cell(target_cell.x, target_cell.y)
+	if current_tile == -1: return # Nothing here!
+	if current_tile == 0: return # You can't destroy the king!
+	# Remove the tile instance
+	cactus_map.set_cellv(target_cell, -1)
+	# Remove the object instance
+	var target_pos = $Level/Cacti.map_to_world(target_cell) + Vector2(0,8)
+	for current_cactus in get_tree().get_nodes_in_group("cactus"):
+		if current_cactus.global_position == target_pos:
+			current_cactus.queue_free()
+			break
+	refresh_fog_map()
+
 func _unhandled_input(event):
 	match cursor_mode:
 		CURSOR_MODES.BUILD:
 			if event is InputEventMouseButton:
 				if event.button_index == BUTTON_RIGHT and event.pressed:
 					change_cursormode(CURSOR_MODES.INSPECT)
-					#fog_map.hide()
 				elif event.button_index == BUTTON_LEFT and event.pressed:
-					place_cactus($Level.get_global_mouse_position(), build_mode)					
-				
+					place_cactus($Level.get_global_mouse_position(), build_mode)
+		CURSOR_MODES.DESTROY:
+			if event is InputEventMouseButton:
+				if event.button_index == BUTTON_RIGHT and event.pressed:
+					change_cursormode(CURSOR_MODES.INSPECT)
+				elif event.button_index == BUTTON_LEFT and event.pressed:
+					delete_cactus($Level.get_global_mouse_position())
+
 func _on_HUDLayer_build_item_selected(which_item):
 	match which_item:
 		"miner": build_mode = BUILD_MODES.MINER
@@ -222,7 +263,9 @@ func _on_HUDLayer_build_item_selected(which_item):
 		"rocket": build_mode = BUILD_MODES.ROCKET
 	change_cursormode(CURSOR_MODES.BUILD)
 	refresh_fog_map()
-	#fog_map.show()
+	
+func _on_HUDLayer_destroy_selected():
+	change_cursormode(CURSOR_MODES.DESTROY)
 
 func _on_Rocket_enemy_reached_rocket():
 	Gamestate.spines_in_rocket -= spines_stolen_per_enemy

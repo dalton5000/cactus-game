@@ -6,6 +6,7 @@ onready var cactus_label = $ResourceBar/LabelCacti
 onready var poacher_label = $ResourceBar/LabelPoachers
 
 onready var button_build = $BuildBar/BuildButton
+onready var button_destroy = $BuildBar/DestroyButton
 onready var button_build_farmer = $BuildBar/FarmerButton
 onready var button_build_miner = $BuildBar/MinerButton
 onready var button_build_shooter = $BuildBar/ShooterButton
@@ -14,6 +15,7 @@ onready var button_build_rocket = $BuildBar/RocketButton
 onready var button_build_cancel = $BuildBar/CancelBuildButton
 
 signal build_item_selected
+signal destroy_selected
 
 func update_spine_count(amount : int):
 	spine_label.text = "x" + str(amount)
@@ -42,12 +44,17 @@ func _on_LureButton_button_up():
 func _on_RocketButton_button_up():
 	emit_signal("build_item_selected", "rocket")
 
+func _on_DestroyButton_button_up():
+	emit_signal("destroy_selected")
+
 func _on_CancelBuildButton_button_up():
 	button_build.show()
+	button_destroy.show()
 	for current in [button_build_miner, button_build_farmer, button_build_shooter, button_build_lure, button_build_rocket, button_build_cancel]:
 		current.hide()
 
 func _on_BuildButton_button_up():
 	button_build.hide()
+	button_destroy.hide()
 	for current in [button_build_miner, button_build_farmer, button_build_shooter, button_build_lure, button_build_rocket, button_build_cancel]:
 		current.show()

@@ -328,7 +328,7 @@ z_index = 1
 [node name="Cacti" type="YSort" parent="Units"]
 
 [node name="Master" parent="Units/Cacti" instance=ExtResource( 10 )]
-position = Vector2( 333.053, -22.737 )
+position = Vector2( 335.193, -17.267 )
 
 [node name="Sprite" parent="Units/Cacti/Master" index="0"]
 frame = 2
@@ -356,5 +356,6 @@ edge = true
 wheel = false
 
 [connection signal="build_item_selected" from="HUDLayer" to="." method="_on_HUDLayer_build_item_selected"]
+[connection signal="destroy_selected" from="HUDLayer" to="." method="_on_HUDLayer_destroy_selected"]
 
 [editable path="Units/Cacti/Master"]
