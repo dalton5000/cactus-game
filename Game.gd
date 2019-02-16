@@ -40,6 +40,7 @@ func _ready():
 	change_cursormode(CURSOR_MODES.INSPECT)
 	hud.update_spine_count(Gamestate.spines)
 	hud.update_coin_count(Gamestate.coins)
+	update_population_display()
 	init_fog_map()
 	resources_map.create_stuff(resources)
 
@@ -152,8 +153,16 @@ func coins_consumed(amount):
 	Gamestate.coins -= amount
 	hud.update_coin_count(Gamestate.coins)
 
+func update_population_display():
+	var current_population = get_tree().get_nodes_in_group("cactus").size()
+	hud.update_cactus_count(current_population, Gamestate.population_limit)
+
 func can_build(cactus_id : int, pos : Vector2) -> bool:
-	# First, make sure we can afford the unit
+	# Make sure we're not at the population limit
+	var current_population = get_tree().get_nodes_in_group("cactus").size()
+	if current_population >= Gamestate.population_limit:
+		return false
+	# Make sure we can afford the unit
 	var cost
 	match cactus_id:
 		BUILD_MODES.MINER:
@@ -222,6 +231,8 @@ func place_cactus(cell_pos : Vector2, cactus_id : int):
 			new_cactus.global_position = $Level/Cacti.map_to_world(target_cell) + Vector2(0,8)
 			$Units/Cacti.add_child(new_cactus)
 			refresh_fog_map()
+			yield(get_tree().create_timer(0.1), "timeout")
+			update_population_display()
 
 func delete_cactus(cell_pos : Vector2):
 	var target_cell = cactus_map.world_to_map(cell_pos)
@@ -238,6 +249,8 @@ func delete_cactus(cell_pos : Vector2):
 			current_cactus.queue_free()
 			break
 	refresh_fog_map()
+	yield(get_tree().create_timer(0.1), "timeout")
+	update_population_display()
 
 func _unhandled_input(event):
 	match cursor_mode:

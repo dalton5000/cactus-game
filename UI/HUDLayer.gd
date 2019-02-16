@@ -23,8 +23,8 @@ func update_spine_count(amount : int):
 func update_coin_count(amount : int):
 	coin_label.text = "x" + str(amount)
 
-func update_cactus_count(amount : int):
-	cactus_label.text = "x" + str(amount)
+func update_cactus_count(amount : int, limit : int):
+	cactus_label.text = "x" + str(amount) + "/" + str(limit)
 
 func update_poacher_count(amount : int):
 	poacher_label.text = "x" + str(amount)
