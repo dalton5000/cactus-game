@@ -1,15 +1,15 @@
 [gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://UI/HUDLayer.gd" type="Script" id=1]
-[ext_resource path="res://UI/icons/spines.png" type="Texture" id=2]
-[ext_resource path="res://UI/fonts/connection_ii/ConnectionII.tres" type="DynamicFont" id=3]
-[ext_resource path="res://UI/icons/coins.png" type="Texture" id=4]
-[ext_resource path="res://UI/icons/cacti.png" type="Texture" id=5]
-[ext_resource path="res://UI/icons/poachers.png" type="Texture" id=6]
-[ext_resource path="res://UI/BuildBar/building_buttongroup.tres" type="ButtonGroup" id=7]
-[ext_resource path="res://UI/icons/build_menu.png" type="Texture" id=8]
-[ext_resource path="res://UI/icons/build_destroy.png" type="Texture" id=9]
-[ext_resource path="res://UI/theme.tres" type="Theme" id=10]
+[ext_resource path="res://UI/theme.tres" type="Theme" id=2]
+[ext_resource path="res://UI/icons/spines.png" type="Texture" id=3]
+[ext_resource path="res://UI/fonts/connection_ii/ConnectionII.tres" type="DynamicFont" id=4]
+[ext_resource path="res://UI/icons/coins.png" type="Texture" id=5]
+[ext_resource path="res://UI/icons/cacti.png" type="Texture" id=6]
+[ext_resource path="res://UI/icons/poachers.png" type="Texture" id=7]
+[ext_resource path="res://UI/BuildBar/building_buttongroup.tres" type="ButtonGroup" id=8]
+[ext_resource path="res://UI/icons/build_menu.png" type="Texture" id=9]
+[ext_resource path="res://UI/icons/build_destroy.png" type="Texture" id=10]
 [ext_resource path="res://UI/PauseMenu.gd" type="Script" id=11]
 
 [sub_resource type="DynamicFontData" id=1]
@@ -33,12 +33,13 @@ margin_left = 10.0
 margin_top = 10.0
 margin_right = -10.0
 margin_bottom = 32.0
+theme = ExtResource( 2 )
 
 [node name="TextureSpines" type="TextureRect" parent="ResourceBar"]
 margin_right = 32.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 32, 32 )
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 expand = true
 stretch_mode = 5
 
@@ -47,7 +48,7 @@ margin_left = 36.0
 margin_right = 100.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 64, 32 )
-custom_fonts/font = ExtResource( 3 )
+custom_fonts/font = ExtResource( 4 )
 text = "x0"
 valign = 1
 
@@ -56,7 +57,7 @@ margin_left = 104.0
 margin_right = 136.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 32, 32 )
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 expand = true
 stretch_mode = 5
 
@@ -65,7 +66,7 @@ margin_left = 140.0
 margin_right = 204.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 64, 32 )
-custom_fonts/font = ExtResource( 3 )
+custom_fonts/font = ExtResource( 4 )
 text = "x0"
 valign = 1
 
@@ -74,7 +75,7 @@ margin_left = 208.0
 margin_right = 240.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 32, 32 )
-texture = ExtResource( 5 )
+texture = ExtResource( 6 )
 expand = true
 stretch_mode = 5
 
@@ -83,7 +84,7 @@ margin_left = 244.0
 margin_right = 308.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 64, 32 )
-custom_fonts/font = ExtResource( 3 )
+custom_fonts/font = ExtResource( 4 )
 text = "x0"
 valign = 1
 
@@ -92,7 +93,7 @@ margin_left = 312.0
 margin_right = 344.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 32, 32 )
-texture = ExtResource( 6 )
+texture = ExtResource( 7 )
 expand = true
 stretch_mode = 5
 
@@ -101,7 +102,7 @@ margin_left = 348.0
 margin_right = 412.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 64, 32 )
-custom_fonts/font = ExtResource( 3 )
+custom_fonts/font = ExtResource( 4 )
 text = "x0"
 valign = 1
 
@@ -117,7 +118,7 @@ margin_left = 1004.0
 margin_top = 5.0
 margin_right = 1004.0
 margin_bottom = 27.0
-custom_fonts/font = ExtResource( 3 )
+custom_fonts/font = ExtResource( 4 )
 align = 2
 
 [node name="ActionBar" type="HBoxContainer" parent="."]
@@ -128,25 +129,26 @@ margin_left = 10.0
 margin_top = -40.0
 margin_bottom = -10.0
 rect_min_size = Vector2( 0, 32 )
+theme = ExtResource( 2 )
 
 [node name="BuildButton" type="Button" parent="ActionBar"]
 margin_right = 128.0
-margin_bottom = 32.0
+margin_bottom = 36.0
 rect_min_size = Vector2( 128, 0 )
-custom_fonts/font = ExtResource( 3 )
+custom_fonts/font = ExtResource( 4 )
 toggle_mode = true
-group = ExtResource( 7 )
+group = ExtResource( 8 )
 text = "Build"
-icon = ExtResource( 8 )
+icon = ExtResource( 9 )
 
 [node name="ResearchButton" type="Button" parent="ActionBar"]
 margin_left = 132.0
 margin_right = 260.0
-margin_bottom = 32.0
+margin_bottom = 36.0
 rect_min_size = Vector2( 128, 0 )
-custom_fonts/font = ExtResource( 3 )
+custom_fonts/font = ExtResource( 4 )
 toggle_mode = true
-group = ExtResource( 7 )
+group = ExtResource( 8 )
 text = "Research"
 
 [node name="StopResearchButton" type="Button" parent="ActionBar"]
@@ -155,21 +157,21 @@ margin_left = 264.0
 margin_right = 424.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 128, 0 )
-custom_fonts/font = ExtResource( 3 )
+custom_fonts/font = ExtResource( 4 )
 toggle_mode = true
-group = ExtResource( 7 )
+group = ExtResource( 8 )
 text = "Stop Research"
 
 [node name="DestroyButton" type="Button" parent="ActionBar"]
 margin_left = 264.0
 margin_right = 392.0
-margin_bottom = 32.0
+margin_bottom = 36.0
 rect_min_size = Vector2( 128, 0 )
-custom_fonts/font = ExtResource( 3 )
+custom_fonts/font = ExtResource( 4 )
 toggle_mode = true
-group = ExtResource( 7 )
+group = ExtResource( 8 )
 text = "Destroy"
-icon = ExtResource( 9 )
+icon = ExtResource( 10 )
 
 [node name="BuildBar" type="HBoxContainer" parent="."]
 visible = false
@@ -180,6 +182,7 @@ margin_left = 10.0
 margin_top = -40.0
 margin_bottom = -10.0
 rect_min_size = Vector2( 0, 32 )
+theme = ExtResource( 2 )
 custom_constants/separation = 8
 
 [node name="CancelBuildButton" type="Button" parent="BuildBar"]
@@ -187,7 +190,7 @@ margin_left = 680.0
 margin_right = 808.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 128, 0 )
-custom_fonts/font = ExtResource( 3 )
+custom_fonts/font = ExtResource( 4 )
 text = "Cancel"
 
 [node name="ResearchBar" type="HBoxContainer" parent="."]
@@ -199,12 +202,13 @@ margin_left = 10.0
 margin_top = -40.0
 margin_bottom = -10.0
 rect_min_size = Vector2( 0, 32 )
+theme = ExtResource( 2 )
 
 [node name="CancelResearchButton" type="Button" parent="ResearchBar"]
 margin_right = 128.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 128, 0 )
-custom_fonts/font = ExtResource( 3 )
+custom_fonts/font = ExtResource( 4 )
 text = "Cancel"
 
 [node name="PauseMenu" type="PopupPanel" parent="."]
@@ -218,7 +222,7 @@ margin_top = -388.0
 margin_right = -352.0
 margin_bottom = -228.0
 rect_min_size = Vector2( 320, 160 )
-theme = ExtResource( 10 )
+theme = ExtResource( 2 )
 popup_exclusive = true
 script = ExtResource( 11 )
 
@@ -237,6 +241,7 @@ valign = 1
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = ExtResource( 2 )
 
 [node name="VBox" type="VBoxContainer" parent="MessageCenter"]
 margin_left = 253.0
@@ -255,7 +260,7 @@ align = 1
 margin_top = 92.0
 margin_right = 518.0
 margin_bottom = 139.0
-custom_fonts/font = ExtResource( 3 )
+custom_fonts/font = ExtResource( 4 )
 text = "The rocket ship leaps into the sky,
 carrying cactuskind to new worlds yet unknown..."
 valign = 1
