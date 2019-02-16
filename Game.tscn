@@ -362,5 +362,7 @@ wheel = false
 
 [connection signal="build_item_selected" from="HUDLayer" to="." method="_on_HUDLayer_build_item_selected"]
 [connection signal="destroy_selected" from="HUDLayer" to="." method="_on_HUDLayer_destroy_selected"]
+[connection signal="research_cancelled" from="HUDLayer" to="." method="_on_HUDLayer_research_cancelled"]
+[connection signal="research_item_selected" from="HUDLayer" to="." method="_on_HUDLayer_research_item_selected"]
 
 [editable path="Units/Cacti/Master"]

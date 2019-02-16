@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://UI/HUDLayer.gd" type="Script" id=1]
 [ext_resource path="res://UI/icons/spines.png" type="Texture" id=2]
@@ -9,13 +9,8 @@
 [ext_resource path="res://UI/BuildBar/building_buttongroup.tres" type="ButtonGroup" id=7]
 [ext_resource path="res://UI/icons/build_menu.png" type="Texture" id=8]
 [ext_resource path="res://UI/icons/build_destroy.png" type="Texture" id=9]
-[ext_resource path="res://UI/icons/build_farmer.png" type="Texture" id=10]
-[ext_resource path="res://UI/icons/build_miner.png" type="Texture" id=11]
-[ext_resource path="res://UI/icons/build_shooter.png" type="Texture" id=12]
-[ext_resource path="res://UI/icons/build_lure.png" type="Texture" id=13]
-[ext_resource path="res://UI/icons/build_rocket.png" type="Texture" id=14]
-[ext_resource path="res://UI/theme.tres" type="Theme" id=15]
-[ext_resource path="res://UI/PauseMenu.gd" type="Script" id=16]
+[ext_resource path="res://UI/theme.tres" type="Theme" id=10]
+[ext_resource path="res://UI/PauseMenu.gd" type="Script" id=11]
 
 [sub_resource type="DynamicFontData" id=1]
 
@@ -33,13 +28,11 @@ pause_mode = 2
 script = ExtResource( 1 )
 
 [node name="ResourceBar" type="HBoxContainer" parent="."]
-editor/display_folded = true
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -206.0
-margin_top = 8.0
-margin_right = 206.0
-margin_bottom = 40.0
+anchor_right = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = 32.0
 
 [node name="TextureSpines" type="TextureRect" parent="ResourceBar"]
 margin_right = 32.0
@@ -112,20 +105,31 @@ custom_fonts/font = ExtResource( 3 )
 text = "x0"
 valign = 1
 
-[node name="BuildBar" type="HBoxContainer" parent="."]
-editor/display_folded = true
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -460.0
-margin_top = -60.0
-margin_right = 212.0
-margin_bottom = -28.0
-rect_min_size = Vector2( 0, 32 )
-custom_constants/separation = 8
+[node name="Container" type="Container" parent="ResourceBar"]
+margin_left = 416.0
+margin_right = 1000.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="BuildButton" type="Button" parent="BuildBar"]
+[node name="Label_ResearchStatus" type="Label" parent="ResourceBar"]
+margin_left = 1004.0
+margin_top = 5.0
+margin_right = 1004.0
+margin_bottom = 27.0
+custom_fonts/font = ExtResource( 3 )
+align = 2
+
+[node name="ActionBar" type="HBoxContainer" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = -40.0
+margin_bottom = -10.0
+rect_min_size = Vector2( 0, 32 )
+
+[node name="BuildButton" type="Button" parent="ActionBar"]
 margin_right = 128.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 128, 0 )
@@ -135,9 +139,30 @@ group = ExtResource( 7 )
 text = "Build"
 icon = ExtResource( 8 )
 
-[node name="DestroyButton" type="Button" parent="BuildBar"]
-margin_left = 136.0
-margin_right = 264.0
+[node name="ResearchButton" type="Button" parent="ActionBar"]
+margin_left = 132.0
+margin_right = 260.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 128, 0 )
+custom_fonts/font = ExtResource( 3 )
+toggle_mode = true
+group = ExtResource( 7 )
+text = "Research"
+
+[node name="StopResearchButton" type="Button" parent="ActionBar"]
+visible = false
+margin_left = 264.0
+margin_right = 424.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 128, 0 )
+custom_fonts/font = ExtResource( 3 )
+toggle_mode = true
+group = ExtResource( 7 )
+text = "Stop Research"
+
+[node name="DestroyButton" type="Button" parent="ActionBar"]
+margin_left = 264.0
+margin_right = 392.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 128, 0 )
 custom_fonts/font = ExtResource( 3 )
@@ -146,66 +171,37 @@ group = ExtResource( 7 )
 text = "Destroy"
 icon = ExtResource( 9 )
 
-[node name="FarmerButton" type="Button" parent="BuildBar"]
+[node name="BuildBar" type="HBoxContainer" parent="."]
 visible = false
-margin_left = 136.0
-margin_right = 264.0
-margin_bottom = 32.0
-rect_min_size = Vector2( 128, 0 )
-custom_fonts/font = ExtResource( 3 )
-toggle_mode = true
-group = ExtResource( 7 )
-text = "Farmer"
-icon = ExtResource( 10 )
-
-[node name="MinerButton" type="Button" parent="BuildBar"]
-visible = false
-margin_left = 136.0
-margin_right = 264.0
-margin_bottom = 32.0
-rect_min_size = Vector2( 128, 0 )
-custom_fonts/font = ExtResource( 3 )
-toggle_mode = true
-group = ExtResource( 7 )
-text = "Miner"
-icon = ExtResource( 11 )
-
-[node name="ShooterButton" type="Button" parent="BuildBar"]
-visible = false
-margin_left = 136.0
-margin_right = 264.0
-margin_bottom = 32.0
-rect_min_size = Vector2( 128, 0 )
-custom_fonts/font = ExtResource( 3 )
-toggle_mode = true
-group = ExtResource( 7 )
-text = "Shooter"
-icon = ExtResource( 12 )
-
-[node name="LureButton" type="Button" parent="BuildBar"]
-visible = false
-margin_left = 136.0
-margin_right = 264.0
-margin_bottom = 32.0
-rect_min_size = Vector2( 128, 0 )
-custom_fonts/font = ExtResource( 3 )
-text = "Lure"
-icon = ExtResource( 13 )
-
-[node name="RocketButton" type="Button" parent="BuildBar"]
-visible = false
-margin_left = 136.0
-margin_right = 264.0
-margin_bottom = 32.0
-rect_min_size = Vector2( 128, 0 )
-custom_fonts/font = ExtResource( 3 )
-text = "Rocket"
-icon = ExtResource( 14 )
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = -40.0
+margin_bottom = -10.0
+rect_min_size = Vector2( 0, 32 )
+custom_constants/separation = 8
 
 [node name="CancelBuildButton" type="Button" parent="BuildBar"]
+margin_left = 680.0
+margin_right = 808.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 128, 0 )
+custom_fonts/font = ExtResource( 3 )
+text = "Cancel"
+
+[node name="ResearchBar" type="HBoxContainer" parent="."]
 visible = false
-margin_left = 272.0
-margin_right = 400.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = -40.0
+margin_bottom = -10.0
+rect_min_size = Vector2( 0, 32 )
+
+[node name="CancelResearchButton" type="Button" parent="ResearchBar"]
+margin_right = 128.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 128, 0 )
 custom_fonts/font = ExtResource( 3 )
@@ -222,9 +218,9 @@ margin_top = -388.0
 margin_right = -352.0
 margin_bottom = -228.0
 rect_min_size = Vector2( 320, 160 )
-theme = ExtResource( 15 )
+theme = ExtResource( 10 )
 popup_exclusive = true
-script = ExtResource( 16 )
+script = ExtResource( 11 )
 
 [node name="Label" type="Label" parent="PauseMenu"]
 anchor_right = 1.0
@@ -264,11 +260,9 @@ text = "The rocket ship leaps into the sky,
 carrying cactuskind to new worlds yet unknown..."
 valign = 1
 
-[connection signal="button_up" from="BuildBar/BuildButton" to="." method="_on_BuildButton_button_up"]
-[connection signal="button_up" from="BuildBar/DestroyButton" to="." method="_on_DestroyButton_button_up"]
-[connection signal="button_up" from="BuildBar/FarmerButton" to="." method="_on_FarmerButton_button_up"]
-[connection signal="button_up" from="BuildBar/MinerButton" to="." method="_on_MinerButton_button_up"]
-[connection signal="button_up" from="BuildBar/ShooterButton" to="." method="_on_ShooterButon_button_up"]
-[connection signal="button_up" from="BuildBar/LureButton" to="." method="_on_LureButton_button_up"]
-[connection signal="button_up" from="BuildBar/RocketButton" to="." method="_on_RocketButton_button_up"]
+[connection signal="button_up" from="ActionBar/BuildButton" to="." method="_on_BuildButton_button_up"]
+[connection signal="button_up" from="ActionBar/ResearchButton" to="." method="_on_ResearchButton_button_up"]
+[connection signal="button_up" from="ActionBar/StopResearchButton" to="." method="_on_StopResearchButton_button_up"]
+[connection signal="button_up" from="ActionBar/DestroyButton" to="." method="_on_DestroyButton_button_up"]
 [connection signal="button_up" from="BuildBar/CancelBuildButton" to="." method="_on_CancelBuildButton_button_up"]
+[connection signal="button_up" from="ResearchBar/CancelResearchButton" to="." method="_on_CancelResearchButton_button_up"]

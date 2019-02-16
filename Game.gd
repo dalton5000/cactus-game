@@ -34,16 +34,6 @@ onready var master_cactus : = $Units/Cacti/Master
 onready var rocket : = $Units/Cacti/Rocket
 onready var resources : = $Units/Resources
 
-func _ready():
-	print(Vector2(1,1).normalized())
-	yield(get_tree(), "idle_frame")
-	change_cursormode(CURSOR_MODES.INSPECT)
-	hud.update_spine_count(Gamestate.spines)
-	hud.update_coin_count(Gamestate.coins)
-	update_population_display()
-	init_fog_map()
-	resources_map.create_stuff(resources)
-
 func init_fog_map():
 	for current_cell in terrain_map.get_used_cells():
 		fog_map.set_cell(current_cell[0], current_cell[1], 2);
@@ -258,6 +248,7 @@ func _unhandled_input(event):
 			if event is InputEventMouseButton:
 				if event.button_index == BUTTON_RIGHT and event.pressed:
 					change_cursormode(CURSOR_MODES.INSPECT)
+					hud.release_build_buttons()
 				elif event.button_index == BUTTON_LEFT and event.pressed:
 					place_cactus($Level.get_global_mouse_position(), build_mode)
 		CURSOR_MODES.DESTROY:
@@ -292,3 +283,33 @@ func rocket_victory():
 	yield(get_tree().create_timer(5), "timeout")
 	get_tree().paused = false
 	get_tree().reload_current_scene()
+
+func _on_HUDLayer_research_item_selected(which):
+	Gamestate.start_research(which)
+
+func _on_HUDLayer_research_cancelled():
+	Gamestate.cancel_research()
+	hud.update_research_status("")
+
+func _on_research_complete():
+	hud.update_research_status("")
+	hud.refresh_build_bar()
+	hud.refresh_research_bar()
+	hud.hide_stop_research_button()
+	update_population_display()
+
+func _process(delta):
+	if Gamestate.currently_researching != null:
+		var name = CactusData.research[Gamestate.currently_researching]["name"]
+		var progress = round((float(Gamestate.research_progress) / float(Gamestate.research_target)) * 100)
+		hud.update_research_status("Researching %s... %d%%" % [name, progress])
+
+func _ready():
+	yield(get_tree(), "idle_frame")
+	change_cursormode(CURSOR_MODES.INSPECT)
+	hud.update_spine_count(Gamestate.spines)
+	hud.update_coin_count(Gamestate.coins)
+	update_population_display()
+	init_fog_map()
+	resources_map.create_stuff(resources)
+	Gamestate.connect("research_complete", self, "_on_research_complete")

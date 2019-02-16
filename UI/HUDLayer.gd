@@ -1,21 +1,23 @@
 extends CanvasLayer
 
+const obj_research_button = preload("res://UI/ResearchButton.tscn")
+const obj_build_button = preload("res://UI/BuildButton.tscn")
+
 onready var resource_bar = $ResourceBar
+onready var action_bar = $ActionBar
 onready var build_bar = $BuildBar
+onready var research_bar = $ResearchBar
 
 onready var spine_label = $ResourceBar/LabelSpines
 onready var coin_label = $ResourceBar/LabelCoins
 onready var cactus_label = $ResourceBar/LabelCacti
 onready var poacher_label = $ResourceBar/LabelPoachers
+onready var research_label = $ResourceBar/Label_ResearchStatus
 
-onready var button_build = $BuildBar/BuildButton
-onready var button_destroy = $BuildBar/DestroyButton
-onready var button_build_farmer = $BuildBar/FarmerButton
-onready var button_build_miner = $BuildBar/MinerButton
-onready var button_build_shooter = $BuildBar/ShooterButton
-onready var button_build_lure = $BuildBar/LureButton
-onready var button_build_rocket = $BuildBar/RocketButton
-onready var button_build_cancel = $BuildBar/CancelBuildButton
+onready var button_research_menu = $ActionBar/ResearchButton
+onready var button_stop_research = $ActionBar/StopResearchButton
+onready var button_hide_build_menu = $BuildBar/CancelBuildButton
+onready var button_hide_research_menu = $ResearchBar/CancelResearchButton
 
 onready var message_center = $MessageCenter
 onready var label_bigmessage = $MessageCenter/VBox/Label_BigMessage
@@ -23,6 +25,43 @@ onready var label_littlemessage = $MessageCenter/VBox/Label_LittleMessage
 
 signal build_item_selected
 signal destroy_selected
+signal research_item_selected
+signal research_cancelled
+
+func init_build_bar():
+	for current_cactus in CactusData.cacti:
+		var build_button = obj_build_button.instance()
+		build_button.slug = current_cactus
+		build_button.text = CactusData.cacti[current_cactus]["name"]
+		build_button.icon = CactusData.cacti[current_cactus]["icon"]
+		build_button.connect("button_pressed", self, "build_button_pressed")
+		build_bar.add_child(build_button)
+	build_bar.move_child(button_hide_build_menu, build_bar.get_child_count()-1)
+
+func init_research_bar():
+	for current_research in CactusData.research:
+		var research_button = obj_research_button.instance()
+		research_button.slug = current_research
+		research_button.text = CactusData.research[current_research]["name"]
+		research_button.connect("button_pressed", self, "research_button_pressed")
+		research_bar.add_child(research_button)
+	research_bar.move_child(button_hide_research_menu, research_bar.get_child_count()-1)
+
+func refresh_build_bar():
+	for current_button in get_tree().get_nodes_in_group("build_button"):
+		var cactus = current_button.slug
+		if Gamestate.is_cactus_unlocked(cactus):
+			current_button.show()
+		else:
+			current_button.hide()
+
+func refresh_research_bar():
+	for current_button in get_tree().get_nodes_in_group("research_button"):
+		var research = current_button.slug
+		if Gamestate.is_research_available(research):
+			current_button.show()
+		else:
+			current_button.hide()
 
 func update_spine_count(amount : int):
 	spine_label.text = "x" + str(amount)
@@ -36,6 +75,9 @@ func update_cactus_count(amount : int, limit : int):
 func update_poacher_count(amount : int):
 	poacher_label.text = "x" + str(amount)
 
+func update_research_status(message):
+	research_label.text = message
+
 func hide_hud():
 	resource_bar.hide()
 	build_bar.hide()
@@ -45,32 +87,51 @@ func display_message(big_message, little_message):
 	label_littlemessage.text = little_message
 	message_center.show()
 
-func _on_FarmerButton_button_up():
-	emit_signal("build_item_selected", "farmer")
-
-func _on_MinerButton_button_up():
-	emit_signal("build_item_selected", "miner")
-
-func _on_ShooterButon_button_up():
-	emit_signal("build_item_selected", "shooter")
-
-func _on_LureButton_button_up():
-	emit_signal("build_item_selected", "lure")
-
-func _on_RocketButton_button_up():
-	emit_signal("build_item_selected", "rocket")
-
 func _on_DestroyButton_button_up():
 	emit_signal("destroy_selected")
 
 func _on_CancelBuildButton_button_up():
-	button_build.show()
-	button_destroy.show()
-	for current in [button_build_miner, button_build_farmer, button_build_shooter, button_build_lure, button_build_rocket, button_build_cancel]:
-		current.hide()
+	action_bar.show()
+	build_bar.hide()
+
+func build_button_pressed(slug):
+	emit_signal("build_item_selected", slug)
+
+func research_button_pressed(slug):
+	button_research_menu.hide()
+	button_stop_research.show()
+	action_bar.show()
+	research_bar.hide()
+	emit_signal("research_item_selected", slug)
 
 func _on_BuildButton_button_up():
-	button_build.hide()
-	button_destroy.hide()
-	for current in [button_build_miner, button_build_farmer, button_build_shooter, button_build_lure, button_build_rocket, button_build_cancel]:
-		current.show()
+	action_bar.hide()
+	build_bar.show()
+
+func _on_ResearchButton_button_up():
+	action_bar.hide()
+	research_bar.show()
+
+# As in, hide research menu
+func _on_CancelResearchButton_button_up():
+	action_bar.show()
+	research_bar.hide()
+
+func _on_StopResearchButton_button_up():
+	button_research_menu.hide()
+	button_stop_research.show()
+	emit_signal("research_cancelled")
+
+func hide_stop_research_button():
+	button_research_menu.show()
+	button_stop_research.hide()
+
+func release_build_buttons():
+	for current_button in get_tree().get_nodes_in_group("build_button"):
+		current_button.pressed = false
+
+func _ready():
+	init_build_bar()
+	init_research_bar()
+	refresh_build_bar()
+	refresh_research_bar()

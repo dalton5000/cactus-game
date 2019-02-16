@@ -8,27 +8,37 @@ var cacti : = {
 	"miner" : {
 		"name" : "Miner",
 		"cost" : 10,
-		"tile_id" : 1
+		"tile_id" : 1,
+		"unlocked_at_start": true,
+		"icon": preload("res://UI/icons/build_miner.png")
 	},
 	"farmer" : {
 		"name" : "Farmer",
 		"cost" : 10,
-		"tile_id" : 2
+		"tile_id" : 2,
+		"unlocked_at_start": true,
+		"icon": preload("res://UI/icons/build_farmer.png")
 	},
 	"shooter" : {
 		"name" : "Shooter",
 		"cost" : 10,
-		"tile_id" : 2
+		"tile_id" : 2,
+		"unlocked_at_start": false,
+		"icon": preload("res://UI/icons/build_shooter.png")
 	},
 	"lure" : {
 		"name" : "Lure",
 		"cost" : 10,
-		"tile_id" : 2
+		"tile_id" : 2,
+		"unlocked_at_start": false,
+		"icon": preload("res://UI/icons/build_lure.png")
 	},
 	"rocket" : {
 		"name" : "Rocket",
 		"cost" : 10,
-		"tile_id" : 2
+		"tile_id" : 2,
+		"unlocked_at_start": false,
+		"icon": preload("res://UI/icons/build_rocket.png")
 	}
 }
 
@@ -87,4 +97,56 @@ func get_rock_amount(tile_id):
 	for current_rock in rocks:
 		if rocks[current_rock]["tile_id"] == tile_id:
 			return current_rock
+
+var research := {
+	"optics": {
+		"name": "Optics",
+		"description": "",
+		"cost": 100,
+		"time": 10,
+		"prerequisite": null
+	},
+	"hivemind": {
+		"name": "Hivemind",
+		"description": "",
+		"cost": 50,
+		"time": 10,
+		"prerequisite": null
+	},
+	"increase_spine_yield": {
+		"name": "Fertiliser",
+		"description": "",
+		"cost": 50,
+		"time": 10,
+		"prerequisite": null
+	},
+	"increase_coin_yield": {
+		"name": "Strip Mining",
+		"description": "",
+		"cost": 50,
+		"time": 10,
+		"prerequisite": null
+	},
+	"thug_life": {
+		"name": "Thug Life",
+		"description": "It takes careful practise and firm discipline to be as unpleasant a cactus as possible, but with the latest findings, we are on the cusp of discovering the secret to absolute social abhorrence.",
+		"cost": 150,
+		"time": 20,
+		"prerequisite": "optics"
+	},
+	"gunpowder": {
+		"name": "Gunpowder",
+		"description": "",
+		"cost": 150,
+		"time": 20,
+		"prerequisite": "optics"
+	},
+	"rocketry": {
+		"name": "Rocketry",
+		"description": "",
+		"cost": 500,
+		"time": 30,
+		"prerequisite": "gunpowder"
+	}
+}
 
