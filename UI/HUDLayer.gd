@@ -1,5 +1,8 @@
 extends CanvasLayer
 
+onready var resource_bar = $ResourceBar
+onready var build_bar = $BuildBar
+
 onready var spine_label = $ResourceBar/LabelSpines
 onready var coin_label = $ResourceBar/LabelCoins
 onready var cactus_label = $ResourceBar/LabelCacti
@@ -13,6 +16,10 @@ onready var button_build_shooter = $BuildBar/ShooterButton
 onready var button_build_lure = $BuildBar/LureButton
 onready var button_build_rocket = $BuildBar/RocketButton
 onready var button_build_cancel = $BuildBar/CancelBuildButton
+
+onready var message_center = $MessageCenter
+onready var label_bigmessage = $MessageCenter/VBox/Label_BigMessage
+onready var label_littlemessage = $MessageCenter/VBox/Label_LittleMessage
 
 signal build_item_selected
 signal destroy_selected
@@ -28,6 +35,15 @@ func update_cactus_count(amount : int, limit : int):
 
 func update_poacher_count(amount : int):
 	poacher_label.text = "x" + str(amount)
+
+func hide_hud():
+	resource_bar.hide()
+	build_bar.hide()
+
+func display_message(big_message, little_message):
+	label_bigmessage.text = big_message
+	label_littlemessage.text = little_message
+	message_center.show()
 
 func _on_FarmerButton_button_up():
 	emit_signal("build_item_selected", "farmer")

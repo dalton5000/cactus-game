@@ -6,6 +6,7 @@ var grow_time : = 3.0
 var grow_phase : = 0
 var max_grow_phase : = 2
 var growing : = true
+var grow_rate := 1.0
 
 func _ready():
 	initialize()
@@ -20,7 +21,7 @@ func _physics_process(delta):
 	_growing_process(delta)
 
 func _growing_process(delta) -> void:
-	lifetime+=delta
+	lifetime += grow_rate * delta
 	if growing:
 		if lifetime - grow_phase*grow_time > grow_time:
 			_grow()

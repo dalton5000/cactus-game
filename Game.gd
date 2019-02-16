@@ -282,3 +282,13 @@ func _on_HUDLayer_destroy_selected():
 
 func _on_Rocket_enemy_reached_rocket():
 	Gamestate.spines_in_rocket -= spines_stolen_per_enemy
+
+func rocket_victory():
+	revealed_map.hide()
+	fog_map.hide()
+	hud.hide_hud()
+	hud.display_message("Victory!", "The rocket ship leaps into the sky,\ncarrying cactuskind to new worlds yet unknown...")
+	get_tree().paused = true
+	yield(get_tree().create_timer(5), "timeout")
+	get_tree().paused = false
+	get_tree().reload_current_scene()

@@ -249,6 +249,7 @@
 [node name="Game" type="Node" groups=[
 "game",
 ]]
+pause_mode = 2
 script = ExtResource( 1 )
 
 [node name="Level" type="Node2D" parent="."]
@@ -304,6 +305,7 @@ cell_size = Vector2( 32, 16 )
 format = 1
 
 [node name="Spawner" type="Node2D" parent="Level"]
+pause_mode = 1
 position = Vector2( 31.1343, -67.0586 )
 script = ExtResource( 8 )
 
@@ -319,6 +321,7 @@ position = Vector2( -40, 20 )
 [node name="HUDLayer" parent="." instance=ExtResource( 9 )]
 
 [node name="Units" type="YSort" parent="."]
+pause_mode = 1
 z_index = 1
 
 [node name="Enemies" type="YSort" parent="Units"]
@@ -337,6 +340,7 @@ frame = 2
 frame = 2
 
 [node name="GameTime" type="Node" parent="."]
+pause_mode = 1
 editor/display_folded = true
 script = ExtResource( 11 )
 
@@ -345,6 +349,7 @@ script = ExtResource( 11 )
 [node name="NightTween" type="Tween" parent="GameTime"]
 
 [node name="RTS-Camera2D" type="Camera2D" parent="."]
+pause_mode = 2
 position = Vector2( 333.122, -22.6101 )
 current = true
 zoom = Vector2( 0.5, 0.5 )
