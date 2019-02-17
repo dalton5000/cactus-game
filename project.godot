@@ -20,8 +20,8 @@ _global_script_class_icons={
 
 [application]
 
-config/name="CactusGame"
-run/main_scene="res://Game.tscn"
+config/name="Spiney Valley Rumpus"
+run/main_scene="res://UI/menus/Title.tscn"
 config/icon="res://icon.png"
 
 [autoload]
