@@ -51,6 +51,7 @@ func get_hit(damage : int) -> void:
 		
 func die() -> void:
 	$FSM.switch_state("Die")
+	$FSM.active = false
 	emit_signal("died", self)
 	is_alive = false
 	audio_die.stream = sfx_die[rand_range(0, sfx_die.size())]
