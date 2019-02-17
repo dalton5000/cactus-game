@@ -1,10 +1,11 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Cacti/BaseCactus.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Cacti/Miner.gd" type="Script" id=2]
 [ext_resource path="res://Cacti/cactus_miner.png" type="Texture" id=3]
+[ext_resource path="res://Sound/mine_rock.ogg" type="AudioStream" id=4]
 
-[node name="Miner" groups=[
+[node name="Miner" index="0" groups=[
 "grower",
 ] instance=ExtResource( 1 )]
 script = ExtResource( 2 )
@@ -16,5 +17,10 @@ texture = ExtResource( 3 )
 [node name="Timer_Harvest" type="Timer" parent="." index="4"]
 wait_time = 5.0
 autostart = true
+
+[node name="Audio_Harvest" type="AudioStreamPlayer2D" parent="." index="8"]
+stream = ExtResource( 4 )
+max_distance = 500.0
+bus = "SFX"
 
 [connection signal="timeout" from="Timer_Harvest" to="." method="_on_Timer_Harvest_timeout"]

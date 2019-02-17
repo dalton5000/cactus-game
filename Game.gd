@@ -198,7 +198,6 @@ func place_cactus(cell_pos : Vector2, cactus_id : int):
 		var target_cell = cactus_map.world_to_map(cell_pos)
 		if can_build(build_mode, target_cell):
 			cactus_map.set_cellv(target_cell,cactus_id)
-			
 			var new_cactus
 			var cost
 			match cactus_id:
@@ -223,6 +222,7 @@ func place_cactus(cell_pos : Vector2, cactus_id : int):
 			refresh_fog_map()
 			yield(get_tree().create_timer(0.1), "timeout")
 			update_population_display()
+			hud.play_sfx("place_cactus")
 
 func delete_cactus(cell_pos : Vector2):
 	var target_cell = cactus_map.world_to_map(cell_pos)
@@ -297,6 +297,7 @@ func _on_research_complete():
 	hud.refresh_research_bar()
 	hud.hide_stop_research_button()
 	update_population_display()
+	hud.play_sfx("research_complete")
 
 func _process(delta):
 	if Gamestate.currently_researching != null:
@@ -314,11 +315,9 @@ func _ready():
 	resources_map.create_stuff(resources)
 	Gamestate.connect("research_complete", self, "_on_research_complete")
 
-
 func _on_Master_died():
 	$GameOverLayer/Control/GameOverAnim.play("gameover")
 	get_tree().paused = true
-
 
 func _on_RestartButton_pressed():
 	get_tree().paused=false

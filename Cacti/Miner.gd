@@ -1,8 +1,11 @@
 extends "res://Cacti/BaseCactus.gd"
 
+onready var audio_harvest = $Audio_Harvest
+
 func _produce_coins() -> void:
 	get_tree().call_group("game", "coins_produced", CactusData.coins_per_production)
 	pop_amount(CactusData.coins_per_production, 0)
+	audio_harvest.play()
 
 func _on_Timer_Harvest_timeout():
 	# Are we near a rock?

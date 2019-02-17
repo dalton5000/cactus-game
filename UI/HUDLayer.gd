@@ -23,6 +23,9 @@ onready var message_center = $MessageCenter
 onready var label_bigmessage = $MessageCenter/VBox/Label_BigMessage
 onready var label_littlemessage = $MessageCenter/VBox/Label_LittleMessage
 
+onready var audio_research_complete = $Audio_ResearchComplete
+onready var audio_place_cactus = $Audio_PlaceCactus
+
 signal build_item_selected
 signal destroy_selected
 signal research_item_selected
@@ -125,6 +128,12 @@ func _on_StopResearchButton_button_up():
 func hide_stop_research_button():
 	button_research_menu.show()
 	button_stop_research.hide()
+
+# An unholy abomination of a hack. Don't care.
+func play_sfx(which):
+	match which:
+		"place_cactus": audio_place_cactus.play()
+		"research_complete": audio_research_complete.play()
 
 func release_build_buttons():
 	for current_button in get_tree().get_nodes_in_group("build_button"):

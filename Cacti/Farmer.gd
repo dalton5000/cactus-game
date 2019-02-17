@@ -1,20 +1,11 @@
 extends "res://Cacti/BaseCactus.gd"
 
-var production_timer : = 0.0
-
-func _physics_process(delta):
-	#_production_process(delta)
-	pass
-	
-func _production_process(delta):
-	if grow_phase >= 2:
-			if production_timer > CactusData.production_length:
-				production_timer = 0.0
-				_produce_spines()
+onready var audio_harvest = $Audio_Harvest
 
 func _produce_spines() -> void:
 	get_tree().call_group("game", "spines_produced", CactusData.spines_per_production)
 	pop_amount(CactusData.spines_per_production, 1)
+	audio_harvest.play()
 
 func _on_Timer_Harvest_timeout():
 	# Are we near a bush?

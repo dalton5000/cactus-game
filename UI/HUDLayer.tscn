@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://UI/HUDLayer.gd" type="Script" id=1]
 [ext_resource path="res://UI/theme.tres" type="Theme" id=2]
@@ -11,6 +11,8 @@
 [ext_resource path="res://UI/icons/build_menu.png" type="Texture" id=9]
 [ext_resource path="res://UI/icons/build_destroy.png" type="Texture" id=10]
 [ext_resource path="res://UI/PauseMenu.gd" type="Script" id=11]
+[ext_resource path="res://Sound/research_complete.ogg" type="AudioStream" id=12]
+[ext_resource path="res://Sound/place_cactus.ogg" type="AudioStream" id=13]
 
 [sub_resource type="DynamicFontData" id=1]
 
@@ -266,6 +268,16 @@ custom_fonts/font = ExtResource( 4 )
 text = "The rocket ship leaps into the sky,
 carrying cactuskind to new worlds yet unknown..."
 valign = 1
+
+[node name="Audio_ResearchComplete" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+volume_db = -5.0
+bus = "UI"
+
+[node name="Audio_PlaceCactus" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 13 )
+volume_db = -5.0
+bus = "UI"
 
 [connection signal="button_up" from="ActionBar/BuildButton" to="." method="_on_BuildButton_button_up"]
 [connection signal="button_up" from="ActionBar/ResearchButton" to="." method="_on_ResearchButton_button_up"]

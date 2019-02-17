@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/mine_rock.ogg-3a784e07817bd6cf7def3db1ae59241d.oggstr"
+
+[deps]
+
+source_file="res://Sound/mine_rock.ogg"
+dest_files=[ "res://.import/mine_rock.ogg-3a784e07817bd6cf7def3db1ae59241d.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
