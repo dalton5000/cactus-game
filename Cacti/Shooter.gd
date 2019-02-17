@@ -47,6 +47,7 @@ func find_next_target():
 
 func shoot():
 	if target == null: return
+	if target.is_queued_for_deletion(): return
 	if !is_shooting:
 		var target_pos = target.global_position
 		is_shooting = true

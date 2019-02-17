@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://Tilesets/Terrain.tres" type="TileSet" id=2]
@@ -16,6 +16,13 @@
 [ext_resource path="res://UI/theme.tres" type="Theme" id=14]
 [ext_resource path="res://Sound/beach.ogg" type="AudioStream" id=15]
 [ext_resource path="res://Sound/wind.ogg" type="AudioStream" id=16]
+[ext_resource path="res://addons/music/mixing_desk_music.gd" type="Script" id=17]
+[ext_resource path="res://addons/music/mdm_icon.png" type="Texture" id=18]
+[ext_resource path="res://addons/music/song.gd" type="Script" id=19]
+[ext_resource path="res://addons/music/song_icon.png" type="Texture" id=20]
+[ext_resource path="res://Sound/Music/calm.ogg" type="AudioStream" id=21]
+[ext_resource path="res://Sound/Music/action.ogg" type="AudioStream" id=22]
+[ext_resource path="res://Sound/Music/game_over.ogg" type="AudioStream" id=23]
 
 [sub_resource type="TileSet" id=1]
 
@@ -217,7 +224,6 @@ format = 1
 
 [node name="Units" type="YSort" parent="."]
 pause_mode = 1
-editor/display_folded = true
 z_index = 1
 
 [node name="Enemies" type="YSort" parent="Units"]
@@ -275,7 +281,6 @@ edge = true
 wheel = false
 
 [node name="GameOverLayer" type="CanvasLayer" parent="."]
-editor/display_folded = true
 
 [node name="Control" type="Control" parent="GameOverLayer"]
 pause_mode = 2
@@ -377,6 +382,49 @@ autoplay = true
 max_distance = 500.0
 attenuation = 2.0
 bus = "Ambience"
+
+[node name="MixingDeskMusic" type="Node2D" parent="Sounds"]
+script = ExtResource( 17 )
+__meta__ = {
+"_editor_icon": ExtResource( 18 )
+}
+
+[node name="Song_Main" type="Node2D" parent="Sounds/MixingDeskMusic"]
+script = ExtResource( 19 )
+__meta__ = {
+"_editor_icon": ExtResource( 20 )
+}
+tempo = 65
+bars = 48
+beats_in_bar = 4
+transition_beats = 8.0
+loop = true
+
+[node name="core" type="Node2D" parent="Sounds/MixingDeskMusic/Song_Main"]
+
+[node name="Music_Calm" type="AudioStreamPlayer" parent="Sounds/MixingDeskMusic/Song_Main/core"]
+stream = ExtResource( 21 )
+bus = "Music"
+
+[node name="Music_Action" type="AudioStreamPlayer" parent="Sounds/MixingDeskMusic/Song_Main/core"]
+stream = ExtResource( 22 )
+bus = "Music"
+
+[node name="Song_GameOver" type="Node2D" parent="Sounds/MixingDeskMusic"]
+script = ExtResource( 19 )
+__meta__ = {
+"_editor_icon": ExtResource( 20 )
+}
+tempo = 100
+bars = 19
+beats_in_bar = 4
+transition_beats = 1.0
+
+[node name="core" type="Node2D" parent="Sounds/MixingDeskMusic/Song_GameOver"]
+
+[node name="Music_GameOver" type="AudioStreamPlayer" parent="Sounds/MixingDeskMusic/Song_GameOver/core"]
+stream = ExtResource( 23 )
+bus = "Music"
 
 [connection signal="build_item_selected" from="HUDLayer" to="." method="_on_HUDLayer_build_item_selected"]
 [connection signal="destroy_selected" from="HUDLayer" to="." method="_on_HUDLayer_destroy_selected"]

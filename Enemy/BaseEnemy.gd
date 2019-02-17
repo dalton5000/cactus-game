@@ -55,6 +55,8 @@ func die() -> void:
 	is_alive = false
 	audio_die.stream = sfx_die[rand_range(0, sfx_die.size())]
 	audio_die.play()
+	yield(get_tree().create_timer(1), "timeout")
+	hide()
 
 func hit_rocket() -> void:
 	has_loot = true

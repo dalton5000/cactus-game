@@ -34,6 +34,9 @@ onready var master_cactus : = $Units/Cacti/Master
 onready var rocket : = $Units/Cacti/Rocket
 onready var resources : = $Units/Resources
 
+onready var mixing_desk = $Sounds/MixingDeskMusic
+onready var music_is_intense = false
+
 func init_fog_map():
 	for current_cell in terrain_map.get_used_cells():
 		fog_map.set_cell(current_cell[0], current_cell[1], 2);
@@ -304,9 +307,26 @@ func _process(delta):
 		var name = CactusData.research[Gamestate.currently_researching]["name"]
 		var progress = round((float(Gamestate.research_progress) / float(Gamestate.research_target)) * 100)
 		hud.update_research_status("Researching %s... %d%%" % [name, progress])
+	# Do we need to change the music?
+	var enemies_approaching = false
+	for current_enemy in get_tree().get_nodes_in_group("enemies"):
+		if current_enemy.is_alive():
+			enemies_approaching = true
+	if enemies_approaching:
+		if not music_is_intense:
+			mixing_desk._fade_out(0, 0)
+			mixing_desk._fade_in(0, 1)
+			music_is_intense = true
+	else:
+		if music_is_intense:
+			mixing_desk._fade_out(0, 1)
+			mixing_desk._fade_in(0, 0)
+			music_is_intense = false
 
 func _ready():
 	yield(get_tree(), "idle_frame")
+	mixing_desk._init_song(0)
+	mixing_desk._start_alone(0, 0)
 	change_cursormode(CURSOR_MODES.INSPECT)
 	hud.update_spine_count(Gamestate.spines)
 	hud.update_coin_count(Gamestate.coins)
