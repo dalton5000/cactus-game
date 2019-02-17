@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://Tilesets/Terrain.tres" type="TileSet" id=2]
@@ -109,6 +109,25 @@
 4/navigation_offset = Vector2( 0, 0 )
 4/shapes = [  ]
 4/z_index = 0
+
+[sub_resource type="Animation" id=6]
+
+resource_name = "daynight_cycle"
+length = 135.0
+loop = true
+step = 15.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("NightModulate:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 45, 60, 75, 105, 120, 135 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 0.854902, 0.729412, 1 ), Color( 0.372549, 0.454902, 0.768627, 1 ), Color( 0.372549, 0.454902, 0.768627, 1 ), Color( 1, 0.854902, 0.729412, 1 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [sub_resource type="Animation" id=3]
 
@@ -261,12 +280,13 @@ wait_time = 180.0
 
 [node name="GameTime" type="Node" parent="."]
 pause_mode = 1
-editor/display_folded = true
 script = ExtResource( 11 )
 
 [node name="NightModulate" type="CanvasModulate" parent="GameTime"]
 
-[node name="NightTween" type="Tween" parent="GameTime"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GameTime"]
+playback_speed = 15.0
+anims/daynight_cycle = SubResource( 6 )
 
 [node name="RTS-Camera2D" type="Camera2D" parent="."]
 pause_mode = 2
