@@ -41,6 +41,7 @@ pause_mode = 2
 script = ExtResource( 1 )
 
 [node name="ResourceBar" type="HBoxContainer" parent="."]
+editor/display_folded = true
 anchor_right = 1.0
 margin_left = 10.0
 margin_top = 10.0
@@ -135,6 +136,7 @@ custom_fonts/font = ExtResource( 4 )
 align = 2
 
 [node name="ActionBar" type="HBoxContainer" parent="."]
+editor/display_folded = true
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -187,6 +189,7 @@ text = "Destroy"
 icon = ExtResource( 10 )
 
 [node name="Tooltip" type="VBoxContainer" parent="."]
+editor/display_folded = true
 visible = false
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -213,6 +216,7 @@ text = "This one gave the intel team some trouble, as we're not sure whether or 
 autowrap = true
 
 [node name="BuildBar" type="HBoxContainer" parent="."]
+editor/display_folded = true
 visible = false
 anchor_top = 1.0
 anchor_right = 1.0
@@ -233,6 +237,7 @@ custom_fonts/font = ExtResource( 4 )
 text = "Cancel"
 
 [node name="ResearchBar" type="HBoxContainer" parent="."]
+editor/display_folded = true
 visible = false
 anchor_top = 1.0
 anchor_right = 1.0
@@ -252,6 +257,7 @@ text = "Cancel"
 
 [node name="PauseMenu" type="PopupPanel" parent="."]
 pause_mode = 2
+editor/display_folded = true
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -314,9 +320,23 @@ stream = ExtResource( 13 )
 volume_db = -5.0
 bus = "UI"
 
+[node name="DebugBar" type="VBoxContainer" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -304.0
+margin_bottom = 40.0
+size_flags_horizontal = 0
+theme = ExtResource( 2 )
+
+[node name="SpawnWaveButton" type="Button" parent="DebugBar"]
+margin_right = 304.0
+margin_bottom = 34.0
+text = "Spawn Wave"
+
 [connection signal="button_up" from="ActionBar/BuildButton" to="." method="_on_BuildButton_button_up"]
 [connection signal="button_up" from="ActionBar/ResearchButton" to="." method="_on_ResearchButton_button_up"]
 [connection signal="button_up" from="ActionBar/StopResearchButton" to="." method="_on_StopResearchButton_button_up"]
 [connection signal="button_up" from="ActionBar/DestroyButton" to="." method="_on_DestroyButton_button_up"]
 [connection signal="button_up" from="BuildBar/CancelBuildButton" to="." method="_on_CancelBuildButton_button_up"]
 [connection signal="button_up" from="ResearchBar/CancelResearchButton" to="." method="_on_CancelResearchButton_button_up"]
+[connection signal="button_up" from="DebugBar/SpawnWaveButton" to="." method="_on_SpawnWaveButton_button_up"]

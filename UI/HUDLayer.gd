@@ -34,6 +34,8 @@ signal build_item_selected
 signal destroy_selected
 signal research_item_selected
 signal research_cancelled
+signal wave_requested
+
 
 func init_build_bar():
 	for current_cactus in CactusData.cacti:
@@ -173,3 +175,7 @@ func _ready():
 	init_research_bar()
 	refresh_build_bar()
 	refresh_research_bar()
+
+
+func _on_SpawnWaveButton_button_up():
+	emit_signal("wave_requested")

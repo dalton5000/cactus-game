@@ -70,14 +70,14 @@ func get_lured(lurer):
 func is_alive() -> bool:
 	return is_alive
 
-func _draw():
-	draw_set_transform(Vector2(0, 0), 0, Vector2(0.5, 0.5))
-	draw_string(font, Vector2(10, 0), fsm.current_state.label)
+#func _draw():
+#	draw_set_transform(Vector2(0, 0), 0, Vector2(0.5, 0.5))
+#	draw_string(font, Vector2(10, 0), fsm.current_state.label)
 
-func enemy_died(enemy):
-	if enemy in cacti_in_range:
-		cacti_in_range.erase(enemy)
-	if enemy == target:
+func cactus_died(cactus):
+	if cactus in cacti_in_range:
+		cacti_in_range.erase(cactus)
+	if cactus == target:
 		fsm.switch_state("Idle")
 		
 		
@@ -95,3 +95,5 @@ func _on_DetectionArea_area_exited(area):
 	if area.is_in_group("cacti"):
 		if area in cacti_in_range:
 			cacti_in_range.erase(area)
+		if area == target:
+			fsm.switch_state("Idle")

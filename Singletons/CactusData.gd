@@ -4,6 +4,8 @@ var production_length : = 5.0
 var spines_per_production : = 20
 var coins_per_production := 20
 
+var spine_damage = 50.0
+
 var cacti : = {
 	"miner" : {
 		"name" : "Miner",

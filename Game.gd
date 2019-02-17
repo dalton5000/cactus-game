@@ -343,3 +343,7 @@ func _on_Master_died():
 func _on_RestartButton_pressed():
 	get_tree().paused=false
 	get_tree().change_scene_to(load("res://Game.tscn"))
+
+
+func _on_HUDLayer_wave_requested():
+	get_tree().call_group("spawners","spawn_wave")

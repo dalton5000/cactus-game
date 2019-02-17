@@ -446,6 +446,7 @@ bus = "Music"
 [connection signal="destroy_selected" from="HUDLayer" to="." method="_on_HUDLayer_destroy_selected"]
 [connection signal="research_cancelled" from="HUDLayer" to="." method="_on_HUDLayer_research_cancelled"]
 [connection signal="research_item_selected" from="HUDLayer" to="." method="_on_HUDLayer_research_item_selected"]
+[connection signal="wave_requested" from="HUDLayer" to="." method="_on_HUDLayer_wave_requested"]
 [connection signal="died" from="Units/Cacti/Master" to="." method="_on_Master_died"]
 [connection signal="pressed" from="GameOverLayer/Control/CenterContainer/VBoxContainer/RestartButton" to="." method="_on_RestartButton_pressed"]
 
