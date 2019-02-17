@@ -110,7 +110,7 @@
 4/shapes = [  ]
 4/z_index = 0
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=3]
 
 resource_name = "daynight_cycle"
 length = 135.0
@@ -129,9 +129,8 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 0.854902, 0.729412, 1 ), Color( 0.372549, 0.454902, 0.768627, 1 ), Color( 0.372549, 0.454902, 0.768627, 1 ), Color( 1, 0.854902, 0.729412, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=4]
 
-resource_name = "gameover"
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:visible")
 tracks/0/interp = 1
@@ -169,16 +168,16 @@ tracks/2/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="DynamicFontData" id=4]
+[sub_resource type="DynamicFontData" id=5]
 
 font_path = "res://UI/fonts/connection_ii/ConnectionII.otf"
 
-[sub_resource type="DynamicFont" id=5]
+[sub_resource type="DynamicFont" id=6]
 
 size = 60
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
-font_data = SubResource( 4 )
+font_data = SubResource( 5 )
 
 [node name="Game" type="Node" groups=[
 "game",
@@ -286,7 +285,7 @@ script = ExtResource( 11 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="GameTime"]
 playback_speed = 15.0
-anims/daynight_cycle = SubResource( 6 )
+anims/daynight_cycle = SubResource( 3 )
 
 [node name="RTS-Camera2D" type="Camera2D" parent="."]
 pause_mode = 2
@@ -317,7 +316,7 @@ margin_bottom = 320.0
 color = Color( 0, 0, 0, 0 )
 
 [node name="GameOverAnim" type="AnimationPlayer" parent="GameOverLayer/Control"]
-anims/gameover = SubResource( 3 )
+anims/gameover = SubResource( 4 )
 
 [node name="CenterContainer" type="CenterContainer" parent="GameOverLayer/Control"]
 modulate = Color( 1, 1, 1, 0 )
@@ -334,7 +333,7 @@ margin_bottom = 426.0
 [node name="Label" type="Label" parent="GameOverLayer/Control/CenterContainer/VBoxContainer"]
 margin_right = 330.0
 margin_bottom = 204.0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 6 )
 text = "Game Over
 
 "

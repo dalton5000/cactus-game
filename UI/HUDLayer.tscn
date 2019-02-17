@@ -14,34 +14,33 @@
 [ext_resource path="res://Sound/research_complete.ogg" type="AudioStream" id=12]
 [ext_resource path="res://Sound/place_cactus.ogg" type="AudioStream" id=13]
 
-[sub_resource type="DynamicFontData" id=3]
-
-font_path = "res://UI/fonts/connection_ii/ConnectionII.otf"
-
-[sub_resource type="DynamicFont" id=4]
-
-size = 40
-outline_size = 4
-outline_color = Color( 0, 0, 0, 1 )
-font_data = SubResource( 3 )
-
 [sub_resource type="DynamicFontData" id=1]
 
 font_path = "res://UI/fonts/connection_ii/ConnectionII.otf"
 
 [sub_resource type="DynamicFont" id=2]
 
+size = 40
+outline_size = 4
+outline_color = Color( 0, 0, 0, 1 )
+font_data = SubResource( 1 )
+
+[sub_resource type="DynamicFontData" id=3]
+
+font_path = "res://UI/fonts/connection_ii/ConnectionII.otf"
+
+[sub_resource type="DynamicFont" id=4]
+
 size = 80
 outline_size = 8
 outline_color = Color( 0, 0, 0, 1 )
-font_data = SubResource( 1 )
+font_data = SubResource( 3 )
 
 [node name="HUDLayer" type="CanvasLayer"]
 pause_mode = 2
 script = ExtResource( 1 )
 
 [node name="ResourceBar" type="HBoxContainer" parent="."]
-editor/display_folded = true
 anchor_right = 1.0
 margin_left = 10.0
 margin_top = 10.0
@@ -136,7 +135,6 @@ custom_fonts/font = ExtResource( 4 )
 align = 2
 
 [node name="ActionBar" type="HBoxContainer" parent="."]
-editor/display_folded = true
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -170,7 +168,7 @@ text = "Research"
 visible = false
 margin_left = 264.0
 margin_right = 424.0
-margin_bottom = 32.0
+margin_bottom = 36.0
 rect_min_size = Vector2( 128, 0 )
 custom_fonts/font = ExtResource( 4 )
 toggle_mode = true
@@ -200,7 +198,7 @@ margin_bottom = -50.0
 [node name="Label_Title" type="Label" parent="Tooltip"]
 margin_right = 800.0
 margin_bottom = 44.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 2 )
 text = "Farmer"
 valign = 2
 autowrap = true
@@ -293,7 +291,7 @@ margin_bottom = 369.0
 [node name="Label_BigMessage" type="Label" parent="MessageCenter/VBox"]
 margin_right = 518.0
 margin_bottom = 88.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 4 )
 text = "Victory!"
 align = 1
 

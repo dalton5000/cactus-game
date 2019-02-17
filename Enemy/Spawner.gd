@@ -10,6 +10,9 @@ onready var spawn_pos = [$Position2D, $Position2D2, $Position2D3]
 onready var timer = $Timer_SpawnWave
 onready var audio_spawn = $Audio_Spawn
 
+func  _ready():
+	spawn_wave()
+
 func spawn_wave():
 	audio_spawn.play()
 	for i in range(0, waves[which_wave % waves.size()]):

@@ -12,6 +12,7 @@ func exit() -> void:
 
 func update(delta) -> String:
 	FSM.owner.target = find_target()
+	FSM.owner.target.connect("died",FSM.owner,"enemy_died")
 	return("Move")
 
 func find_target() -> Node:

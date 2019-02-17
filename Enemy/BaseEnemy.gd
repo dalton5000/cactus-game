@@ -73,6 +73,13 @@ func _draw():
 	draw_set_transform(Vector2(0, 0), 0, Vector2(0.5, 0.5))
 	draw_string(font, Vector2(10, 0), fsm.current_state.label)
 
+func enemy_died(enemy):
+	if enemy in cacti_in_range:
+		cacti_in_range.erase(enemy)
+	if enemy == target:
+		fsm.switch_state("Idle")
+		
+		
 
 func _on_DetectionArea_area_entered(area):
 	if area.is_in_group("cacti"):
