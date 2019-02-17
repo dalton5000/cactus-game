@@ -73,6 +73,12 @@ func refresh_research_bar():
 			current_button.show()
 		else:
 			current_button.hide()
+		# Okay, but can we afford it?
+		var cost = CactusData.research[research]["cost"]
+		if Gamestate.coins >= cost:
+			current_button.disabled = false
+		else:
+			current_button.disabled = true
 
 func build_button_hovered(slug):
 	tooltip_title.text = CactusData.cacti[slug]["name"]
@@ -134,6 +140,7 @@ func _on_BuildButton_button_up():
 	build_bar.show()
 
 func _on_ResearchButton_button_up():
+	refresh_research_bar()
 	action_bar.hide()
 	research_bar.show()
 

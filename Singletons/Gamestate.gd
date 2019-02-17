@@ -24,7 +24,7 @@ func reset():
 	spines = 100
 	coins = 50
 	population_limit = 10
-	research_rate = 5.0
+	research_rate = 1.0
 	spine_yield = 10
 	coin_yield = 10
 	currently_researching = null
@@ -61,9 +61,12 @@ func is_currently_researching():
 	return currently_researching
 
 func start_research(which):
-	currently_researching = which
-	research_progress = 0
-	research_target = CactusData.research[currently_researching]["time"]
+	var cost = CactusData.research[which]["cost"]
+	if coins >= cost:
+		coins -= cost
+		currently_researching = which
+		research_progress = 0
+		research_target = CactusData.research[currently_researching]["time"]
 
 func cancel_research():
 	currently_researching = null

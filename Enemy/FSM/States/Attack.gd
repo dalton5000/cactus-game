@@ -8,8 +8,9 @@ func _enter_tree():
 func enter() -> void:
 	target_dead = false
 	if FSM.owner.target != null:
-		FSM.owner.target.connect("died",self,"target_died")
-		$Timer.start()
+		if not FSM.owner.target.is_queued_for_deletion():
+			FSM.owner.target.connect("died",self,"target_died")
+			$Timer.start()
 	
 	var direction = (FSM.owner.target.global_position-FSM.owner.global_position).normalized()
 	var anim_direction

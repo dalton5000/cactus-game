@@ -248,7 +248,7 @@ frame = 2
 position = Vector2( 61, -330 )
 
 [node name="Timer_SpawnWave" parent="Units/Spawners/Spawner" index="4"]
-wait_time = 45.0
+wait_time = 90.0
 
 [node name="Spawner2" parent="Units/Spawners" instance=ExtResource( 10 )]
 position = Vector2( -493, 46 )
@@ -257,7 +257,7 @@ position = Vector2( -493, 46 )
 flip_h = true
 
 [node name="Timer_SpawnWave" parent="Units/Spawners/Spawner2" index="4"]
-wait_time = 90.0
+wait_time = 180.0
 
 [node name="GameTime" type="Node" parent="."]
 pause_mode = 1

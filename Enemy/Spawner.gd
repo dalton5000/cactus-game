@@ -24,4 +24,4 @@ func spawn_wave():
 
 func _on_Timer_SpawnWave_timeout():
 	spawn_wave()
-	timer.wait_time = 90
+	timer.wait_time = 180

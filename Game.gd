@@ -289,6 +289,8 @@ func rocket_victory():
 
 func _on_HUDLayer_research_item_selected(which):
 	Gamestate.start_research(which)
+	yield(get_tree().create_timer(0.1), "timeout")
+	hud.update_coin_count(Gamestate.coins)
 
 func _on_HUDLayer_research_cancelled():
 	Gamestate.cancel_research()
