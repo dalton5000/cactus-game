@@ -14,6 +14,7 @@ onready var statemap = {
 	}
 
 onready var current_state : Node = STATE_IDLE
+onready var active = true
 
 func _ready():
 	set_physics_process(true)
@@ -25,6 +26,8 @@ func switch_state(new_state) -> void:
 		current_state.enter()
 
 func _physics_process(delta):
+	# If we ded, we ded
+	if not active: return
 	if current_state:
 		var transition = current_state.update(delta)
 		if transition == "":
