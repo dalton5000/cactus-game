@@ -66,6 +66,12 @@ func _die():
 	emit_signal("died")
 	$DieAnim.play("die")
 	audio_dead.play()
+
+func delete():
+	emit_signal("died")
+	hide()
+	yield(get_tree().create_timer(1), "timeout")
+	queue_free()
 	
 func _grow() -> void:
 	grow_phase+=1

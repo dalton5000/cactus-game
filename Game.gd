@@ -239,7 +239,7 @@ func delete_cactus(cell_pos : Vector2):
 	var target_pos = $Level/Cacti.map_to_world(target_cell) + Vector2(0,8)
 	for current_cactus in get_tree().get_nodes_in_group("cactus"):
 		if current_cactus.global_position == target_pos:
-			current_cactus.queue_free()
+			current_cactus.delete()
 			break
 	refresh_fog_map()
 	yield(get_tree().create_timer(0.1), "timeout")
