@@ -15,3 +15,5 @@ text = "Build"
 script = ExtResource( 2 )
 
 [connection signal="button_up" from="." to="." method="_on_BuildButton_button_up"]
+[connection signal="mouse_entered" from="." to="." method="_on_BuildButton_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_BuildButton_mouse_exited"]

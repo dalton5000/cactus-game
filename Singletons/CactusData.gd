@@ -7,8 +7,9 @@ var coins_per_production := 20
 var cacti : = {
 	"miner" : {
 		"name" : "Miner",
+		"description": "It ain't much, but it's honest work.\n* Mines coins from rocks\nCost: 50 spines",
 		"threat_level": 1,
-		"cost" : 10,
+		"cost" : 50,
 		"health": 50,
 		"tile_id" : 1,
 		"unlocked_at_start": true,
@@ -16,7 +17,8 @@ var cacti : = {
 	},
 	"farmer" : {
 		"name" : "Farmer",
-		"cost" : 10,
+		"description": "This one gave the intel team some trouble, as we're not sure whether or not pulling spines off one plant in order to create another counts as some strange form of cannibalism.\n* Harvests spines from thorns\nCost: 50 spines",
+		"cost" : 50,
 		"threat_level": 1,
 		"health": 50,
 		"tile_id" : 2,
@@ -25,7 +27,8 @@ var cacti : = {
 	},
 	"shooter" : {
 		"name" : "Shooter",
-		"cost" : 10,
+		"description": "Contrary to popular belief, wearing a Stetson and chewing on wheat does not turn you into a stalwart defender of the land. It does look pretty cool, though, so we're sticking with it.\n* Fires on enemies\nCost: 100 spines",
+		"cost" : 100,
 		"threat_level": 2,
 		"health": 50,
 		"tile_id" : 2,
@@ -34,7 +37,8 @@ var cacti : = {
 	},
 	"lure" : {
 		"name" : "Lure",
-		"cost" : 10,
+		"description": "\"Oi, wot you looking at, m8? You wanna go?\"\n* Distracts enemies\nCost: 100 spines",
+		"cost" : 100,
 		"threat_level": 10,
 		"health": 50,
 		"tile_id" : 4,
@@ -43,7 +47,8 @@ var cacti : = {
 	},
 	"rocket" : {
 		"name" : "Rocket",
-		"cost" : 10,
+		"description": "A group of funny small creatures with green skin gave us the design for this one, and they assured us that it's perfectly safe.\n* Game ends in victory upon building\nCost: 500 spines",
+		"cost" : 500,
 		"threat_level": 4,
 		"health": 100,
 		"tile_id" : 2,
@@ -111,49 +116,49 @@ func get_rock_amount(tile_id):
 var research := {
 	"optics": {
 		"name": "Optics",
-		"description": "",
+		"description": "We're going to level with you: this is meant to unlock the scout cactus, but we didn't have time to implement it, so this is just a prerequisite for a bunch of other research items you really need.\nSorry about that.\n-The Devs\nCost: 100 coins",
 		"cost": 100,
 		"time": 10,
 		"prerequisite": null
 	},
 	"hivemind": {
 		"name": "Hivemind",
-		"description": "",
+		"description": "We aren't exactly sure how these cacti are coordinating themselves - and to be honest, it scares us quite a bit - but either way, this lets them spread even further. We predict no negative consequences from doing this.\n* Increases population limit by 20\nCost: 50 coins",
 		"cost": 50,
 		"time": 10,
 		"prerequisite": null
 	},
 	"increase_spine_yield": {
 		"name": "Fertiliser",
-		"description": "",
+		"description": "* Doubles farmer spine yield\nCost: 50 coins",
 		"cost": 50,
 		"time": 10,
 		"prerequisite": null
 	},
 	"increase_coin_yield": {
 		"name": "Strip Mining",
-		"description": "",
+		"description": "* Doubles miner coin yield\nCost: 50 coins",
 		"cost": 50,
 		"time": 10,
 		"prerequisite": null
 	},
 	"thug_life": {
 		"name": "Thug Life",
-		"description": "It takes careful practise and firm discipline to be as unpleasant a cactus as possible, but with the latest findings, we are on the cusp of discovering the secret to absolute social abhorrence.",
+		"description": "It takes careful practise and firm discipline to be as unpleasant a cactus as possible, but with the latest findings, we are on the cusp of discovering the secret to absolute social abhorrence.\n* Unlocks Lure cactus\nCost: 150 coins",
 		"cost": 150,
 		"time": 20,
 		"prerequisite": "optics"
 	},
 	"gunpowder": {
 		"name": "Gunpowder",
-		"description": "",
+		"description": "Oh, sure, let's just give them guns now!\nWhat's next, cactus-made space rockets?\n* Unlocks Shooter cactus\nCost: 150 coins",
 		"cost": 150,
 		"time": 20,
 		"prerequisite": "optics"
 	},
 	"rocketry": {
 		"name": "Rocketry",
-		"description": "",
+		"description": "...You have got to be kidding me.\n* Unlocks Rocket cactus\nCost: 500 coins",
 		"cost": 500,
 		"time": 30,
 		"prerequisite": "gunpowder"

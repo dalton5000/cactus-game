@@ -23,6 +23,10 @@ onready var message_center = $MessageCenter
 onready var label_bigmessage = $MessageCenter/VBox/Label_BigMessage
 onready var label_littlemessage = $MessageCenter/VBox/Label_LittleMessage
 
+onready var tooltip = $Tooltip
+onready var tooltip_title = $Tooltip/Label_Title
+onready var tooltip_text = $Tooltip/Label_Text
+
 onready var audio_research_complete = $Audio_ResearchComplete
 onready var audio_place_cactus = $Audio_PlaceCactus
 
@@ -38,6 +42,8 @@ func init_build_bar():
 		build_button.text = CactusData.cacti[current_cactus]["name"]
 		build_button.icon = CactusData.cacti[current_cactus]["icon"]
 		build_button.connect("button_pressed", self, "build_button_pressed")
+		build_button.connect("hover_on", self, "build_button_hovered")
+		build_button.connect("hover_off", self, "clear_tooltip")
 		build_bar.add_child(build_button)
 	build_bar.move_child(button_hide_build_menu, build_bar.get_child_count()-1)
 
@@ -47,6 +53,8 @@ func init_research_bar():
 		research_button.slug = current_research
 		research_button.text = CactusData.research[current_research]["name"]
 		research_button.connect("button_pressed", self, "research_button_pressed")
+		research_button.connect("hover_on", self, "research_button_hovered")
+		research_button.connect("hover_off", self, "clear_tooltip")
 		research_bar.add_child(research_button)
 	research_bar.move_child(button_hide_research_menu, research_bar.get_child_count()-1)
 
@@ -65,6 +73,19 @@ func refresh_research_bar():
 			current_button.show()
 		else:
 			current_button.hide()
+
+func build_button_hovered(slug):
+	tooltip_title.text = CactusData.cacti[slug]["name"]
+	tooltip_text.text = CactusData.cacti[slug]["description"]
+	tooltip.show()
+
+func research_button_hovered(slug):
+	tooltip_title.text = CactusData.research[slug]["name"]
+	tooltip_text.text = CactusData.research[slug]["description"]
+	tooltip.show()
+
+func clear_tooltip():
+	tooltip.hide()
 
 func update_spine_count(amount : int):
 	spine_label.text = "x" + str(amount)
@@ -105,6 +126,7 @@ func research_button_pressed(slug):
 	button_stop_research.show()
 	action_bar.show()
 	research_bar.hide()
+	clear_tooltip()
 	emit_signal("research_item_selected", slug)
 
 func _on_BuildButton_button_up():
