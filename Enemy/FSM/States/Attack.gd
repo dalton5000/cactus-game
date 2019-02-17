@@ -7,8 +7,9 @@ func _enter_tree():
 	
 func enter() -> void:
 	target_dead = false
-	FSM.owner.target.connect("died",self,"target_died")
-	$Timer.start()
+	if FSM.owner.target != null:
+		FSM.owner.target.connect("died",self,"target_died")
+		$Timer.start()
 	
 	var direction = (FSM.owner.target.global_position-FSM.owner.global_position).normalized()
 	var anim_direction
@@ -42,6 +43,7 @@ func update(delta) -> String:
 		return("")
 
 func _on_Timer_timeout():
+	if FSM.owner.target == null: return
 	if not FSM.owner.target.current_health <= 0:
 		var dmg = FSM.owner.damage
 		FSM.owner.target.get_hit(dmg)

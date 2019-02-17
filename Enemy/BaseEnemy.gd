@@ -2,7 +2,24 @@ extends Area2D
 
 const font = preload("res://UI/fonts/connection_ii/ConnectionII.tres")
 
+onready var sfx_die = [
+	preload("res://Sound/Poacher/die1.ogg"),
+	preload("res://Sound/Poacher/die2.ogg"),
+	preload("res://Sound/Poacher/die3.ogg"),
+	preload("res://Sound/Poacher/die4.ogg")
+]
+
+onready var sfx_hurt = [
+	preload("res://Sound/Poacher/hurt1.ogg"),
+	preload("res://Sound/Poacher/hurt2.ogg"),
+	preload("res://Sound/Poacher/hurt3.ogg"),
+	preload("res://Sound/Poacher/hurt4.ogg"),
+	preload("res://Sound/Poacher/hurt5.ogg")
+]
+
 onready var fsm = $FSM
+onready var audio_hurt = $Audio_Hurt
+onready var audio_die = $Audio_Die
 
 signal died
 
@@ -28,11 +45,16 @@ func get_hit(damage : int) -> void:
 	health -= damage
 	if health <= 0:
 		die()
+	else:
+		audio_hurt.stream = sfx_hurt[rand_range(0, sfx_hurt.size())]
+		audio_hurt.play()
 		
 func die() -> void:
 	$FSM.switch_state("Die")
 	emit_signal("died", self)
 	is_alive = false
+	audio_die.stream = sfx_die[rand_range(0, sfx_die.size())]
+	audio_die.play()
 
 func hit_rocket() -> void:
 	has_loot = true

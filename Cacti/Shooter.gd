@@ -11,6 +11,7 @@ var is_shooting : = false
 
 onready var shooting_area = $ShootingArea
 onready var shooting_tween = $ShootingTween
+onready var audio_gunshot = $Audio_Gunshot
 
 func _ready():
 	initialize()
@@ -53,6 +54,8 @@ func shoot():
 		shooting_tween.start()
 		yield(shooting_tween, "tween_completed")
 		spawn_spine(target_pos)
+		audio_gunshot.pitch_scale = 0.9 + (randf() * 0.2)
+		audio_gunshot.play()
 		shooting_tween.interpolate_property($Sprite,"modulate",Color.yellowgreen,Color.white,0.1,Tween.TRANS_LINEAR,Tween.EASE_OUT)
 	#	$Sprite.modulate = Color.whit
 		yield(shooting_tween, "tween_completed")

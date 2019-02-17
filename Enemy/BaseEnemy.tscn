@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=2]
+[gd_scene load_steps=60 format=2]
 
 [ext_resource path="res://Enemy/BaseEnemy.gd" type="Script" id=1]
 [ext_resource path="res://Enemy/Sprites/poacher-Up1.png" type="Texture" id=2]
@@ -11,26 +11,28 @@
 [ext_resource path="res://Enemy/Sprites/poacher-Down2.png" type="Texture" id=9]
 [ext_resource path="res://Enemy/Sprites/poacher-Down4.png" type="Texture" id=10]
 [ext_resource path="res://Enemy/Sprites/poacher-Down5.png" type="Texture" id=11]
-[ext_resource path="res://Enemy/Sprites/poacher-Side1.png" type="Texture" id=12]
-[ext_resource path="res://Enemy/Sprites/poacher-Side2.png" type="Texture" id=13]
-[ext_resource path="res://Enemy/Sprites/poacher-Up-side1.png" type="Texture" id=14]
-[ext_resource path="res://Enemy/Sprites/poacher-Up-side2.png" type="Texture" id=15]
-[ext_resource path="res://Enemy/Sprites/poacher-Down-side4.png" type="Texture" id=16]
-[ext_resource path="res://Enemy/Sprites/poacher-Down-side5.png" type="Texture" id=17]
-[ext_resource path="res://Enemy/Sprites/poacher-Up4.png" type="Texture" id=18]
-[ext_resource path="res://Enemy/Sprites/poacher-Up5.png" type="Texture" id=19]
-[ext_resource path="res://Enemy/Sprites/poacher-Up-side4.png" type="Texture" id=20]
-[ext_resource path="res://Enemy/Sprites/poacher-Up-side5.png" type="Texture" id=21]
-[ext_resource path="res://Enemy/Sprites/poacher-Side3.png" type="Texture" id=22]
-[ext_resource path="res://Enemy/Sprites/poacher-Up3.png" type="Texture" id=23]
-[ext_resource path="res://Enemy/Sprites/poacher-Up-side3.png" type="Texture" id=24]
-[ext_resource path="res://Enemy/Sprites/poacher-Down-side3.png" type="Texture" id=25]
-[ext_resource path="res://Enemy/Sprites/poacher-Down3.png" type="Texture" id=26]
+[ext_resource path="res://Enemy/Sprites/poacher-Up4.png" type="Texture" id=12]
+[ext_resource path="res://Enemy/Sprites/poacher-Up5.png" type="Texture" id=13]
+[ext_resource path="res://Enemy/Sprites/poacher-Down-side3.png" type="Texture" id=14]
+[ext_resource path="res://Enemy/Sprites/poacher-Down-side4.png" type="Texture" id=15]
+[ext_resource path="res://Enemy/Sprites/poacher-Down-side5.png" type="Texture" id=16]
+[ext_resource path="res://Enemy/Sprites/poacher-Up-side4.png" type="Texture" id=17]
+[ext_resource path="res://Enemy/Sprites/poacher-Up-side5.png" type="Texture" id=18]
+[ext_resource path="res://Enemy/Sprites/poacher-Down3.png" type="Texture" id=19]
+[ext_resource path="res://Enemy/Sprites/poacher-Side1.png" type="Texture" id=20]
+[ext_resource path="res://Enemy/Sprites/poacher-Side2.png" type="Texture" id=21]
+[ext_resource path="res://Enemy/Sprites/poacher-Up3.png" type="Texture" id=22]
+[ext_resource path="res://Enemy/Sprites/poacher-Up-side1.png" type="Texture" id=23]
+[ext_resource path="res://Enemy/Sprites/poacher-Up-side2.png" type="Texture" id=24]
+[ext_resource path="res://Enemy/Sprites/poacher-Up-side3.png" type="Texture" id=25]
+[ext_resource path="res://Enemy/Sprites/poacher-Side3.png" type="Texture" id=26]
 [ext_resource path="res://Enemy/FSM/EnemyFSM.gd" type="Script" id=27]
 [ext_resource path="res://Enemy/FSM/States/Idle.tscn" type="PackedScene" id=28]
 [ext_resource path="res://Enemy/FSM/States/Move.tscn" type="PackedScene" id=29]
 [ext_resource path="res://Enemy/FSM/States/Attack.tscn" type="PackedScene" id=30]
 [ext_resource path="res://Enemy/FSM/States/Die.tscn" type="PackedScene" id=31]
+[ext_resource path="res://Sound/Poacher/hurt1.ogg" type="AudioStream" id=32]
+[ext_resource path="res://Sound/Poacher/die1.ogg" type="AudioStream" id=33]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -65,57 +67,57 @@ animations = [ {
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 12 ), ExtResource( 13 ) ],
-"loop": true,
-"name": "walk_side",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 14 ), ExtResource( 15 ) ],
-"loop": true,
-"name": "walk_up_side",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 16 ), ExtResource( 17 ) ],
-"loop": false,
-"name": "die_down_side",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 18 ), ExtResource( 19 ) ],
 "loop": false,
 "name": "die_up",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 20 ), ExtResource( 21 ) ],
-"loop": false,
-"name": "die_up_side",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 12 ), ExtResource( 22 ) ],
-"loop": true,
-"name": "attack_side",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 2 ), ExtResource( 23 ) ],
-"loop": true,
-"name": "attack_up",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 14 ), ExtResource( 24 ) ],
-"loop": true,
-"name": "attack_up_side",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 4 ), ExtResource( 25 ) ],
+"frames": [ ExtResource( 4 ), ExtResource( 14 ) ],
 "loop": true,
 "name": "attack_down_side",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 8 ), ExtResource( 26 ) ],
+"frames": [ ExtResource( 15 ), ExtResource( 16 ) ],
+"loop": false,
+"name": "die_down_side",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 17 ), ExtResource( 18 ) ],
+"loop": false,
+"name": "die_up_side",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 19 ) ],
 "loop": true,
 "name": "attack_down",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 20 ), ExtResource( 21 ) ],
+"loop": true,
+"name": "walk_side",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ), ExtResource( 22 ) ],
+"loop": true,
+"name": "attack_up",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 23 ), ExtResource( 24 ) ],
+"loop": true,
+"name": "walk_up_side",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 23 ), ExtResource( 25 ) ],
+"loop": true,
+"name": "attack_up_side",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 20 ), ExtResource( 26 ) ],
+"loop": true,
+"name": "attack_side",
+"speed": 5.0
 } ]
 
-[sub_resource type="Animation" id=21]
+[sub_resource type="Animation" id=3]
 
 resource_name = "attack_down"
 tracks/0/type = "value"
@@ -143,7 +145,7 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=22]
+[sub_resource type="Animation" id=4]
 
 resource_name = "attack_down_left"
 tracks/0/type = "value"
@@ -171,7 +173,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=23]
+[sub_resource type="Animation" id=5]
 
 resource_name = "attack_down_right"
 tracks/0/type = "value"
@@ -199,7 +201,7 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=19]
+[sub_resource type="Animation" id=6]
 
 resource_name = "attack_left"
 tracks/0/type = "value"
@@ -227,7 +229,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=20]
+[sub_resource type="Animation" id=7]
 
 resource_name = "attack_right"
 tracks/0/type = "value"
@@ -255,7 +257,7 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=24]
+[sub_resource type="Animation" id=8]
 
 resource_name = "attack_up"
 tracks/0/type = "value"
@@ -283,7 +285,7 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=25]
+[sub_resource type="Animation" id=9]
 
 resource_name = "attack_up_left"
 tracks/0/type = "value"
@@ -311,7 +313,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=26]
+[sub_resource type="Animation" id=10]
 
 resource_name = "attack_up_right"
 tracks/0/type = "value"
@@ -339,9 +341,8 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=11]
 
-resource_name = "die_down"
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:animation")
 tracks/0/interp = 1
@@ -367,9 +368,8 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=12]
 
-resource_name = "die_down_left"
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:animation")
 tracks/0/interp = 1
@@ -395,9 +395,8 @@ tracks/1/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=13]
 
-resource_name = "die_down_right"
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:animation")
 tracks/0/interp = 1
@@ -423,9 +422,8 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=14]
 
-resource_name = "die_left"
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:animation")
 tracks/0/interp = 1
@@ -451,9 +449,8 @@ tracks/1/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=15]
 
-resource_name = "die_right"
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:animation")
 tracks/0/interp = 1
@@ -479,9 +476,8 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=16]
 
-resource_name = "die_up"
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:animation")
 tracks/0/interp = 1
@@ -507,9 +503,8 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=17]
 
-resource_name = "die_up_right"
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:animation")
 tracks/0/interp = 1
@@ -535,7 +530,7 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=18]
 
 loop = true
 tracks/0/type = "value"
@@ -563,7 +558,7 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=19]
 
 loop = true
 tracks/0/type = "value"
@@ -591,7 +586,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=20]
 
 loop = true
 tracks/0/type = "value"
@@ -619,7 +614,7 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=21]
 
 loop = true
 tracks/0/type = "value"
@@ -647,7 +642,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=22]
 
 loop = true
 tracks/0/type = "value"
@@ -675,7 +670,7 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=23]
 
 loop = true
 tracks/0/type = "value"
@@ -703,7 +698,7 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=24]
 
 loop = true
 tracks/0/type = "value"
@@ -731,7 +726,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=17]
+[sub_resource type="Animation" id=25]
 
 loop = true
 tracks/0/type = "value"
@@ -759,7 +754,7 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="CircleShape2D" id=18]
+[sub_resource type="CircleShape2D" id=26]
 
 radius = 30.0
 
@@ -778,7 +773,6 @@ shape = SubResource( 1 )
 position = Vector2( 0, -5 )
 frames = SubResource( 2 )
 animation = "attack_up_side"
-frame = 1
 playing = true
 
 [node name="FSM" type="Node" parent="."]
@@ -795,34 +789,46 @@ script = ExtResource( 27 )
 [node name="Die" parent="FSM/States" instance=ExtResource( 31 )]
 
 [node name="WalkAnimation" type="AnimationPlayer" parent="."]
-anims/attack_down = SubResource( 21 )
-anims/attack_down_left = SubResource( 22 )
-anims/attack_down_right = SubResource( 23 )
-anims/attack_left = SubResource( 19 )
-anims/attack_right = SubResource( 20 )
-anims/attack_up = SubResource( 24 )
-anims/attack_up_left = SubResource( 25 )
-anims/attack_up_right = SubResource( 26 )
-anims/die_down = SubResource( 3 )
-anims/die_down_left = SubResource( 4 )
-anims/die_down_right = SubResource( 5 )
-anims/die_left = SubResource( 6 )
-anims/die_right = SubResource( 7 )
-anims/die_up = SubResource( 8 )
-anims/die_up_right = SubResource( 9 )
-anims/walk_down = SubResource( 10 )
-anims/walk_down_left = SubResource( 11 )
-anims/walk_down_right = SubResource( 12 )
-anims/walk_left = SubResource( 13 )
-anims/walk_right = SubResource( 14 )
-anims/walk_up = SubResource( 15 )
-anims/walk_up_left = SubResource( 16 )
-anims/walk_up_right = SubResource( 17 )
+anims/attack_down = SubResource( 3 )
+anims/attack_down_left = SubResource( 4 )
+anims/attack_down_right = SubResource( 5 )
+anims/attack_left = SubResource( 6 )
+anims/attack_right = SubResource( 7 )
+anims/attack_up = SubResource( 8 )
+anims/attack_up_left = SubResource( 9 )
+anims/attack_up_right = SubResource( 10 )
+anims/die_down = SubResource( 11 )
+anims/die_down_left = SubResource( 12 )
+anims/die_down_right = SubResource( 13 )
+anims/die_left = SubResource( 14 )
+anims/die_right = SubResource( 15 )
+anims/die_up = SubResource( 16 )
+anims/die_up_right = SubResource( 17 )
+anims/walk_down = SubResource( 18 )
+anims/walk_down_left = SubResource( 19 )
+anims/walk_down_right = SubResource( 20 )
+anims/walk_left = SubResource( 21 )
+anims/walk_right = SubResource( 22 )
+anims/walk_up = SubResource( 23 )
+anims/walk_up_left = SubResource( 24 )
+anims/walk_up_right = SubResource( 25 )
 
 [node name="DetectionArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
-shape = SubResource( 18 )
+shape = SubResource( 26 )
+
+[node name="Audio_Hurt" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 32 )
+max_distance = 150.0
+attenuation = 2.0
+bus = "SFX"
+
+[node name="Audio_Die" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 33 )
+max_distance = 150.0
+attenuation = 2.0
+bus = "SFX"
 
 [connection signal="area_entered" from="DetectionArea" to="." method="_on_DetectionArea_area_entered"]
 [connection signal="area_exited" from="DetectionArea" to="." method="_on_DetectionArea_area_exited"]

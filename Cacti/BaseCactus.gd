@@ -18,6 +18,9 @@ onready var health_bar = $HealthBar
 onready var hit_anim = $HitAnim
 onready var die_anim = $DieAnim
 
+onready var audio_hit = $Audio_Hit
+onready var audio_dead = $Audio_Dead
+
 func _ready():
 	initialize()
 	
@@ -48,7 +51,8 @@ func _growing_process(delta) -> void:
 func get_hit(damage : int) -> void:
 	hit_anim.play("hit")
 	set_current_health(current_health-damage)
-
+	audio_hit.pitch_scale = 0.8 + (randf()*0.4)
+	audio_hit.play()
 
 func set_current_health(value : int) -> void:	
 	if value < 0: value = 0
@@ -61,7 +65,7 @@ func set_current_health(value : int) -> void:
 func _die():	
 	emit_signal("died")
 	$DieAnim.play("die")
-	
+	audio_dead.play()
 	
 func _grow() -> void:
 	grow_phase+=1
