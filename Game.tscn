@@ -218,6 +218,7 @@ mode = 1
 tile_set = ExtResource( 6 )
 cell_size = Vector2( 32, 16 )
 format = 1
+tile_data = PoolIntArray( -917504, 3, 0, -917503, 3, 0, -917502, 3, 0, -851968, 3, 0, -851967, 3, 0, -786432, 3, 0, -786431, 3, 0 )
 
 [node name="Revealed" type="TileMap" parent="Level"]
 modulate = Color( 0, 0, 0, 1 )
@@ -291,7 +292,7 @@ script = ExtResource( 11 )
 __meta__ = {
 "_editor_icon": ExtResource( 12 )
 }
-edge = true
+zoom_out_limit = 4
 
 [node name="GameOverLayer" type="CanvasLayer" parent="."]
 
