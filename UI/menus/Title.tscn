@@ -13,30 +13,8 @@ script = ExtResource( 2 )
 [node name="TextureRect" type="TextureRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = -768.0
-margin_bottom = -440.0
-rect_scale = Vector2( 4, 4 )
 texture = ExtResource( 3 )
-
-[node name="CenterContainer" type="CenterContainer" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_right = -514.0
-margin_bottom = -285.0
-rect_scale = Vector2( 2, 2 )
-
-[node name="MarginContainer" type="MarginContainer" parent="CenterContainer"]
-margin_left = 182.0
-margin_top = 116.0
-margin_right = 328.0
-margin_bottom = 198.0
-custom_constants/margin_top = 48
-
-[node name="Button" type="Button" parent="CenterContainer/MarginContainer"]
-margin_top = 48.0
-margin_right = 146.0
-margin_bottom = 82.0
-text = "    Start!    "
+stretch_mode = 1
 
 [node name="StartTimer" type="Timer" parent="."]
 wait_time = 0.3
@@ -45,5 +23,17 @@ one_shot = true
 [node name="TitleMusic" type="AudioStreamPlayer" parent="."]
 autoplay = true
 
-[connection signal="button_up" from="CenterContainer/MarginContainer/Button" to="." method="_on_Button_button_up"]
+[node name="Button" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -143.0
+margin_top = 23.0
+margin_right = 3.0
+margin_bottom = 57.0
+rect_scale = Vector2( 2, 2 )
+text = "    Start!    "
+
 [connection signal="timeout" from="StartTimer" to="." method="_on_StartTimer_timeout"]
+[connection signal="button_up" from="Button" to="." method="_on_Button_button_up"]

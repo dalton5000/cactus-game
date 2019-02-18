@@ -14,27 +14,27 @@
 [ext_resource path="res://Sound/research_complete.ogg" type="AudioStream" id=12]
 [ext_resource path="res://Sound/place_cactus.ogg" type="AudioStream" id=13]
 
-[sub_resource type="DynamicFontData" id=3]
-
-font_path = "res://UI/fonts/connection_ii/ConnectionII.otf"
-
-[sub_resource type="DynamicFont" id=4]
-
-size = 40
-outline_size = 4
-outline_color = Color( 0, 0, 0, 1 )
-font_data = SubResource( 3 )
-
 [sub_resource type="DynamicFontData" id=1]
 
 font_path = "res://UI/fonts/connection_ii/ConnectionII.otf"
 
 [sub_resource type="DynamicFont" id=2]
 
+size = 40
+outline_size = 4
+outline_color = Color( 0, 0, 0, 1 )
+font_data = SubResource( 1 )
+
+[sub_resource type="DynamicFontData" id=3]
+
+font_path = "res://UI/fonts/connection_ii/ConnectionII.otf"
+
+[sub_resource type="DynamicFont" id=4]
+
 size = 80
 outline_size = 8
 outline_color = Color( 0, 0, 0, 1 )
-font_data = SubResource( 1 )
+font_data = SubResource( 3 )
 
 [node name="HUDLayer" type="CanvasLayer"]
 pause_mode = 2
@@ -170,7 +170,7 @@ text = "Research"
 visible = false
 margin_left = 264.0
 margin_right = 424.0
-margin_bottom = 32.0
+margin_bottom = 36.0
 rect_min_size = Vector2( 128, 0 )
 custom_fonts/font = ExtResource( 4 )
 toggle_mode = true
@@ -189,6 +189,7 @@ text = "Destroy"
 icon = ExtResource( 10 )
 
 [node name="Tooltip" type="VBoxContainer" parent="."]
+editor/display_folded = true
 visible = false
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -200,7 +201,7 @@ margin_bottom = -50.0
 [node name="Label_Title" type="Label" parent="Tooltip"]
 margin_right = 800.0
 margin_bottom = 44.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 2 )
 text = "Farmer"
 valign = 2
 autowrap = true
@@ -215,6 +216,7 @@ text = "This one gave the intel team some trouble, as we're not sure whether or 
 autowrap = true
 
 [node name="BuildBar" type="HBoxContainer" parent="."]
+editor/display_folded = true
 visible = false
 anchor_top = 1.0
 anchor_right = 1.0
@@ -235,6 +237,7 @@ custom_fonts/font = ExtResource( 4 )
 text = "Cancel"
 
 [node name="ResearchBar" type="HBoxContainer" parent="."]
+editor/display_folded = true
 visible = false
 anchor_top = 1.0
 anchor_right = 1.0
@@ -254,6 +257,7 @@ text = "Cancel"
 
 [node name="PauseMenu" type="PopupPanel" parent="."]
 pause_mode = 2
+editor/display_folded = true
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -293,7 +297,7 @@ margin_bottom = 369.0
 [node name="Label_BigMessage" type="Label" parent="MessageCenter/VBox"]
 margin_right = 518.0
 margin_bottom = 88.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 4 )
 text = "Victory!"
 align = 1
 
@@ -316,9 +320,23 @@ stream = ExtResource( 13 )
 volume_db = -5.0
 bus = "UI"
 
+[node name="DebugBar" type="VBoxContainer" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -304.0
+margin_bottom = 40.0
+size_flags_horizontal = 0
+theme = ExtResource( 2 )
+
+[node name="SpawnWaveButton" type="Button" parent="DebugBar"]
+margin_right = 304.0
+margin_bottom = 34.0
+text = "Spawn Wave"
+
 [connection signal="button_up" from="ActionBar/BuildButton" to="." method="_on_BuildButton_button_up"]
 [connection signal="button_up" from="ActionBar/ResearchButton" to="." method="_on_ResearchButton_button_up"]
 [connection signal="button_up" from="ActionBar/StopResearchButton" to="." method="_on_StopResearchButton_button_up"]
 [connection signal="button_up" from="ActionBar/DestroyButton" to="." method="_on_DestroyButton_button_up"]
 [connection signal="button_up" from="BuildBar/CancelBuildButton" to="." method="_on_CancelBuildButton_button_up"]
 [connection signal="button_up" from="ResearchBar/CancelResearchButton" to="." method="_on_CancelResearchButton_button_up"]
+[connection signal="button_up" from="DebugBar/SpawnWaveButton" to="." method="_on_SpawnWaveButton_button_up"]

@@ -63,12 +63,12 @@ func set_current_health(value : int) -> void:
 		_die()
 		
 func _die():	
-	emit_signal("died")
+	emit_signal("died",self)
 	$DieAnim.play("die")
 	audio_dead.play()
 
 func delete():
-	emit_signal("died")
+	emit_signal("died",self)
 	hide()
 	yield(get_tree().create_timer(1), "timeout")
 	queue_free()

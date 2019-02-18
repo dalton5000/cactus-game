@@ -4,7 +4,9 @@
 [ext_resource path="res://Enemy/Camp.png" type="Texture" id=2]
 [ext_resource path="res://Sound/enemy_spawn.ogg" type="AudioStream" id=3]
 
-[node name="Spawner" type="Node2D"]
+[node name="Spawner" type="Node2D" groups=[
+"spawners",
+]]
 pause_mode = 1
 script = ExtResource( 1 )
 

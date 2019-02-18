@@ -31,8 +31,9 @@ onready var fog_map : = $Level/Fog
 onready var revealed_map : = $Level/Revealed
 onready var hud := $HUDLayer
 onready var master_cactus : = $Units/Cacti/Master
-onready var rocket : = $Units/Cacti/Rocket
 onready var resources : = $Units/Resources
+
+onready var daynight_anim = $GameTime/AnimationPlayer
 
 onready var mixing_desk = $Sounds/MixingDeskMusic
 onready var music_is_intense = false
@@ -126,9 +127,6 @@ func cell_is_fertile(cell_pos : Vector2) -> bool:
 
 func get_master_cactus() -> Node:
 	return(master_cactus)
-
-func get_rocket() -> Node:
-	return(rocket)
 
 func spines_produced(amount):
 	Gamestate.spines += amount
@@ -336,6 +334,7 @@ func _ready():
 	init_fog_map()
 	resources_map.create_stuff(resources)
 	Gamestate.connect("research_complete", self, "_on_research_complete")
+	daynight_anim.play("daynight_cycle")
 
 func _on_Master_died():
 	$GameOverLayer/Control/GameOverAnim.play("gameover")
@@ -344,3 +343,7 @@ func _on_Master_died():
 func _on_RestartButton_pressed():
 	get_tree().paused=false
 	get_tree().change_scene_to(load("res://Game.tscn"))
+
+
+func _on_HUDLayer_wave_requested():
+	get_tree().call_group("spawners","spawn_wave")

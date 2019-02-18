@@ -10,19 +10,18 @@
 [ext_resource path="res://UI/HUDLayer.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Cacti/Master.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Enemy/Spawner.tscn" type="PackedScene" id=10]
-[ext_resource path="res://GameTime.gd" type="Script" id=11]
-[ext_resource path="res://addons/carmel4a97.RTS_Camera2D/RTS-Camera2D.gd" type="Script" id=12]
-[ext_resource path="res://addons/carmel4a97.RTS_Camera2D/node_icon.png" type="Texture" id=13]
-[ext_resource path="res://UI/theme.tres" type="Theme" id=14]
-[ext_resource path="res://Sound/beach.ogg" type="AudioStream" id=15]
-[ext_resource path="res://Sound/wind.ogg" type="AudioStream" id=16]
-[ext_resource path="res://addons/music/mixing_desk_music.gd" type="Script" id=17]
-[ext_resource path="res://addons/music/mdm_icon.png" type="Texture" id=18]
-[ext_resource path="res://addons/music/song.gd" type="Script" id=19]
-[ext_resource path="res://addons/music/song_icon.png" type="Texture" id=20]
-[ext_resource path="res://Sound/Music/calm.ogg" type="AudioStream" id=21]
-[ext_resource path="res://Sound/Music/action.ogg" type="AudioStream" id=22]
-[ext_resource path="res://Sound/Music/game_over.ogg" type="AudioStream" id=23]
+[ext_resource path="res://addons/carmel4a97.RTS_Camera2D/RTS-Camera2D.gd" type="Script" id=11]
+[ext_resource path="res://addons/carmel4a97.RTS_Camera2D/node_icon.png" type="Texture" id=12]
+[ext_resource path="res://UI/theme.tres" type="Theme" id=13]
+[ext_resource path="res://Sound/beach.ogg" type="AudioStream" id=14]
+[ext_resource path="res://Sound/wind.ogg" type="AudioStream" id=15]
+[ext_resource path="res://addons/music/mixing_desk_music.gd" type="Script" id=16]
+[ext_resource path="res://addons/music/mdm_icon.png" type="Texture" id=17]
+[ext_resource path="res://addons/music/song.gd" type="Script" id=18]
+[ext_resource path="res://addons/music/song_icon.png" type="Texture" id=19]
+[ext_resource path="res://Sound/Music/calm.ogg" type="AudioStream" id=20]
+[ext_resource path="res://Sound/Music/action.ogg" type="AudioStream" id=21]
+[ext_resource path="res://Sound/Music/game_over.ogg" type="AudioStream" id=22]
 
 [sub_resource type="TileSet" id=1]
 
@@ -112,7 +111,25 @@
 
 [sub_resource type="Animation" id=3]
 
-resource_name = "gameover"
+resource_name = "daynight_cycle"
+length = 135.0
+loop = true
+step = 15.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("NightModulate:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 45, 60, 75, 105, 120, 135 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 0.854902, 0.729412, 1 ), Color( 0.372549, 0.454902, 0.768627, 1 ), Color( 0.372549, 0.454902, 0.768627, 1 ), Color( 1, 0.854902, 0.729412, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:visible")
 tracks/0/interp = 1
@@ -150,16 +167,16 @@ tracks/2/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="DynamicFontData" id=4]
+[sub_resource type="DynamicFontData" id=5]
 
 font_path = "res://UI/fonts/connection_ii/ConnectionII.otf"
 
-[sub_resource type="DynamicFont" id=5]
+[sub_resource type="DynamicFont" id=6]
 
 size = 60
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
-font_data = SubResource( 4 )
+font_data = SubResource( 5 )
 
 [node name="Game" type="Node" groups=[
 "game",
@@ -261,21 +278,20 @@ wait_time = 180.0
 
 [node name="GameTime" type="Node" parent="."]
 pause_mode = 1
-editor/display_folded = true
-script = ExtResource( 11 )
 
 [node name="NightModulate" type="CanvasModulate" parent="GameTime"]
 
-[node name="NightTween" type="Tween" parent="GameTime"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GameTime"]
+anims/daynight_cycle = SubResource( 3 )
 
 [node name="RTS-Camera2D" type="Camera2D" parent="."]
 pause_mode = 2
 position = Vector2( 333.122, -22.6101 )
 current = true
 zoom = Vector2( 0.5, 0.5 )
-script = ExtResource( 12 )
+script = ExtResource( 11 )
 __meta__ = {
-"_editor_icon": ExtResource( 13 )
+"_editor_icon": ExtResource( 12 )
 }
 edge = true
 wheel = false
@@ -297,13 +313,13 @@ margin_bottom = 320.0
 color = Color( 0, 0, 0, 0 )
 
 [node name="GameOverAnim" type="AnimationPlayer" parent="GameOverLayer/Control"]
-anims/gameover = SubResource( 3 )
+anims/gameover = SubResource( 4 )
 
 [node name="CenterContainer" type="CenterContainer" parent="GameOverLayer/Control"]
 modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = ExtResource( 14 )
+theme = ExtResource( 13 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GameOverLayer/Control/CenterContainer"]
 margin_left = 347.0
@@ -314,7 +330,7 @@ margin_bottom = 426.0
 [node name="Label" type="Label" parent="GameOverLayer/Control/CenterContainer/VBoxContainer"]
 margin_right = 330.0
 margin_bottom = 204.0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 6 )
 text = "Game Over
 
 "
@@ -331,7 +347,7 @@ text = "Try Again!"
 
 [node name="Audio_Beach" type="AudioStreamPlayer2D" parent="Sounds"]
 position = Vector2( -923.892, -39.0278 )
-stream = ExtResource( 15 )
+stream = ExtResource( 14 )
 volume_db = -10.0
 autoplay = true
 max_distance = 500.0
@@ -340,7 +356,7 @@ bus = "Ambience"
 
 [node name="Audio_Beach2" type="AudioStreamPlayer2D" parent="Sounds"]
 position = Vector2( -351.611, -345.871 )
-stream = ExtResource( 15 )
+stream = ExtResource( 14 )
 volume_db = -10.0
 autoplay = true
 max_distance = 500.0
@@ -349,7 +365,7 @@ bus = "Ambience"
 
 [node name="Audio_Beach3" type="AudioStreamPlayer2D" parent="Sounds"]
 position = Vector2( -225.096, 352.001 )
-stream = ExtResource( 15 )
+stream = ExtResource( 14 )
 volume_db = -10.0
 autoplay = true
 max_distance = 500.0
@@ -358,7 +374,7 @@ bus = "Ambience"
 
 [node name="Audio_Beach4" type="AudioStreamPlayer2D" parent="Sounds"]
 position = Vector2( 334.017, 349.28 )
-stream = ExtResource( 15 )
+stream = ExtResource( 14 )
 volume_db = -10.0
 autoplay = true
 max_distance = 500.0
@@ -367,7 +383,7 @@ bus = "Ambience"
 
 [node name="Audio_Beach5" type="AudioStreamPlayer2D" parent="Sounds"]
 position = Vector2( 757.094, -26.1831 )
-stream = ExtResource( 15 )
+stream = ExtResource( 14 )
 volume_db = -10.0
 autoplay = true
 max_distance = 500.0
@@ -376,7 +392,7 @@ bus = "Ambience"
 
 [node name="Audio_Wind" type="AudioStreamPlayer2D" parent="Sounds"]
 position = Vector2( -86.3382, -98.283 )
-stream = ExtResource( 16 )
+stream = ExtResource( 15 )
 volume_db = -10.0
 autoplay = true
 max_distance = 500.0
@@ -384,15 +400,15 @@ attenuation = 2.0
 bus = "Ambience"
 
 [node name="MixingDeskMusic" type="Node2D" parent="Sounds"]
-script = ExtResource( 17 )
+script = ExtResource( 16 )
 __meta__ = {
-"_editor_icon": ExtResource( 18 )
+"_editor_icon": ExtResource( 17 )
 }
 
 [node name="Song_Main" type="Node2D" parent="Sounds/MixingDeskMusic"]
-script = ExtResource( 19 )
+script = ExtResource( 18 )
 __meta__ = {
-"_editor_icon": ExtResource( 20 )
+"_editor_icon": ExtResource( 19 )
 }
 tempo = 65
 bars = 48
@@ -403,17 +419,17 @@ loop = true
 [node name="core" type="Node2D" parent="Sounds/MixingDeskMusic/Song_Main"]
 
 [node name="Music_Calm" type="AudioStreamPlayer" parent="Sounds/MixingDeskMusic/Song_Main/core"]
-stream = ExtResource( 21 )
+stream = ExtResource( 20 )
 bus = "Music"
 
 [node name="Music_Action" type="AudioStreamPlayer" parent="Sounds/MixingDeskMusic/Song_Main/core"]
-stream = ExtResource( 22 )
+stream = ExtResource( 21 )
 bus = "Music"
 
 [node name="Song_GameOver" type="Node2D" parent="Sounds/MixingDeskMusic"]
-script = ExtResource( 19 )
+script = ExtResource( 18 )
 __meta__ = {
-"_editor_icon": ExtResource( 20 )
+"_editor_icon": ExtResource( 19 )
 }
 tempo = 100
 bars = 19
@@ -423,13 +439,14 @@ transition_beats = 1.0
 [node name="core" type="Node2D" parent="Sounds/MixingDeskMusic/Song_GameOver"]
 
 [node name="Music_GameOver" type="AudioStreamPlayer" parent="Sounds/MixingDeskMusic/Song_GameOver/core"]
-stream = ExtResource( 23 )
+stream = ExtResource( 22 )
 bus = "Music"
 
 [connection signal="build_item_selected" from="HUDLayer" to="." method="_on_HUDLayer_build_item_selected"]
 [connection signal="destroy_selected" from="HUDLayer" to="." method="_on_HUDLayer_destroy_selected"]
 [connection signal="research_cancelled" from="HUDLayer" to="." method="_on_HUDLayer_research_cancelled"]
 [connection signal="research_item_selected" from="HUDLayer" to="." method="_on_HUDLayer_research_item_selected"]
+[connection signal="wave_requested" from="HUDLayer" to="." method="_on_HUDLayer_wave_requested"]
 [connection signal="died" from="Units/Cacti/Master" to="." method="_on_Master_died"]
 [connection signal="pressed" from="GameOverLayer/Control/CenterContainer/VBoxContainer/RestartButton" to="." method="_on_RestartButton_pressed"]
 

@@ -51,6 +51,7 @@ func get_hit(damage : int) -> void:
 		
 func die() -> void:
 	$FSM.switch_state("Die")
+	$FSM.active = false
 	emit_signal("died", self)
 	is_alive = false
 	audio_die.stream = sfx_die[rand_range(0, sfx_die.size())]
@@ -69,10 +70,17 @@ func get_lured(lurer):
 func is_alive() -> bool:
 	return is_alive
 
-func _draw():
-	draw_set_transform(Vector2(0, 0), 0, Vector2(0.5, 0.5))
-	draw_string(font, Vector2(10, 0), fsm.current_state.label)
+#func _draw():
+#	draw_set_transform(Vector2(0, 0), 0, Vector2(0.5, 0.5))
+#	draw_string(font, Vector2(10, 0), fsm.current_state.label)
 
+func cactus_died(cactus):
+	if cactus in cacti_in_range:
+		cacti_in_range.erase(cactus)
+	if cactus == target:
+		fsm.switch_state("Idle")
+		
+		
 
 func _on_DetectionArea_area_entered(area):
 	if area.is_in_group("cacti"):
@@ -87,3 +95,5 @@ func _on_DetectionArea_area_exited(area):
 	if area.is_in_group("cacti"):
 		if area in cacti_in_range:
 			cacti_in_range.erase(area)
+		if area == target:
+			fsm.switch_state("Idle")

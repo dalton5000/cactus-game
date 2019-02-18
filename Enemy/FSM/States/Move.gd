@@ -4,9 +4,10 @@ var path
 
 onready var speed : float = FSM.owner.speed
 
+var attack_offset : = 18.0
 
-func _enter_tree():
-	label = "move" # no other way to override variables :(
+#func _enter_tree():
+#	label = "move" # no other way to override variables :(
 
 func enter() -> void:
 	update_path()
@@ -53,6 +54,8 @@ func update_path():
 		
 		var own_pos = FSM.owner.global_position
 		var target_pos = FSM.owner.target.global_position
+		randomize()
+		target_pos += Vector2(attack_offset,0).rotated(deg2rad(180.0*randf()))
 		
 		
 		path = navigation.get_simple_path(own_pos,target_pos,false)
