@@ -5,6 +5,7 @@
 
 [node name="Bush" type="Node2D" groups=[
 "bush",
+"obscurable",
 ]]
 script = ExtResource( 1 )
 

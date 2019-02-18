@@ -6,6 +6,7 @@
 
 [node name="Spawner" type="Node2D" groups=[
 "spawners",
+"obscurable",
 ]]
 pause_mode = 1
 script = ExtResource( 1 )
