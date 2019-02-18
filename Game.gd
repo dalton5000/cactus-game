@@ -171,9 +171,13 @@ func can_build(cactus_id : int, pos : Vector2) -> bool:
 	# Now, is it on an area we can see?
 	if fog_map.get_cell(pos[0], pos[1]) != 3:
 		return false
-	# Is it on a cell that's already occupied?
+	# Is it on a cell that's already occupied by other cacti?	
 	if cactus_map.get_cell(pos[0], pos[1]) != -1:
 		return false
+	# Is there a resource in the way?	
+	if resources_map.get_cell(pos[0], pos[1]) != -1:
+		return false
+		
 	# Is it on the right sort of tile?
 	if not terrain_map.get_cell(pos[0], pos[1]) in [FERTILE_CELL_ID, SAND_CELL_ID]:
 		return false
