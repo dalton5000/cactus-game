@@ -19,13 +19,15 @@ onready var parent = get_parent()
 var parent_buttons : = []
 
 func _input(event):
-	for i in number_hotkeys.size():
-		if event.is_action(number_hotkeys[i]) and event.pressed:
-			if i < parent_buttons.size():
-				parent_buttons[i].emit_signal("button_up")
-				parent_buttons[i].pressed = true
-#				parent_buttons[i].hide()
-			break
+	if event is InputEventKey:
+		if event.pressed:
+			for i in number_hotkeys.size():
+				if event.is_action(number_hotkeys[i]):
+					if i < parent_buttons.size():
+						parent_buttons[i].emit_signal("button_up")
+						parent_buttons[i].pressed = true
+		#				parent_buttons[i].hide()
+					break
 	
 		
 func _set_active(value : bool) -> void:
