@@ -442,6 +442,7 @@ transition_beats = 1.0
 stream = ExtResource( 22 )
 bus = "Music"
 
+[connection signal="build_cancelled" from="HUDLayer" to="." method="_on_HUDLayer_build_cancelled"]
 [connection signal="build_item_selected" from="HUDLayer" to="." method="_on_HUDLayer_build_item_selected"]
 [connection signal="destroy_selected" from="HUDLayer" to="." method="_on_HUDLayer_destroy_selected"]
 [connection signal="research_cancelled" from="HUDLayer" to="." method="_on_HUDLayer_research_cancelled"]

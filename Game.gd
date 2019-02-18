@@ -248,8 +248,7 @@ func _unhandled_input(event):
 		CURSOR_MODES.BUILD:
 			if event is InputEventMouseButton:
 				if event.button_index == BUTTON_RIGHT and event.pressed:
-					change_cursormode(CURSOR_MODES.INSPECT)
-					hud.release_build_buttons()
+					build_mode_cancelled()
 				elif event.button_index == BUTTON_LEFT and event.pressed:
 					place_cactus($Level.get_global_mouse_position(), build_mode)
 		CURSOR_MODES.DESTROY:
@@ -258,6 +257,10 @@ func _unhandled_input(event):
 					change_cursormode(CURSOR_MODES.INSPECT)
 				elif event.button_index == BUTTON_LEFT and event.pressed:
 					delete_cactus($Level.get_global_mouse_position())
+
+func build_mode_cancelled():
+	change_cursormode(CURSOR_MODES.INSPECT)
+	hud.release_build_buttons()
 
 func _on_HUDLayer_build_item_selected(which_item):
 	match which_item:
@@ -347,3 +350,7 @@ func _on_RestartButton_pressed():
 
 func _on_HUDLayer_wave_requested():
 	get_tree().call_group("spawners","spawn_wave")
+
+
+func _on_HUDLayer_build_cancelled():
+	build_mode_cancelled()

@@ -31,6 +31,7 @@ onready var tooltip_text = $Tooltip/Label_Text
 onready var audio_research_complete = $Audio_ResearchComplete
 onready var audio_place_cactus = $Audio_PlaceCactus
 
+signal build_cancelled
 signal build_item_selected
 signal destroy_selected
 signal research_item_selected
@@ -125,7 +126,7 @@ func _on_DestroyButton_button_up():
 	emit_signal("destroy_selected")
 
 func _on_CancelBuildButton_button_up():
-	release_build_buttons()
+	emit_signal("build_cancelled")
 #	obj_build_button_group.get_pressed_button().pressed=false
 	action_bar.show()
 	build_bar.hide()
