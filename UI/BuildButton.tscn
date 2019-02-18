@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://UI/fonts/connection_ii/ConnectionII.tres" type="DynamicFont" id=1]
-[ext_resource path="res://UI/BuildButton.gd" type="Script" id=2]
+[ext_resource path="res://UI/buttons/build_buttongroup.tres" type="ButtonGroup" id=2]
+[ext_resource path="res://UI/BuildButton.gd" type="Script" id=3]
 
 [node name="BuildButton" type="Button" groups=[
 "build_button",
@@ -11,8 +12,10 @@ margin_bottom = 32.0
 rect_min_size = Vector2( 128, 0 )
 custom_fonts/font = ExtResource( 1 )
 toggle_mode = true
+shortcut_in_tooltip = false
+group = ExtResource( 2 )
 text = "Build"
-script = ExtResource( 2 )
+script = ExtResource( 3 )
 
 [connection signal="button_up" from="." to="." method="_on_BuildButton_button_up"]
 [connection signal="mouse_entered" from="." to="." method="_on_BuildButton_mouse_entered"]

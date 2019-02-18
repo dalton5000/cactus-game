@@ -171,9 +171,13 @@ func can_build(cactus_id : int, pos : Vector2) -> bool:
 	# Now, is it on an area we can see?
 	if fog_map.get_cell(pos[0], pos[1]) != 3:
 		return false
-	# Is it on a cell that's already occupied?
+	# Is it on a cell that's already occupied by other cacti?	
 	if cactus_map.get_cell(pos[0], pos[1]) != -1:
 		return false
+	# Is there a resource in the way?	
+	if resources_map.get_cell(pos[0], pos[1]) != -1:
+		return false
+		
 	# Is it on the right sort of tile?
 	if not terrain_map.get_cell(pos[0], pos[1]) in [FERTILE_CELL_ID, SAND_CELL_ID]:
 		return false
@@ -248,8 +252,7 @@ func _unhandled_input(event):
 		CURSOR_MODES.BUILD:
 			if event is InputEventMouseButton:
 				if event.button_index == BUTTON_RIGHT and event.pressed:
-					change_cursormode(CURSOR_MODES.INSPECT)
-					hud.release_build_buttons()
+					build_mode_cancelled()
 				elif event.button_index == BUTTON_LEFT and event.pressed:
 					place_cactus($Level.get_global_mouse_position(), build_mode)
 		CURSOR_MODES.DESTROY:
@@ -258,6 +261,10 @@ func _unhandled_input(event):
 					change_cursormode(CURSOR_MODES.INSPECT)
 				elif event.button_index == BUTTON_LEFT and event.pressed:
 					delete_cactus($Level.get_global_mouse_position())
+
+func build_mode_cancelled():
+	change_cursormode(CURSOR_MODES.INSPECT)
+	hud.release_build_buttons()
 
 func _on_HUDLayer_build_item_selected(which_item):
 	match which_item:
@@ -347,3 +354,7 @@ func _on_RestartButton_pressed():
 
 func _on_HUDLayer_wave_requested():
 	get_tree().call_group("spawners","spawn_wave")
+
+
+func _on_HUDLayer_build_cancelled():
+	build_mode_cancelled()

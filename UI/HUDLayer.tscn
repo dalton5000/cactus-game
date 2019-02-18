@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://UI/HUDLayer.gd" type="Script" id=1]
 [ext_resource path="res://UI/theme.tres" type="Theme" id=2]
@@ -7,12 +7,13 @@
 [ext_resource path="res://UI/icons/coins.png" type="Texture" id=5]
 [ext_resource path="res://UI/icons/cacti.png" type="Texture" id=6]
 [ext_resource path="res://UI/icons/poachers.png" type="Texture" id=7]
-[ext_resource path="res://UI/BuildBar/building_buttongroup.tres" type="ButtonGroup" id=8]
-[ext_resource path="res://UI/icons/build_menu.png" type="Texture" id=9]
+[ext_resource path="res://UI/icons/build_menu.png" type="Texture" id=8]
+[ext_resource path="res://UI/BuildBar/building_buttongroup.tres" type="ButtonGroup" id=9]
 [ext_resource path="res://UI/icons/build_destroy.png" type="Texture" id=10]
-[ext_resource path="res://UI/PauseMenu.gd" type="Script" id=11]
-[ext_resource path="res://Sound/research_complete.ogg" type="AudioStream" id=12]
-[ext_resource path="res://Sound/place_cactus.ogg" type="AudioStream" id=13]
+[ext_resource path="res://UI/Components/HotkeyListener.tscn" type="PackedScene" id=11]
+[ext_resource path="res://UI/PauseMenu.gd" type="Script" id=12]
+[ext_resource path="res://Sound/research_complete.ogg" type="AudioStream" id=13]
+[ext_resource path="res://Sound/place_cactus.ogg" type="AudioStream" id=14]
 
 [sub_resource type="DynamicFontData" id=1]
 
@@ -136,7 +137,6 @@ custom_fonts/font = ExtResource( 4 )
 align = 2
 
 [node name="ActionBar" type="HBoxContainer" parent="."]
-editor/display_folded = true
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -151,10 +151,8 @@ margin_right = 128.0
 margin_bottom = 36.0
 rect_min_size = Vector2( 128, 0 )
 custom_fonts/font = ExtResource( 4 )
-toggle_mode = true
-group = ExtResource( 8 )
 text = "Build"
-icon = ExtResource( 9 )
+icon = ExtResource( 8 )
 
 [node name="ResearchButton" type="Button" parent="ActionBar"]
 margin_left = 132.0
@@ -162,8 +160,8 @@ margin_right = 260.0
 margin_bottom = 36.0
 rect_min_size = Vector2( 128, 0 )
 custom_fonts/font = ExtResource( 4 )
-toggle_mode = true
-group = ExtResource( 8 )
+shortcut_in_tooltip = false
+group = ExtResource( 9 )
 text = "Research"
 
 [node name="StopResearchButton" type="Button" parent="ActionBar"]
@@ -174,7 +172,7 @@ margin_bottom = 36.0
 rect_min_size = Vector2( 128, 0 )
 custom_fonts/font = ExtResource( 4 )
 toggle_mode = true
-group = ExtResource( 8 )
+group = ExtResource( 9 )
 text = "Stop Research"
 
 [node name="DestroyButton" type="Button" parent="ActionBar"]
@@ -184,9 +182,14 @@ margin_bottom = 36.0
 rect_min_size = Vector2( 128, 0 )
 custom_fonts/font = ExtResource( 4 )
 toggle_mode = true
-group = ExtResource( 8 )
+group = ExtResource( 9 )
 text = "Destroy"
 icon = ExtResource( 10 )
+
+[node name="HotkeyListener" parent="ActionBar" instance=ExtResource( 11 )]
+margin_left = 396.0
+margin_right = 396.0
+margin_bottom = 36.0
 
 [node name="Tooltip" type="VBoxContainer" parent="."]
 editor/display_folded = true
@@ -216,7 +219,6 @@ text = "This one gave the intel team some trouble, as we're not sure whether or 
 autowrap = true
 
 [node name="BuildBar" type="HBoxContainer" parent="."]
-editor/display_folded = true
 visible = false
 anchor_top = 1.0
 anchor_right = 1.0
@@ -236,8 +238,9 @@ rect_min_size = Vector2( 128, 0 )
 custom_fonts/font = ExtResource( 4 )
 text = "Cancel"
 
+[node name="HotkeyListener" parent="BuildBar" instance=ExtResource( 11 )]
+
 [node name="ResearchBar" type="HBoxContainer" parent="."]
-editor/display_folded = true
 visible = false
 anchor_top = 1.0
 anchor_right = 1.0
@@ -255,6 +258,8 @@ rect_min_size = Vector2( 128, 0 )
 custom_fonts/font = ExtResource( 4 )
 text = "Cancel"
 
+[node name="HotkeyListener" parent="ResearchBar" instance=ExtResource( 11 )]
+
 [node name="PauseMenu" type="PopupPanel" parent="."]
 pause_mode = 2
 editor/display_folded = true
@@ -269,7 +274,7 @@ margin_bottom = -228.0
 rect_min_size = Vector2( 320, 160 )
 theme = ExtResource( 2 )
 popup_exclusive = true
-script = ExtResource( 11 )
+script = ExtResource( 12 )
 
 [node name="Label" type="Label" parent="PauseMenu"]
 anchor_right = 1.0
@@ -311,12 +316,12 @@ carrying cactuskind to new worlds yet unknown..."
 valign = 1
 
 [node name="Audio_ResearchComplete" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 12 )
+stream = ExtResource( 13 )
 volume_db = -5.0
 bus = "UI"
 
 [node name="Audio_PlaceCactus" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 13 )
+stream = ExtResource( 14 )
 volume_db = -5.0
 bus = "UI"
 
