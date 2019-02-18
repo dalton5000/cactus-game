@@ -294,7 +294,6 @@ __meta__ = {
 "_editor_icon": ExtResource( 12 )
 }
 edge = true
-wheel = false
 
 [node name="GameOverLayer" type="CanvasLayer" parent="."]
 
