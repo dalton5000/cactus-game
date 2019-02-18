@@ -2,6 +2,7 @@ extends CanvasLayer
 
 const obj_research_button = preload("res://UI/ResearchButton.tscn")
 const obj_build_button = preload("res://UI/BuildButton.tscn")
+onready var obj_build_button_group = preload("res://UI/buttons/build_buttongroup.tres")
 
 onready var resource_bar = $ResourceBar
 onready var action_bar = $ActionBar
@@ -46,6 +47,7 @@ func init_build_bar():
 		build_button.connect("button_pressed", self, "build_button_pressed")
 		build_button.connect("hover_on", self, "build_button_hovered")
 		build_button.connect("hover_off", self, "clear_tooltip")
+		build_button.group= obj_build_button_group
 		build_bar.add_child(build_button)
 	build_bar.move_child(button_hide_build_menu, build_bar.get_child_count()-1)
 
@@ -123,6 +125,8 @@ func _on_DestroyButton_button_up():
 	emit_signal("destroy_selected")
 
 func _on_CancelBuildButton_button_up():
+	release_build_buttons()
+#	obj_build_button_group.get_pressed_button().pressed=false
 	action_bar.show()
 	build_bar.hide()
 
