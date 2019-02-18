@@ -123,7 +123,7 @@ func _unhandled_input( event ):
 			camera_zoom.x + camera_zoom_speed.x < zoom_out_limit and\
 			camera_zoom.y + camera_zoom_speed.y < zoom_out_limit:
 				camera_zoom += camera_zoom_speed
-				set_zoom(camera_zoom)
+				set_zoom(camera_zoom/2)
 	# Control by keyboard handled by InpuMap.
 	if event.is_action_pressed("ui_left"):
 		__keys[0] = true
