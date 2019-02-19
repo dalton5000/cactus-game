@@ -25,6 +25,11 @@ export (float) var resource_line = 0.75
 
 onready var tilemap_debug = $Debug
 
+var rock_resource_scene = "res://Resources/Rock/Rock.tscn"
+var bush_resource_scene = "res://Resources/Bush/Bush.tscn"
+
+onready var resource_container = get_node("../Units/Resources")
+
 enum BIOME {GRASS, DIRT, SAND, STONE}
 enum FERTILE {BARREN, NORMAL, VERDENT}
 
