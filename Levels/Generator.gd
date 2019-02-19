@@ -25,8 +25,10 @@ export (float) var resource_line = 0.75
 
 onready var tilemap_debug = $Debug
 
-var rock_resource_scene = "res://Resources/Rock/Rock.tscn"
-var bush_resource_scene = "res://Resources/Bush/Bush.tscn"
+var rock_resource_scene = preload("res://Resources/Rock/Rock.tscn")
+const ROCK_TILE_INDEX = 1
+var bush_resource_scene = preload("res://Resources/Bush/Bush.tscn")
+const BUSH_TILE_INDEX = 2
 
 onready var resource_container = get_node("../Units/Resources")
 
@@ -34,6 +36,12 @@ enum BIOME {GRASS, DIRT, SAND, STONE}
 enum FERTILE {BARREN, NORMAL, VERDENT}
 
 func _do_the_thing(value):
+	
+	#delete the old resources in scene_tree
+#	for i in $Res.get_child_count():
+#		$Res.get_child(i).queue_free()
+	
+	
 	var noise_altitude = OpenSimplexNoise.new()
 	var noise_fertile = OpenSimplexNoise.new()
 	var noise_biome = OpenSimplexNoise.new()
@@ -96,13 +104,33 @@ func _do_the_thing(value):
 			if resources_amount > resource_line:
 				# We can't put resources on water
 				if tile != 12:
-					var which_resource = -1
+					var res_pos = $Navigation/Resources.map_to_world(Vector2(x,y))
 					if fertile_amount > 0.5:
-						var rock_amount = rand_range(0, 4)
-						which_resource = 5 + rock_amount
+						place_resource("rock",res_pos)
+						$Navigation/Resources.set_cell(x, y, ROCK_TILE_INDEX)
 					else:
-						var bush_amount = rand_range(0, 4)
-						which_resource = bush_amount
-					$Navigation/Resources.set_cell(x, y, which_resource)
-	$Debug.update()
+						place_resource("bush",res_pos)
+						$Navigation/Resources.set_cell(x, y, BUSH_TILE_INDEX)
+#	$Debug.update()
 	generate_map = false
+
+
+func place_resource(type:String, pos:Vector2):
+	
+	var new_resource
+	randomize()
+	var amount = randi()%5
+	match type:
+		"bush":
+			new_resource=bush_resource_scene.instance()
+		"rock":
+			new_resource=rock_resource_scene.instance()
+	new_resource.set_owner(get_tree().get_edited_scene_root())
+	call_deferred("add_child",new_resource)
+#	resource_container.add_child(new_resource)
+	new_resource.global_position = pos
+	new_resource.amount = amount
+			
+			
+			
+			
