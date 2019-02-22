@@ -157,8 +157,8 @@ func _on_CancelResearchButton_button_up():
 	research_bar.hide()
 
 func _on_StopResearchButton_button_up():
-	button_research_menu.hide()
-	button_stop_research.show()
+	button_research_menu.show()
+	button_stop_research.hide()
 	emit_signal("research_cancelled")
 
 func hide_stop_research_button():
