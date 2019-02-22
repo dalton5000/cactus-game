@@ -23,25 +23,92 @@ export (int) var resources_seed = 1
 export (float) var water_line = 0.35
 export (float) var resource_line = 0.75
 
+export (Texture) var altitude_texture = null
+export (Texture) var fertile_texture = null
+export (Texture) var biome_texture = null
+export (Texture) var resources_texture = null
+
 onready var tilemap_debug = $Debug
-
-var rock_resource_scene = preload("res://Resources/Rock/Rock.tscn")
-const ROCK_TILE_INDEX = 1
-var bush_resource_scene = preload("res://Resources/Bush/Bush.tscn")
-const BUSH_TILE_INDEX = 2
-
-onready var resource_container = get_node("../Units/Resources")
 
 enum BIOME {GRASS, DIRT, SAND, STONE}
 enum FERTILE {BARREN, NORMAL, VERDENT}
 
+var tiles = {
+	[BIOME.GRASS, FERTILE.NORMAL]: 0,
+	[BIOME.DIRT, FERTILE.NORMAL]: 1,
+	[BIOME.SAND, FERTILE.NORMAL]: 2,
+	[BIOME.STONE, FERTILE.NORMAL]: 3,
+	[BIOME.GRASS, FERTILE.VERDENT]: 4,
+	[BIOME.DIRT, FERTILE.VERDENT]: 5,
+	[BIOME.SAND, FERTILE.VERDENT]: 6,
+	[BIOME.STONE, FERTILE.VERDENT]: 7,
+	[BIOME.GRASS, FERTILE.BARREN]: 8,
+	[BIOME.DIRT, FERTILE.BARREN]: 9,
+	[BIOME.SAND, FERTILE.BARREN]: 10,
+	[BIOME.STONE, FERTILE.BARREN]: 11
+}
+
+func set_map_tile(x, y, noise_altitude, noise_fertile, noise_biome, noise_resources,
+		altitude_data, fertile_data, biome_data, resources_data):
+	# Normally, we get the values for altitude/fertility/biome/resources from a noise texture...
+	var altitude = clamp((noise_altitude.get_noise_2d(x, y) + 1)/2, 0, 1.0)
+	var fertile_amount = clamp((noise_fertile.get_noise_2d(x, y) + 1)/2, 0, 1.0)
+	var biome_amount = clamp((noise_biome.get_noise_2d(x, y) + 1)/2, 0, 1.0)
+	var resources_amount = clamp((noise_resources.get_noise_2d(x, y) + 1)/2, 0, 1.0)
+	# But we can also get it from a texture, if you want to make a sneaky cameo!
+	if altitude_data != null:
+		altitude = altitude_data.get_pixel(x+32, y+32).v
+	if fertile_data != null:
+		fertile_amount = fertile_data.get_pixel(x+32, y+32).v
+	if biome_data != null:
+		biome_amount = biome_data.get_pixel(x+32, y+32).v
+	if resources_data != null:
+		resources_amount = resources_data.get_pixel(x+32, y+32).v
+	var fertile
+	if fertile_amount > 0.67: fertile = FERTILE.VERDENT
+	elif fertile_amount > 0.33: fertile = FERTILE.NORMAL
+	else: fertile = FERTILE.BARREN
+	var biome
+	if biome_amount > 0.75: biome = BIOME.DIRT
+	elif biome_amount > 0.50: biome = BIOME.GRASS
+	elif biome_amount > 0.25: biome = BIOME.SAND
+	else: biome = BIOME.STONE
+	var tile = tiles[[biome, fertile]]
+	# Waterline
+	if altitude < water_line: tile = 12
+	# Resources
+	var resource_tile = round(resources_amount*7)
+	$Navigation/Terrain.set_cell(x, y, tile)
+	# Can we put a resource here?
+	if resources_amount > resource_line:
+		# We can't put resources on water
+		if tile != 12:
+			var which_resource = -1
+			if fertile_amount > 0.5:
+				var rock_amount = rand_range(0, 4)
+				which_resource = 5 + rock_amount
+			else:
+				var bush_amount = rand_range(0, 4)
+				which_resource = bush_amount
+			$Navigation/Resources.set_cell(x, y, which_resource)
+
 func _do_the_thing(value):
-	
-	#delete the old resources in scene_tree
-#	for i in $Res.get_child_count():
-#		$Res.get_child(i).queue_free()
-	
-	
+	var altitude_data
+	if altitude_texture != null:
+		altitude_data = altitude_texture.get_data()
+		altitude_data.lock()
+	var fertile_data
+	if fertile_texture != null:
+		fertile_data = fertile_texture.get_data()
+		fertile_data.lock()
+	var biome_data
+	if biome_texture != null:
+		biome_data = biome_texture.get_data()
+		biome_data.lock()
+	var resources_data
+	if resources_texture != null:
+		resources_data = resources_texture.get_data()
+		resources_data.lock()
 	var noise_altitude = OpenSimplexNoise.new()
 	var noise_fertile = OpenSimplexNoise.new()
 	var noise_biome = OpenSimplexNoise.new()
@@ -62,75 +129,11 @@ func _do_the_thing(value):
 	noise_resources.period = resources_period
 	noise_resources.persistence = resources_persistence
 	noise_resources.seed = resources_seed + master_seed
-	var tiles = {
-		[BIOME.GRASS, FERTILE.NORMAL]: 0,
-		[BIOME.DIRT, FERTILE.NORMAL]: 1,
-		[BIOME.SAND, FERTILE.NORMAL]: 2,
-		[BIOME.STONE, FERTILE.NORMAL]: 3,
-		[BIOME.GRASS, FERTILE.VERDENT]: 4,
-		[BIOME.DIRT, FERTILE.VERDENT]: 5,
-		[BIOME.SAND, FERTILE.VERDENT]: 6,
-		[BIOME.STONE, FERTILE.VERDENT]: 7,
-		[BIOME.GRASS, FERTILE.BARREN]: 8,
-		[BIOME.DIRT, FERTILE.BARREN]: 9,
-		[BIOME.SAND, FERTILE.BARREN]: 10,
-		[BIOME.STONE, FERTILE.BARREN]: 11
-	}
 	# Clear away existing stuff
 	$Navigation/Resources.clear()
 	$Navigation/Terrain.clear()
 	for x in range(-map_size, map_size):
 		for y in range(-map_size, map_size):
-			var altitude = clamp((noise_altitude.get_noise_2d(x, y) + 1)/2, 0, 1.0)
-			var fertile_amount = clamp((noise_fertile.get_noise_2d(x, y) + 1)/2, 0, 1.0)
-			var biome_amount = clamp((noise_biome.get_noise_2d(x, y) + 1)/2, 0, 1.0)
-			var resources_amount = clamp((noise_resources.get_noise_2d(x, y) + 1)/2, 0, 1.0)
-			var fertile
-			if fertile_amount > 0.67: fertile = FERTILE.VERDENT
-			elif fertile_amount > 0.33: fertile = FERTILE.NORMAL
-			else: fertile = FERTILE.BARREN
-			var biome
-			if biome_amount > 0.75: biome = BIOME.DIRT
-			elif biome_amount > 0.50: biome = BIOME.GRASS
-			elif biome_amount > 0.25: biome = BIOME.SAND
-			else: biome = BIOME.STONE
-			var tile = tiles[[biome, fertile]]
-			# Waterline
-			if altitude < water_line: tile = 12
-			# Resources
-			var resource_tile = round(resources_amount*7)
-			$Navigation/Terrain.set_cell(x, y, tile)
-			# Can we put a resource here?
-			if resources_amount > resource_line:
-				# We can't put resources on water
-				if tile != 12:
-					var res_pos = $Navigation/Resources.map_to_world(Vector2(x,y))
-					if fertile_amount > 0.5:
-						place_resource("rock",res_pos)
-						$Navigation/Resources.set_cell(x, y, ROCK_TILE_INDEX)
-					else:
-						place_resource("bush",res_pos)
-						$Navigation/Resources.set_cell(x, y, BUSH_TILE_INDEX)
-#	$Debug.update()
+			set_map_tile(x, y, noise_altitude, noise_fertile, noise_biome, noise_resources,
+					altitude_data, fertile_data, biome_data, resources_data)
 	generate_map = false
-
-
-func place_resource(type:String, pos:Vector2):
-	
-	var new_resource
-	randomize()
-	var amount = randi()%5
-	match type:
-		"bush":
-			new_resource=bush_resource_scene.instance()
-		"rock":
-			new_resource=rock_resource_scene.instance()
-	new_resource.set_owner(get_tree().get_edited_scene_root())
-	call_deferred("add_child",new_resource)
-#	resource_container.add_child(new_resource)
-	new_resource.global_position = pos
-	new_resource.amount = amount
-			
-			
-			
-			
