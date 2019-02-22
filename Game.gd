@@ -1,5 +1,7 @@
 extends Node
 
+const obj_gameover = preload("res://UI/GameOver.tscn")
+
 const FERTILE_CELL_ID : = 6
 
 const GRASS_CELL_ID : = 0
@@ -332,6 +334,7 @@ func _process(delta):
 
 func _ready():
 	yield(get_tree(), "idle_frame")
+	Gamestate.reset()
 	mixing_desk._init_song(0)
 	mixing_desk._start_alone(0, 0)
 	change_cursormode(CURSOR_MODES.INSPECT)
@@ -344,13 +347,12 @@ func _ready():
 	daynight_anim.play("daynight_cycle")
 
 func _on_Master_died():
-	$GameOverLayer/Control/GameOverAnim.play("gameover")
+	hud.queue_free()
+	mixing_desk._fade_out(0, 0)
+	mixing_desk._fade_out(0, 1)
+	var gameover = obj_gameover.instance()
+	add_child(gameover)
 	get_tree().paused = true
-
-func _on_RestartButton_pressed():
-	get_tree().paused=false
-	get_tree().change_scene_to(load("res://Game.tscn"))
-
 
 func _on_HUDLayer_wave_requested():
 	get_tree().call_group("spawners","spawn_wave")
