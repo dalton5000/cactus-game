@@ -57,13 +57,13 @@ func set_map_tile(x, y, noise_altitude, noise_fertile, noise_biome, noise_resour
 	var resources_amount = clamp((noise_resources.get_noise_2d(x, y) + 1)/2, 0, 1.0)
 	# But we can also get it from a texture, if you want to make a sneaky cameo!
 	if altitude_data != null:
-		altitude = altitude_data.get_pixel(x+32, y+32).v
+		altitude = altitude_data.get_pixel(x, y).v
 	if fertile_data != null:
-		fertile_amount = fertile_data.get_pixel(x+32, y+32).v
+		fertile_amount = fertile_data.get_pixel(x, y).v
 	if biome_data != null:
-		biome_amount = biome_data.get_pixel(x+32, y+32).v
+		biome_amount = biome_data.get_pixel(x, y).v
 	if resources_data != null:
-		resources_amount = resources_data.get_pixel(x+32, y+32).v
+		resources_amount = resources_data.get_pixel(x, y).v
 	var fertile
 	if fertile_amount > 0.67: fertile = FERTILE.VERDENT
 	elif fertile_amount > 0.33: fertile = FERTILE.NORMAL
@@ -132,8 +132,8 @@ func _do_the_thing(value):
 	# Clear away existing stuff
 	$Navigation/Resources.clear()
 	$Navigation/Terrain.clear()
-	for x in range(-map_size, map_size):
-		for y in range(-map_size, map_size):
+	for x in range(0, map_size):
+		for y in range(0, map_size):
 			set_map_tile(x, y, noise_altitude, noise_fertile, noise_biome, noise_resources,
 					altitude_data, fertile_data, biome_data, resources_data)
 	generate_map = false
