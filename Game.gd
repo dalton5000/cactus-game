@@ -66,6 +66,14 @@ func refresh_fog_map():
 		if fog_map.get_cell(current_cell[0], current_cell[1]) == 2:
 			if (int(current_cell[0]) % 2 + int(current_cell[1]) % 2) == 1:
 				fog_map.set_cell(current_cell[0], current_cell[1], 1)
+
+func refresh_obscurables():
+	for current_obscurable in get_tree().get_nodes_in_group("obscurable"):
+		var pos = fog_map.world_to_map(current_obscurable.global_position)
+		if fog_map.get_cell(pos.x, pos.y) == 3:
+			current_obscurable.show()
+		else:
+			current_obscurable.hide()
 	
 func _physics_process(delta):
 	var mouse_pos = $Level.get_global_mouse_position()
@@ -331,6 +339,7 @@ func _process(delta):
 			mixing_desk._fade_out(0, 1)
 			mixing_desk._fade_in(0, 0)
 			music_is_intense = false
+	refresh_obscurables()
 
 func _ready():
 	yield(get_tree(), "idle_frame")

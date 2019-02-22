@@ -7,11 +7,9 @@
 [ext_resource path="res://Sound/cactus_dead.ogg" type="AudioStream" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
-
 extents = Vector2( 8, 8 )
 
 [sub_resource type="Animation" id=2]
-
 resource_name = "die"
 length = 0.3
 tracks/0/type = "value"
@@ -64,7 +62,6 @@ tracks/3/keys = {
 }
 
 [sub_resource type="Animation" id=3]
-
 resource_name = "die_fade"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:modulate")
@@ -92,7 +89,6 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id=4]
-
 resource_name = "hit"
 length = 0.3
 step = 0.05
@@ -122,16 +118,15 @@ tracks/1/keys = {
 }
 
 [sub_resource type="StyleBoxFlat" id=5]
-
 bg_color = Color( 0.709804, 1, 0.0392157, 1 )
 
 [sub_resource type="StyleBoxFlat" id=6]
-
 bg_color = Color( 0.858824, 0.0823529, 0.0823529, 1 )
 
 [node name="BaseCactus" type="Area2D" groups=[
 "cacti",
 "cactus",
+"obscurable",
 ]]
 script = ExtResource( 1 )
 
